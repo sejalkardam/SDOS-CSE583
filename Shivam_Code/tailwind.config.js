@@ -1,0 +1,66 @@
+/** @type {import('tailwindcss').Config} */
+module.exports = {
+  content: ["./src/**/*.{js,jsx,ts,tsx}"],
+  theme: {
+    extend: {
+      colors: {
+        gold: {
+          "100": "#ffe054",
+          "200": "#fccc24",
+          "300": "rgba(252, 204, 36, 0.85)",
+        },
+        black: "#000",
+        white: "#fff",
+        khaki: "#fcec90",
+        chocolate: "#231c09",
+        lemon: "#fffdd4",
+        gainsboro: "#d9d9d9",
+        gray: {
+          "100": "#20201d",
+          "200": "rgba(0, 0, 0, 0.04)",
+          "300": "rgba(0, 0, 0, 0.2)",
+          "400": "rgba(0, 0, 0, 0.75)",
+          "500": "rgba(35, 28, 9, 0.8)",
+          "600": "rgba(35, 28, 9, 0.75)",
+          "700": "rgba(0, 0, 0, 0.8)",
+          "800": "rgba(255, 255, 255, 0.75)",
+          "900": "rgba(0, 0, 0, 0.5)",
+        },
+        crimson: "#ff225d",
+        firebrick: "#c02b0a",
+        ivory: "#fffee9",
+        dimgray: "#595959",
+        lightgreen: "#67dd72",
+        lightgoldenrodyellow: "rgba(255, 253, 212, 0.5)",
+      },
+      spacing: {},
+      fontFamily: {
+        "h2-petite": "Inter",
+        roboto: "Roboto",
+        righteous: "Righteous",
+        inherit: "inherit",
+      },
+      borderRadius: {
+        "3xs": "10px",
+        "10xs": "3px",
+      },
+    },
+    fontSize: {
+      xl: "1.25rem",
+      base: "1rem",
+      "21xl": "2.5rem",
+      lg: "1.13rem",
+      sm: "0.88rem",
+      xs: "0.75rem",
+      smi: "0.81rem",
+      "5xl": "1.5rem",
+      "3xl": "1.38rem",
+      "2xl": "1.31rem",
+      "7xl": "1.63rem",
+      inherit: "inherit",
+    },
+  },
+  corePlugins: {
+    preflight: false,
+  },
+};
