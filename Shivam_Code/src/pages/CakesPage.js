@@ -38,9 +38,7 @@ const CakesPage = () => {
       <div className="absolute top-[-95.06rem] left-[-277.56rem] leading-[0.98rem] inline-block w-[5.19rem]">{`Hans & Franz`}</div>
       <div className="absolute top-[-95.06rem] left-[0rem] w-[75rem] h-[250.06rem] overflow-hidden text-[0.88rem] text-black">
         <div className="absolute top-[95.06rem] left-[0rem] w-[75rem] h-[155rem] overflow-hidden">
-          <div className="absolute top-[153.56rem] left-[33.13rem] text-[0.75rem] tracking-[0.94px] leading-[1.38rem] text-gray-800">
-            Made by Anton.G 2022
-          </div>
+
           <div className="absolute top-[0rem] left-[0rem] w-[75rem] h-[42.13rem] overflow-hidden">
             <div className="absolute top-[13.06rem] left-[2.5rem] text-[1rem] tracking-[1.19px] leading-[1.28rem] uppercase font-medium text-gray-900">
               <span>{`Home / `}</span>
