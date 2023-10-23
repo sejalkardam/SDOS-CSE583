@@ -12,25 +12,31 @@ const NavBar = () => {
       const onContactTextClick = useCallback(() => {
         navigate("/contact");
       }, [navigate]);
+  
+  const onPaaCreationsLogo11Click = useCallback(() => {
+    navigate("/home");
+  }, [navigate]);
     return (
-        <div>
-        
-        <div className="absolute top-[3.31rem] left-[47rem] text-[1.25rem] tracking-[1.19px] leading-[1.28rem] uppercase font-medium inline-block w-[7.69rem]">
-              CAKES
-            </div>
-            <div
-              className="absolute top-[3.31rem] left-[55.94rem] text-[1.25rem] tracking-[1.19px] leading-[1.28rem] uppercase font-medium inline-block w-[7.69rem] cursor-pointer"
-              onClick={onAboutTextClick}
-            >
-              About
-            </div>
-            <div
-              className="absolute top-[3.31rem] left-[64.88rem] text-[1.25rem] tracking-[1.19px] leading-[1.28rem] uppercase font-medium inline-block w-[7.63rem] cursor-pointer"
-              onClick={onContactTextClick}
-            >
-              Contact
-            </div>
+      <div className="flex items-center justify-between">
+        <img
+          className="w-24 h-24 object-cover cursor-pointer"
+          alt=""
+          src="/paa-creations-logo-1-1@2x.png"
+          onClick={onPaaCreationsLogo11Click}
+        />
+        <div className="flex items-center space-x-6">
+          <div className="text-sm uppercase font-medium cursor-pointer" >
+            Cakes
+          </div>
+          <div className="text-sm uppercase font-medium cursor-pointer" onClick={onAboutTextClick}>
+            About
+          </div>
+          <div className="text-sm uppercase font-medium cursor-pointer" onClick={onContactTextClick}>
+            Contact
+          </div>
         </div>
+      </div>
+
 
 
     );

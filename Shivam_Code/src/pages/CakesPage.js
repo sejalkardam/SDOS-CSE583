@@ -1,7 +1,7 @@
 import { useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 import NavBar from "./Navbar";
-
+import CakeCard from "../components/CakeCard";
 const CakesPage = () => {
   const navigate = useNavigate();
 
@@ -25,17 +25,16 @@ const CakesPage = () => {
     navigate("/contact");
   }, [navigate]);
 
-  const onPaaCreationsLogo11Click = useCallback(() => {
-    navigate("/home");
-  }, [navigate]);
+  
 
   const onIMAGE8Click = useCallback(() => {
     navigate("/contact");
   }, [navigate]);
 
   return (
-    <div className="relative bg-white w-full h-[151.94rem] overflow-hidden text-center text-[0.81rem] text-crimson font-roboto">
-      <div className="absolute top-[-95.06rem] left-[-277.56rem] leading-[0.98rem] inline-block w-[5.19rem]">{`Hans & Franz`}</div>
+    <div className="">
+      <CakeCard/>
+      {/* <div className="absolute top-[-95.06rem] left-[-277.56rem] leading-[0.98rem] inline-block w-[5.19rem]">{`Hans & Franz`}</div>
       <div className="absolute top-[-95.06rem] left-[0rem] w-[75rem] h-[250.06rem] overflow-hidden text-[0.88rem] text-black">
         <div className="absolute top-[95.06rem] left-[0rem] w-[75rem] h-[155rem] overflow-hidden">
 
@@ -47,13 +46,7 @@ const CakesPage = () => {
             <div className="absolute top-[18.13rem] left-[2.63rem] rounded-3xs box-border w-[16.44rem] h-[24rem] border-[1px] border-solid border-black" />
             <div className="absolute top-[18.13rem] left-[20.31rem] rounded-3xs box-border w-[16.44rem] h-[24rem] border-[1px] border-solid border-black" />
             <div className="absolute top-[18.13rem] left-[38.13rem] rounded-3xs box-border w-[16.56rem] h-[24rem] border-[1px] border-solid border-black" />
-            <div className="absolute top-[18.13rem] left-[56.06rem] rounded-3xs box-border w-[16.56rem] h-[24rem] border-[1px] border-solid border-black" />
-            <img
-              className="absolute top-[18.88rem] left-[3.75rem] rounded-3xs w-[14.44rem] h-[15.06rem] object-cover cursor-pointer"
-              alt=""
-              src="/image@2x.png"
-              onClick={onIMAGEClick}
-            />
+            
             <img
               className="absolute top-[18.88rem] left-[39.31rem] rounded-3xs w-[14.44rem] h-[15.06rem] object-cover"
               alt=""
@@ -123,15 +116,9 @@ const CakesPage = () => {
             </div>
 
             <div>
-            <NavBar />
             </div>
             <div className="absolute top-[5.03rem] left-[47.97rem] bg-black box-border w-[5.81rem] h-[0.19rem] border-t-[3px] border-solid border-chocolate" />
-            <img
-              className="absolute top-[0rem] left-[1.38rem] w-[10.63rem] h-[10.63rem] object-cover cursor-pointer"
-              alt=""
-              src="/paa-creations-logo-1-1@2x.png"
-              onClick={onPaaCreationsLogo11Click}
-            />
+            
           </div>
           <div className="absolute top-[43.38rem] left-[2.63rem] w-[70rem] h-[24rem] overflow-hidden text-left text-chocolate">
             <div className="absolute top-[0rem] left-[0rem] rounded-3xs box-border w-[16.44rem] h-[24rem] border-[1px] border-solid border-black" />
@@ -265,7 +252,7 @@ const CakesPage = () => {
             </div>
           </div>
         </div>
-      </div>
+      </div> */}
     </div>
   );
 };

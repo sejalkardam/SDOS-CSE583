@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import client from '../sanityClient.js';
+import Navbar from "./Navbar";
 const About = () => {
   const navigate = useNavigate();
 
@@ -22,6 +23,7 @@ const About = () => {
     , []);
   return (
     <>
+      <Navbar/>
       <div className="flex-col flex justify-center items-center justify-center items-center">
         <img
           className="z-0 absolute h-[18.03rem] "
