@@ -1,5 +1,6 @@
 import { useCallback } from "react";
 import { useNavigate } from "react-router-dom";
+import NavBar from "./Navbar";
 
 const CakesPage = () => {
   const navigate = useNavigate();
@@ -37,9 +38,7 @@ const CakesPage = () => {
       <div className="absolute top-[-95.06rem] left-[-277.56rem] leading-[0.98rem] inline-block w-[5.19rem]">{`Hans & Franz`}</div>
       <div className="absolute top-[-95.06rem] left-[0rem] w-[75rem] h-[250.06rem] overflow-hidden text-[0.88rem] text-black">
         <div className="absolute top-[95.06rem] left-[0rem] w-[75rem] h-[155rem] overflow-hidden">
-          <div className="absolute top-[153.56rem] left-[33.13rem] text-[0.75rem] tracking-[0.94px] leading-[1.38rem] text-gray-800">
-            Made by Anton.G 2022
-          </div>
+
           <div className="absolute top-[0rem] left-[0rem] w-[75rem] h-[42.13rem] overflow-hidden">
             <div className="absolute top-[13.06rem] left-[2.5rem] text-[1rem] tracking-[1.19px] leading-[1.28rem] uppercase font-medium text-gray-900">
               <span>{`Home / `}</span>
@@ -122,20 +121,9 @@ const CakesPage = () => {
               <div className="absolute top-[6.73rem] left-[52.5rem] bg-gainsboro w-[7.5rem] h-[5.29rem]" />
               <div className="absolute top-[6.73rem] left-[67.5rem] bg-gainsboro w-[7.5rem] h-[5.29rem]" />
             </div>
-            <div className="absolute top-[3.31rem] left-[47rem] text-[1.25rem] tracking-[1.19px] leading-[1.28rem] uppercase font-medium inline-block w-[7.69rem]">
-              CAKES
-            </div>
-            <div
-              className="absolute top-[3.31rem] left-[55.94rem] text-[1.25rem] tracking-[1.19px] leading-[1.28rem] uppercase font-medium inline-block w-[7.69rem] cursor-pointer"
-              onClick={onAboutTextClick}
-            >
-              About
-            </div>
-            <div
-              className="absolute top-[3.31rem] left-[64.88rem] text-[1.25rem] tracking-[1.19px] leading-[1.28rem] uppercase font-medium inline-block w-[7.63rem] cursor-pointer"
-              onClick={onContactTextClick}
-            >
-              Contact
+
+            <div>
+            <NavBar />
             </div>
             <div className="absolute top-[5.03rem] left-[47.97rem] bg-black box-border w-[5.81rem] h-[0.19rem] border-t-[3px] border-solid border-chocolate" />
             <img
