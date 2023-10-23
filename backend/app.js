@@ -1,7 +1,15 @@
-const express = require('express'); 
+import express from "express"; 
+import db from "./config/mongoose.js";
+import routes from "./routes/routes.js";
+import bodyParser from "body-parser";
   
 const app = express(); 
-const PORT = 3000; 
+const PORT = 5000;
+
+// Define middleware to parse JSON requests
+app.use(bodyParser.json());
+
+app.use("/",routes); 
   
 app.listen(PORT, (error) =>{ 
     if(!error) 
