@@ -53,18 +53,22 @@ const CakesPage = () => {
 
   return (
     <>
-    {/* // Navbar
+      {/* // Navbar
       // Catalogue */}
-      <div className="flex flex-row space-x-8 my-4 z-10 text-[1.13rem] tracking-[1.1px] inline-block">
+      <div className="mx-12 my-6 flex-wrap flex flex-row z-10 text-[1.13rem]">
 
         {cakesData.map(function (cake, i) {
-          return <CakeCard className='mt-4' key={i} info={cake} url={cake.cakeimage.asset.url} />;
+          return (
+            <div className="mx-4 mt-4">
+              <CakeCard key={i} info={cake} url={cake.cakeimage.asset.url} />
+            </div>
+          )
         })}
       </div>
       {/* // Promo wali cheez
     // Footer */}
     </>
-  );
+  )
 
 };
 
