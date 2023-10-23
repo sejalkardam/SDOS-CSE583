@@ -1,3 +1,4 @@
 import Image from "./ImageCake"
 import pet from "./pet"
-export const schemaTypes = [pet,Image]
+import about from "./about"
+export const schemaTypes = [pet,Image, about]

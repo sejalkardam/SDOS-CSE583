@@ -1,9 +1,25 @@
-import { useCallback } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-
+import client from '../sanityClient.js';
 const About = () => {
   const navigate = useNavigate();
 
+  const [sanityData, setSanityData] = useState([]);
+  const [titles, setTitles] = useState([]);
+  const [description, setDescription] = useState([]);
+  useEffect(() => {
+    client.fetch(`*[_type == "about"]{
+              title,
+              description
+          }`).then((res) => {
+            setSanityData(res);
+            setTitles(res[0].title);
+            setDescription(res[0].description);
+
+    });
+  }
+
+    , []);
   return (
     <>
       <div className="flex-col flex justify-center items-center justify-center items-center">
@@ -21,13 +37,12 @@ const About = () => {
           src="/line-6.svg"
         />
         <div className="my-4 z-10 text-[1.13rem] tracking-[1.1px] inline-block">
-          <p className="m-0">
-            Our Eggless Designer Cakes are a great combination of taste
-            and nutrients.
-          </p>
-          <p className="m-0">
-            Our wide range of flavours and designs are ready for you.
-          </p>
+
+          {titles.map(function (title, i) {
+            return <p className="m-0" key={i}>
+              { title}
+            </p>;
+          })}
         </div>
       </div>
       <div className="relative bg-white w-full mt-8  text-center text-[0.81rem] text-crimson font-roboto">
@@ -41,22 +56,12 @@ const About = () => {
                   </div>
                   <div className=" w-[38.88rem]  text-[1.13rem] text-gray-400 font-roboto">
                     <div className="tracking-[1.04px] leading-[1.88rem] inline-block w-[38.75rem]">
-                      <p className="m-0 text-left ">Hi I am Prachi,</p>
-                      <p className="m-0 text-left">
-                        I was born and raised in Russia and moved to Israel in
-                        at a very young age. In 2017 I relocated to Hong kong
-                        and lived there for 4 years, the culinary impact on me
-                        was huge. I thought it would be nice to combine my
-                        experience and passion with tasty cakes
-                      </p>
+
+                      {description.map(function (title, i) {
+                        return <p key={ i} className="m-0 text-left ">{ title}</p>
+                      })}
                     </div>
-                    <div className="text-left tracking-[1.04px] leading-[1.88rem] inline-block w-[38.88rem]">
-                      Coming back to israel i missed some of the flavours i
-                      tried in Hong Kong. Not everyone is familiar with them, I
-                      started baking them for family and friends events, and
-                      People tend to give their starters names. We called ours
-                      “Petites Bentos.”.
-                    </div>
+                  
                   </div>
                 </div>
 
