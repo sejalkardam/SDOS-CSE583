@@ -13,6 +13,8 @@ import CakeProductPage from "./pages/CakeProductPage";
 import ProductPage1 from "./pages/ProductPage1";
 import ProductPage2 from "./pages/ProductPage2";
 import Home from "./pages/Home";
+import Footer from './components/Footer';
+import './App.css';
 
 function App() {
   const action = useNavigationType();
@@ -75,16 +77,19 @@ function App() {
   }, [pathname]);
 
   return (
-    <Routes>
-      <Route path="/" element={<CakesPage />} />
-      <Route path="/contact" element={<Contact />} />
-      <Route path="/about" element={<About />} />
-      <Route path="/product-page" element={<ProductPage />} />
-      <Route path="/product-page2" element={<ProductPage1 />} />
-      <Route path="/product-page1" element={<ProductPage2 />} />
-      <Route path="/home" element={<Home />} />
-      <Route path="/:slug" element={<CakeProductPage />} />
-    </Routes>
+    <div className="app-container"> {/* Wrap the entire content in a container */}
+      <Routes>
+        <Route path="/" element={<CakesPage />} />
+        <Route path="/contact" element={<Contact />} />
+        <Route path="/about" element={<About />} />
+        <Route path="/product-page" element={<ProductPage />} />
+        <Route path="/product-page2" element={<ProductPage1 />} />
+        <Route path="/product-page1" element={<ProductPage2 />} />
+        <Route path="/home" element={<Home />} />
+        <Route path="/:slug" element={<CakeProductPage />} />
+      </Routes>
+      <Footer />
+    </div>
   );
 }
 export default App;

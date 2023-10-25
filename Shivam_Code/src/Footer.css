@@ -1,0 +1,112 @@
+/* Footer.css */
+html, body {
+    height: 100%; /* Make sure the body and html elements fill the viewport */
+    margin: 0; /* Remove default margin */
+  }
+  
+  .footer-container {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh; /* Make sure the container takes at least the full height of the viewport */
+  }
+  
+  .footer-content {
+    flex-grow: 1; /* Allow content to grow and take available space */
+  }
+  
+  .footer {
+    background-color: black;
+    color: white;
+    padding: 2rem;
+    position: relative;
+    text-align: center;
+  }
+  
+  .yellow-line {
+    background-color: #FCEC90;
+    height: 0.2rem;
+    width: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+  }
+  
+  .yellow-box {
+    background-color: #FCCC24;
+    height: 2rem;
+    width: 2rem;
+    position: absolute;
+    top: -1rem;
+    left: 50%;
+    transform: translateX(-50%);
+    border-radius: 10px;
+    display: flex; /* Enable flexbox */
+    justify-content: center; /* Center horizontally */
+    align-items: center; /* Center vertically */
+  }
+  
+  /* Media Query for Smaller Screens */
+  @media (max-width: 768px) {
+    .footer {
+      padding: 1rem;
+    }
+  
+    .yellow-box {
+      height: 1.5rem;
+      width: 1.5rem;
+      top: -0.75rem;
+    }
+  
+    .yellow-line {
+      height: 0.1rem;
+    }
+
+    .follow-text {
+        font-size: 30px; /* Adjusted font size for smaller screens */
+      }
+    
+  }
+
+  .yellow-box img {
+    width: 65%;
+    height: 65%;
+    /* object-fit: cover; Adjusts the image's aspect ratio to fill the container */
+  }
+
+  .follow-text {
+    font-family: 'Righteous', sans-serif; /* Use Righteous font */
+    font-size: 40px; /* Set font size to 40 */
+    text-align: center; /* Center the text */
+    margin-top: 10px; /* Add some spacing from the image */
+  }
+
+  .social-icons {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .social-icons img {
+    max-width: 23px; /* Set the maximum width for the icons */
+    margin: 20px 8px; /* Add some spacing between the icons */
+  }
+
+  .space {
+    margin-bottom: 10px; /* Adjust the value to control the spacing */
+  }
+
+  .email-text {
+    text-align: center;
+    margin-top: 10px;
+  }
+  
+  .email-text p {
+    font-family: 'Roboto', sans-serif;
+    font-size: 16px;
+    color: white;
+  }
+
+  a {
+    text-decoration: none; /* Remove underline */
+    color: inherit; /* Use the default color (usually black) */
+  }
