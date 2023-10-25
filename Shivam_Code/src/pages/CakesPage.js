@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import NavBar from "./Navbar";
+import Drift from "react-driftjs";
 import CakeCard from "../components/CakeCard";
 import client from '../sanityClient.js';
 import { Link } from "react-router-dom";
@@ -67,6 +68,11 @@ const CakesPage = () => {
             </div>
           )
         })}
+        <Drift
+          appId="8c6e7txsysbf"
+          userId="1234"
+          attributes={{ email: "user@example.com", company: "Acme Inc" }}
+        />
       </div>
       {/* // Promo wali cheez
     // Footer */}
