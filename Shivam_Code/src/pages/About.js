@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import client from '../sanityClient.js';
-import Navbar from "./Navbar";
+import Navbar from "../components/Navbar.js";
 const About = () => {
   const navigate = useNavigate();
 
