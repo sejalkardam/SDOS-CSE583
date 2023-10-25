@@ -28,6 +28,11 @@ export default {
             options: {
                 hotspot: true
             }
+        },
+        {
+            name: 'slugurl',
+            type: 'slug',
+            title: 'Slug',
         }
 
     ]
