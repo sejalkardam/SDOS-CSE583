@@ -14,6 +14,7 @@ import ProductPage1 from "./pages/ProductPage1";
 import ProductPage2 from "./pages/ProductPage2";
 import Home from "./pages/Home";
 import Footer from './components/Footer';
+import Navbar from './components/Navbar';
 import './App.css';
 
 function App() {
@@ -78,6 +79,7 @@ function App() {
 
   return (
     <div className="app-container"> {/* Wrap the entire content in a container */}
+      <Navbar />
       <Routes>
         <Route path="/" element={<CakesPage />} />
         <Route path="/contact" element={<Contact />} />

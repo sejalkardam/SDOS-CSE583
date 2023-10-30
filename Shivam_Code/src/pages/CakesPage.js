@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import NavBar from "./Navbar";
+import Navbar from "../components/Navbar";
 import Drift from "react-driftjs";
 import CakeCard from "../components/CakeCard";
 import client from '../sanityClient.js';
@@ -57,6 +57,7 @@ const CakesPage = () => {
     <>
       {/* // Navbar
       // Catalogue */}
+      
       <div className="mx-12 my-6 flex-wrap justify-center flex flex-row z-10 text-[1.13rem]">
 
         {cakesData.map(function (cake, i) {

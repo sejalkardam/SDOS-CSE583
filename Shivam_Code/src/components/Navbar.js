@@ -50,8 +50,11 @@ const Navbar = () => {
   const onPaaCreationsLogo11Click = useCallback(() => {
     navigate("/home");
   }, [navigate]);
+  const catalogue = useCallback(() => {
+    navigate("/");
+  }, [navigate]);
     return (
-      <nav className="bg-pink-200 h-22 w-full">
+      <nav className="bg-black h-22 w-full">
       <div className="flex items-center justify-between">
         <img
           className="w-24 h-24 object-cover cursor-pointer"
@@ -60,20 +63,20 @@ const Navbar = () => {
           onClick={onPaaCreationsLogo11Click}
         />
         {/* <div className="text-right space-y-4 space-x-4"> */}
-        <div className="flex items-center space-x-6">
-          <div className="text-xl uppercase text-pink-600 font-bold cursor-pointer hover:text-white" >
+        <div className="flex items-center space-x-6 mr-6">
+          <div onClick={catalogue} className="text-xl uppercase text-white font-bold cursor-pointer hover:text-white" >
             Cakes
           </div>
-          <div className="text-xl  uppercase text-pink-600 font-bold cursor-pointer hover:text-white mr" onClick={onCartTextClick}>
+            {/* <div className="text-xl  uppercase text-white font-bold cursor-pointer hover:text-white mr" onClick={onCartTextClick}>
             My Cart
-          </div>
-          <div className="text-xl uppercase text-pink-600 font-bold cursor-pointer hover:text-white mr-4" onClick={onSignInTextClick}>
+          </div> */}
+            <div className="text-xl uppercase text-white font-bold cursor-pointer hover:text-white mr-4" onClick={onSignInTextClick}>
             Sign In
           </div>
-          <div className="text-xl uppercase text-pink-600 font-bold cursor-pointer hover:text-white mr-4" onClick={onAboutTextClick}>
+            <div className="text-xl uppercase text-white font-bold cursor-pointer hover:text-white mr-4" onClick={onAboutTextClick}>
             About Us
           </div>
-          <div className="text-xl uppercase text-pink-600 font-bold cursor-pointer hover:text-white mr-4" onClick={onContactTextClick}>
+            <div className="text-xl uppercase text-white font-bold cursor-pointer hover:text-white mr-4" onClick={onContactTextClick}>
             Contact Us
           </div>
         </div>

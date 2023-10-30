@@ -23,7 +23,6 @@ const About = () => {
     , []);
   return (
     <>
-      <Navbar/>
       <div className="flex-col flex justify-center items-center justify-center items-center">
         <img
           className="z-0 absolute h-[18.03rem] "
@@ -110,58 +109,6 @@ const About = () => {
                 />
               </div>
             </div>
-
-            <div className="absolute top-[31rem] left-[0rem] w-full h-[60.44rem]  text-[1rem] text-white">
-              <div className="absolute top-[37.25rem] left-[0rem] w-full h-[23.19rem] ">
-                <div className="absolute top-[0rem] left-[0rem] w-full h-[23.19rem]">
-                  <div className="absolute top-[1.63rem] left-[0rem] bg-khaki w-full h-[0.19rem]" />
-                  <div className="absolute top-[1.81rem] left-[0rem] bg-black w-full h-[21.38rem]" />
-                  <div className="absolute top-[0rem] left-[45.5rem] rounded-3xs bg-gold-200 w-[4.06rem] h-[4.06rem]" />
-                  <div className="absolute top-[6.06rem] left-[29.13rem] text-[2.5rem] font-righteous inline-block w-[16.81rem]">
-                    Follow Us
-                  </div>
-                  <div className="absolute top-[14.13rem] left-[29.31rem] tracking-[0.94px] leading-[1.38rem] inline-block w-[16.63rem]">
-                    prachi_153@rediffmail.com
-                  </div>
-                  <div className="absolute top-[16.56rem] left-[32.38rem] tracking-[0.94px] leading-[1.38rem] inline-block w-[10.44rem]">
-                    +91 9911114128
-                  </div>
-                  <div className="absolute top-[19rem] left-[32.5rem] tracking-[0.94px] leading-[1.38rem] inline-block w-[10.13rem]">
-                    Noida - India
-                  </div>
-                  <img
-                    className="absolute top-[10.44rem] left-[36.63rem] w-[1.94rem] h-[1.94rem] "
-                    alt=""
-                    src="/akariconsinstagramfill1.svg"
-                  />
-                  <img
-                    className="absolute top-[10.44rem] left-[39.81rem] w-[1.94rem] h-[1.94rem] "
-                    alt=""
-                    src="/akariconsfacebookfill.svg"
-                  />
-                  <img
-                    className="absolute top-[10.5rem] left-[33.63rem] w-[1.75rem] h-[1.75rem] "
-                    alt=""
-                    src="/akariconswhatsappfill1.svg"
-                  />
-                </div>
-                <img
-                  className="absolute h-[11.49%] w-[3.38%] top-[3.23%] right-[48.21%] bottom-[85.28%] left-[48.42%] max-w-full  max-h-full"
-                  alt=""
-                  src="/e076735c70194744ac56140b689ba33f2.svg"
-                />
-              </div>
-            </div>
-
-
-
-
-
-
-
-
-
-
 
           </div>
         </div>
