@@ -5,23 +5,17 @@ const cakeSchema = new mongoose.Schema({
     type: String,
     description: "Name of the cake.",
   },
-  description: {
+
+  id: {
     type: String,
-    description: "Description of the cake.",
+    description:"Id of cake",
+    unique: true
   },
+
   price: {
     type: Number,
     description: "Price of the cake.",
-  },
-  category: {
-    type: String,
-    description: "Category or type of the cake.",
-  },
-  availability: {
-    type: Boolean,
-    description:
-      "Availability status of the cake (true if available, false if sold out).",
-  },
+  }
 });
 
 const Cake = mongoose.model("Cake", cakeSchema);

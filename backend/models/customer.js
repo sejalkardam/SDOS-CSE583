@@ -1,7 +1,8 @@
 import mongoose from "mongoose";
+import { orderSchema } from "./order";
 
 // Define the schema for WishlistItem
-const wishlistItemSchema = new mongoose.Schema({
+const wishlistItemSchema = {
   id: {
     type: String,
     description: "Unique identifier for the wishlist item",
@@ -14,10 +15,10 @@ const wishlistItemSchema = new mongoose.Schema({
     type: Date,
     description: "Date and time when the item was added to the wishlist",
   },
-});
+};
 
 // Define the schema for Address
-const addressSchema = new mongoose.Schema({
+const addressSchema = {
   street: {
     type: String,
     description: "Street address",
@@ -42,10 +43,10 @@ const addressSchema = new mongoose.Schema({
     type: Boolean,
     description: "Indicates if this is the customer's primary address",
   },
-});
+};
 
 // Define the schema for CartItem
-const cartItemSchema = new mongoose.Schema({
+const cartItemSchema ={
   id: {
     type: String,
     description: "Unique identifier for the cart item",
@@ -63,14 +64,10 @@ const cartItemSchema = new mongoose.Schema({
     description:
       "Customization details for the cake (size, flavor, message, etc.)",
   },
-});
+};
 
 // Define the schema for Customer
 const customerSchema = new mongoose.Schema({
-  id: {
-    type: String,
-    description: "Unique identifier for the customer",
-  },
   firstName: {
     type: String,
     description: "First name of the customer",
@@ -94,6 +91,7 @@ const customerSchema = new mongoose.Schema({
   addresses: {
     type: [addressSchema],
     description: "List of customer addresses",
+    default: [],
   },
   birthDate: {
     type: Date,
@@ -106,17 +104,20 @@ const customerSchema = new mongoose.Schema({
   wishlist: {
     type: [wishlistItemSchema],
     description: "List of product IDs in the customer's wishlist",
+    default: [],
   },
   orders: {
-    type: [String],
+    type: [string],
     description: "List of customer's order IDs",
+    default: [],
   },
   cart: {
     type: [cartItemSchema],
     description: "List of items in the customer's cart",
+    default: [],
   },
 });
 
 const Customer = mongoose.model("Customer", customerSchema);
 
-export default Customer;
+export {Customer, customerSchema, cartItemSchema, addressSchema,wishlistItemSchema};

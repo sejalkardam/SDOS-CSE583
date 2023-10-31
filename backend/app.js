@@ -1,6 +1,6 @@
 import express from "express"; 
 import db from "./config/mongoose.js";
-import routes from "./routes/routes.js";
+import routes from "./routes/sellerRoutes.js";
 import bodyParser from "body-parser";
   
 const app = express(); 

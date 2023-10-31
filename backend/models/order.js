@@ -1,7 +1,7 @@
 import mongoose from "mongoose";
 
 // Define the schema for OrderedItem
-const orderedItemSchema = new mongoose.Schema({
+const orderedItemSchema = {
   cakeId: {
     type: String,
     description: "Unique identifier of the cake",
@@ -15,7 +15,7 @@ const orderedItemSchema = new mongoose.Schema({
     description:
       "Customization details for the cake (size, flavor, message, etc.)",
   },
-});
+};
 
 // Define the schema for Order
 const orderSchema = new mongoose.Schema({
@@ -80,4 +80,4 @@ const orderSchema = new mongoose.Schema({
 const Order = mongoose.model("Order", orderSchema);
 const OrderedItem = mongoose.model("OrderedItem", orderedItemSchema);
 
-export { Order, OrderedItem };
+export { Order, OrderedItem, orderSchema };

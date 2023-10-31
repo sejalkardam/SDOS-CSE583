@@ -2,10 +2,6 @@ import mongoose from "mongoose";
 
 // Define the schema for Coupon
 const couponSchema = new mongoose.Schema({
-  id: {
-    type: String,
-    description: "Unique identifier for the coupon code",
-  },
   code: {
     type: String,
     description: "Coupon code value",
