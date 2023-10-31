@@ -6,7 +6,7 @@ import bodyParser from "body-parser";
 const app = express(); 
 const PORT = 5000;
 
-// Define middleware to parse JSON requests
+// Middleware to parse JSON requests
 app.use(bodyParser.json());
 
 app.use("/",routes); 

@@ -2,7 +2,7 @@ import mongoose from "mongoose";
 import { orderSchema } from "./order";
 
 // Define the schema for WishlistItem
-const wishlistItemSchema = {
+const wishlistItemSchema = new mongoose.Schema({
   id: {
     type: String,
     description: "Unique identifier for the wishlist item",
@@ -15,10 +15,10 @@ const wishlistItemSchema = {
     type: Date,
     description: "Date and time when the item was added to the wishlist",
   },
-};
+});
 
 // Define the schema for Address
-const addressSchema = {
+const addressSchema = new mongoose.Schema({
   street: {
     type: String,
     description: "Street address",
@@ -43,10 +43,10 @@ const addressSchema = {
     type: Boolean,
     description: "Indicates if this is the customer's primary address",
   },
-};
+});
 
 // Define the schema for CartItem
-const cartItemSchema ={
+const cartItemSchema = new mongoose.Schema({
   id: {
     type: String,
     description: "Unique identifier for the cart item",
@@ -64,7 +64,7 @@ const cartItemSchema ={
     description:
       "Customization details for the cake (size, flavor, message, etc.)",
   },
-};
+});
 
 // Define the schema for Customer
 const customerSchema = new mongoose.Schema({
@@ -107,7 +107,7 @@ const customerSchema = new mongoose.Schema({
     default: [],
   },
   orders: {
-    type: [string],
+    type: [String],
     description: "List of customer's order IDs",
     default: [],
   },
