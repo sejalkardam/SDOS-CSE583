@@ -47,6 +47,6 @@ router.get("/customers/:customerId/orders", controller.getCustomerOrders);
 
 router.put("/customers/:customerId/orders/:orderId", controller.updateOrder);
 
-router.get( "/api/customers/:customerId/orders/:orderId/items/:itemId", controller.getOrderItem);
+router.get( "/customers/:customerId/orders/:orderId/items/:itemId", controller.getOrderItem);
 
 export default router;
