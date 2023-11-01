@@ -1,12 +1,8 @@
 import mongoose from "mongoose";
-import { orderSchema } from "./order";
+import { orderSchema } from "../models/order.js";
 
 // Define the schema for WishlistItem
 const wishlistItemSchema = new mongoose.Schema({
-  id: {
-    type: String,
-    description: "Unique identifier for the wishlist item",
-  },
   cakeId: {
     type: String,
     description: "Unique identifier of the cake in the wishlist",
@@ -47,10 +43,6 @@ const addressSchema = new mongoose.Schema({
 
 // Define the schema for CartItem
 const cartItemSchema = new mongoose.Schema({
-  id: {
-    type: String,
-    description: "Unique identifier for the cart item",
-  },
   itemId: {
     type: String,
     description: "Unique identifier of the cake",

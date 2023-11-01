@@ -69,7 +69,7 @@ const orderSchema = new mongoose.Schema({
       type: Date,
       description: "Date and time when the feedback was submitted",
     },
-    description: "Customer feedback or comments on the order",
+    
   },
   deliveryDate: {
     type: Date,
@@ -79,4 +79,4 @@ const orderSchema = new mongoose.Schema({
 
 const Order = mongoose.model("Order", orderSchema);
 
-export { Order, OrderedItem, orderSchema };
+export { Order, orderSchema };

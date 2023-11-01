@@ -1,0 +1,122 @@
+[
+    {
+        "code": "SAVE10",
+        "discountPercentage": 10,
+        "validFrom": "2023-01-01",
+        "validUntil": "2023-02-28"
+    },
+    {
+        "code": "FREESHIP",
+        "discountPercentage": 100,
+        "validFrom": "2023-03-15",
+        "validUntil": "2023-03-31"
+    },
+    {
+        "code": "HALFOFF",
+        "discountPercentage": 50,
+        "validFrom": "2023-04-10",
+        "validUntil": "2023-05-10"
+    },
+    {
+        "code": "SUMMER20",
+        "discountPercentage": 20,
+        "validFrom": "2023-06-01",
+        "validUntil": "2023-08-31"
+    },
+    {
+        "code": "SPRINGSALE",
+        "discountPercentage": 15,
+        "validFrom": "2023-03-01",
+        "validUntil": "2023-04-30"
+    },
+    {
+        "code": "EARLYBIRD",
+        "discountPercentage": 25,
+        "validFrom": "2023-01-15",
+        "validUntil": "2023-02-15"
+    },
+    {
+        "code": "WINTER25",
+        "discountPercentage": 25,
+        "validFrom": "2023-11-01",
+        "validUntil": "2023-12-31"
+    },
+    {
+        "code": "BACKTOSCHOOL",
+        "discountPercentage": 15,
+        "validFrom": "2023-08-01",
+        "validUntil": "2023-09-15"
+    },
+    {
+        "code": "BIRTHDAY50",
+        "discountPercentage": 50,
+        "validFrom": "2023-07-10",
+        "validUntil": "2023-07-10"
+    },
+    {
+        "code": "FALL2023",
+        "discountPercentage": 20,
+        "validFrom": "2023-09-01",
+        "validUntil": "2023-11-30"
+    },
+    {
+        "code": "HOLIDAYSALE",
+        "discountPercentage": 30,
+        "validFrom": "2023-12-01",
+        "validUntil": "2023-12-25"
+    },
+    {
+        "code": "GRADUATION",
+        "discountPercentage": 15,
+        "validFrom": "2023-05-01",
+        "validUntil": "2023-06-30"
+    },
+    {
+        "code": "EASTER20",
+        "discountPercentage": 20,
+        "validFrom": "2023-03-28",
+        "validUntil": "2023-04-05"
+    },
+    {
+        "code": "VIPMEMBER",
+        "discountPercentage": 10,
+        "validFrom": "2023-01-01",
+        "validUntil": "2023-12-31"
+    },
+    {
+        "code": "NEWCUSTOMER",
+        "discountPercentage": 15,
+        "validFrom": "2023-01-01",
+        "validUntil": "2023-01-31"
+    },
+    {
+        "code": "LOYALTY10",
+        "discountPercentage": 10,
+        "validFrom": "2023-01-01",
+        "validUntil": "2023-12-31"
+    },
+    {
+        "code": "FAMILY15",
+        "discountPercentage": 15,
+        "validFrom": "2023-01-01",
+        "validUntil": "2023-12-31"
+    },
+    {
+        "code": "SUMMERSALE",
+        "discountPercentage": 20,
+        "validFrom": "2023-06-15",
+        "validUntil": "2023-08-15"
+    },
+    {
+        "code": "SPRING2023",
+        "discountPercentage": 15,
+        "validFrom": "2023-03-20",
+        "validUntil": "2023-06-20"
+    },
+    {
+        "code": "AUTUMN20",
+        "discountPercentage": 20,
+        "validFrom": "2023-09-15",
+        "validUntil": "2023-11-15"
+    }
+]

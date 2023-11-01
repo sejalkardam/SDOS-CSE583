@@ -2,7 +2,7 @@ import express from "express";
 import * as controller from "../controller/customerController.js";
 const router = express.Router();
 
-//Customer APIs
+// Customer APIs
 router.post("/customer/:customerId", controller.getCustomer);
 
 router.post("/customer", controller.addCustomer);
@@ -12,7 +12,7 @@ router.put("/customer/:customerId", controller.updateCustomerDetails);
 router.delete("/customer/:customerId", controller.deleteCustomer);
 
 // Cart APIs
-router.get("/customers/:customerId/cart",controller.getCartItem);
+router.get("/customers/:customerId/cart",controller.getCartItems);
 
 router.post("/customers/:customerId/cart", controller.addCartItem);
 
@@ -21,7 +21,7 @@ router.put("/customers/:customerId/cart/:cartItemId",controller.updateCartItem);
 router.delete("/customers/:customerId/cart/:cartItemId", controller.deleteCartItem);
 
 // Wishlist APIs
-router.get("/customers/:customerId/wishlist", controller.getWishlistItem);
+router.get("/customers/:customerId/wishlist", controller.getWishlistItems);
 
 router.post("/customers/:customerId/wishlist", controller.addWishlistItem);
 

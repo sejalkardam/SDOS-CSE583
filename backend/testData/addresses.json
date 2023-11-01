@@ -1,0 +1,162 @@
+[
+    {
+        "street": "123 Tulip Road",
+        "city": "Mumbai",
+        "state": "Maharashtra",
+        "postalCode": "400001",
+        "country": "India",
+        "isPrimary": true
+    },
+    {
+        "street": "456 Rose Lane",
+        "city": "Delhi",
+        "state": "Delhi",
+        "postalCode": "110001",
+        "country": "India",
+        "isPrimary": false
+    },
+    {
+        "street": "789 Jasmine Avenue",
+        "city": "Bengaluru",
+        "state": "Karnataka",
+        "postalCode": "560001",
+        "country": "India",
+        "isPrimary": false
+    },
+    {
+        "street": "321 Orchid Drive",
+        "city": "Chennai",
+        "state": "Tamil Nadu",
+        "postalCode": "600001",
+        "country": "India",
+        "isPrimary": false
+    },
+    {
+        "street": "654 Marigold Circle",
+        "city": "Kolkata",
+        "state": "West Bengal",
+        "postalCode": "700001",
+        "country": "India",
+        "isPrimary": false
+    },
+    {
+        "street": "987 Sunflower Road",
+        "city": "Hyderabad",
+        "state": "Telangana",
+        "postalCode": "500001",
+        "country": "India",
+        "isPrimary": false
+    },
+    {
+        "street": "234 Lotus Lane",
+        "city": "Pune",
+        "state": "Maharashtra",
+        "postalCode": "411001",
+        "country": "India",
+        "isPrimary": false
+    },
+    {
+        "street": "567 Lily Avenue",
+        "city": "Ahmedabad",
+        "state": "Gujarat",
+        "postalCode": "380001",
+        "country": "India",
+        "isPrimary": false
+    },
+    {
+        "street": "876 Daffodil Drive",
+        "city": "Jaipur",
+        "state": "Rajasthan",
+        "postalCode": "302001",
+        "country": "India",
+        "isPrimary": false
+    },
+    {
+        "street": "123 Carnation Road",
+        "city": "Lucknow",
+        "state": "Uttar Pradesh",
+        "postalCode": "226001",
+        "country": "India",
+        "isPrimary": true
+    },
+    {
+        "street": "456 Lavender Lane",
+        "city": "Bhopal",
+        "state": "Madhya Pradesh",
+        "postalCode": "462001",
+        "country": "India",
+        "isPrimary": false
+    },
+    {
+        "street": "789 Violet Drive",
+        "city": "Chandigarh",
+        "state": "Chandigarh",
+        "postalCode": "160001",
+        "country": "India",
+        "isPrimary": false
+    },
+    {
+        "street": "321 Zinnia Lane",
+        "city": "Nagpur",
+        "state": "Maharashtra",
+        "postalCode": "440001",
+        "country": "India",
+        "isPrimary": false
+    },
+    {
+        "street": "654 Pansy Circle",
+        "city": "Indore",
+        "state": "Madhya Pradesh",
+        "postalCode": "452001",
+        "country": "India",
+        "isPrimary": false
+    },
+    {
+        "street": "987 Peony Road",
+        "city": "Mysuru",
+        "state": "Karnataka",
+        "postalCode": "570001",
+        "country": "India",
+        "isPrimary": false
+    },
+    {
+        "street": "234 Azalea Avenue",
+        "city": "Coimbatore",
+        "state": "Tamil Nadu",
+        "postalCode": "641001",
+        "country": "India",
+        "isPrimary": false
+    },
+    {
+        "street": "567 Geranium Lane",
+        "city": "Vadodara",
+        "state": "Gujarat",
+        "postalCode": "390001",
+        "country": "India",
+        "isPrimary": false
+    },
+    {
+        "street": "876 Chrysanthemum Drive",
+        "city": "Agra",
+        "state": "Uttar Pradesh",
+        "postalCode": "282001",
+        "country": "India",
+        "isPrimary": false
+    },
+    {
+        "street": "123 Honeysuckle Road",
+        "city": "Visakhapatnam",
+        "state": "Andhra Pradesh",
+        "postalCode": "530001",
+        "country": "India",
+        "isPrimary": false
+    },
+    {
+        "street": "456 Magnolia Avenue",
+        "city": "Thiruvananthapuram",
+        "state": "Kerala",
+        "postalCode": "695001",
+        "country": "India",
+        "isPrimary": false
+    }
+]

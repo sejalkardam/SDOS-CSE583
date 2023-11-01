@@ -1,0 +1,102 @@
+[
+    {
+        "name": "Delicious Chocolate Cake",
+        "id": "delicious-chocolate-cake",
+        "price": 25.99
+    },
+    {
+        "name": "Vanilla Dream",
+        "id": "vanilla-dream",
+        "price": 19.95
+    },
+    {
+        "name": "Strawberry Delight",
+        "id": "strawberry-delight",
+        "price": 14.50
+    },
+    {
+        "name": "Red Velvet Supreme",
+        "id": "red-velvet-supreme",
+        "price": 22.75
+    },
+    {
+        "name": "Lemon Zest Cake",
+        "id": "lemon-zest-cake",
+        "price": 18.99
+    },
+    {
+        "name": "Carrot Cake Bliss",
+        "id": "carrot-cake-bliss",
+        "price": 17.25
+    },
+    {
+        "name": "Classic Cheesecake",
+        "id": "classic-cheesecake",
+        "price": 21.50
+    },
+    {
+        "name": "Mango Tango",
+        "id": "mango-tango",
+        "price": 12.99
+    },
+    {
+        "name": "Coconut Cream Cake",
+        "id": "coconut-cream-cake",
+        "price": 15.75
+    },
+    {
+        "name": "Blueberry Burst",
+        "id": "blueberry-burst",
+        "price": 13.25
+    },
+    {
+        "name": "Pineapple Paradise",
+        "id": "pineapple-paradise",
+        "price": 16.99
+    },
+    {
+        "name": "Raspberry Ripple",
+        "id": "raspberry-ripple",
+        "price": 20.50
+    },
+    {
+        "name": "Caramel Crunch Cake",
+        "id": "caramel-crunch-cake",
+        "price": 24.75
+    },
+    {
+        "name": "Cookies and Cream",
+        "id": "cookies-and-cream",
+        "price": 11.99
+    },
+    {
+        "name": "Tiramisu Treat",
+        "id": "tiramisu-treat",
+        "price": 23.25
+    },
+    {
+        "name": "Cherry Chocolate Chip",
+        "id": "cherry-chocolate-chip",
+        "price": 17.50
+    },
+    {
+        "name": "Banana Nut Delight",
+        "id": "banana-nut-delight",
+        "price": 14.99
+    },
+    {
+        "name": "Oreo Delight",
+        "id": "oreo-delight",
+        "price": 26.25
+    },
+    {
+        "name": "Lavender Lemon Cake",
+        "id": "lavender-lemon-cake",
+        "price": 22.50
+    },
+    {
+        "name": "Pistachio Passion",
+        "id": "pistachio-passion",
+        "price": 20.99
+    }
+]
