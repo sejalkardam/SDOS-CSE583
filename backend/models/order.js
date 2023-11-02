@@ -22,10 +22,12 @@ const orderSchema = new mongoose.Schema({
   customerId: {
     type: String,
     description: "Id of the customer who placed the order",
+    required: true,
   },
   addressId: {
     type: String,
     description: "Id of the destination address",
+    required: true,
   },
   recieverPhoneNo: {
     type: String,
@@ -38,15 +40,18 @@ const orderSchema = new mongoose.Schema({
   items: {
     type: [orderedItemSchema],
     description: "List of ordered items (cakes) with details",
+    required: true,
   },
   totalAmount: {
     type: Number,
     description: "Total amount of the order",
+    required: true,
   },
   modeOfPayment: {
     type: String,
     enum: ["cashOnDelivery", "netBanking", "upi", "wallet"],
     description: "Mode of payment of the order",
+    required: true,
   },
   paymentId: {
     type: String,
@@ -55,6 +60,8 @@ const orderSchema = new mongoose.Schema({
   status: {
     type: String,
     description: "Current status of the order (e.g., pending, completed)",
+    enum: ["PENDING", "COMPLETED", "CANCELLED" , "IN PROCESS"],
+    required: true,
   },
   feedback: {
     rating: {
@@ -69,7 +76,6 @@ const orderSchema = new mongoose.Schema({
       type: Date,
       description: "Date and time when the feedback was submitted",
     },
-    
   },
   deliveryDate: {
     type: Date,

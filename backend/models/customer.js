@@ -6,6 +6,7 @@ const wishlistItemSchema = new mongoose.Schema({
   cakeId: {
     type: String,
     description: "Unique identifier of the cake in the wishlist",
+    required: true,
   },
   addedAt: {
     type: Date,
@@ -43,13 +44,15 @@ const addressSchema = new mongoose.Schema({
 
 // Define the schema for CartItem
 const cartItemSchema = new mongoose.Schema({
-  itemId: {
+  cakeId: {
     type: String,
     description: "Unique identifier of the cake",
+    required: true,
   },
   quantity: {
     type: Number,
     description: "Quantity of the cake ordered",
+    required: true,
   },
   customization: {
     type: String,
@@ -63,10 +66,12 @@ const customerSchema = new mongoose.Schema({
   firstName: {
     type: String,
     description: "First name of the customer",
+    required: true,
   },
   lastName: {
     type: String,
     description: "Last name of the customer",
+    required: true,
   },
   age: {
     type: Number,
@@ -108,6 +113,11 @@ const customerSchema = new mongoose.Schema({
     description: "List of items in the customer's cart",
     default: [],
   },
+  totalCartValue:{
+    type:Number,
+    description:"The total value of all products in the customer's cart",
+    default: 0
+  }
 });
 
 const Customer = mongoose.model("Customer", customerSchema);

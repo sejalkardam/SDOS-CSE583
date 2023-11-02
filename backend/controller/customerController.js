@@ -1,10 +1,11 @@
-import {Customer} from "../models/customer.js";
-import {Order} from "../models/order.js";
+import { Customer } from "../models/customer.js";
+import { Order } from "../models/order.js";
+import Cake from "../models/cake.js";
 
 // Customer
-export async function getCustomer(req, res) {
+export async function getCustomerDetails(req, res) {
   try {
-    let customerDetails = await Customer.find({ _id: req.params.customerId })
+    let customerDetails = await Customer.find({ _id: req.params.customerId });
     res.status(200).json(customerDetails);
   } catch (err) {
     console.log("Error fetching customerDetails: " + err);
@@ -12,14 +13,14 @@ export async function getCustomer(req, res) {
   }
 }
 
-export async function addCustomer(req, res) {
+export async function addCustomerAccount(req, res) {
   try {
-    const customer = new Customer(req.body);
-    const savedCustomer = await customer.save();
-    res.json(savedCustomer);
+    const newCustomer = new Customer(req.body);
+    const savedCustomer = await newCustomer.save();
+    res.status(201).json(savedCustomer);
   } catch (error) {
-    console.log("Error adding Customer: "+error)
-    res.status(400).json({ error: "Error adding customer" });
+    console.log("Error adding Customer: " + error);
+    res.status(500).json({ error: "Error adding customer" });
   }
 }
 
@@ -30,73 +31,117 @@ export async function updateCustomerDetails(req, res) {
       req.body,
       { new: true }
     );
-    res.json(updatedCustomer);
+    res.status(200).json(updatedCustomer);
   } catch (error) {
-    console.log("Error updating Customer: "+error)
-    res.status(400).json({ error: "Error updating Customer"});
+    console.log("Error updating Customer: " + error);
+    res.status(500).json({ error: "Error updating Customer" });
   }
 }
 
-export async function deleteCustomer(req, res) {
+export async function deleteCustomerAccount(req, res) {
   try {
     await Customer.findByIdAndRemove(req.params.customerId);
-    res.json({ message: "Customer deleted" });
+    res.status(204).json({ message: "Customer deleted" });
   } catch (error) {
-    console.log("Error deleting Customer: "+error)
-    res.status(400).json({ error: "Error deleting Customer" });
+    console.log("Error deleting Customer: " + error);
+    res.status(500).json({ error: "Error deleting Customer" });
   }
 }
 
 // Cart
-export async function getCartItems(req,res){
+export async function getCartItems(req, res) {
   try {
     const customer = await Customer.findById(req.params.customerId);
     const cartItems = customer.cart;
-    res.json(cartItems);
+    res.json([
+      {
+        cart: cartItems,
+        totalCartValue: customer.totalCartValue,
+      },
+    ]);
   } catch (error) {
     console.log("Error getting CartItems: " + error);
     res.status(400).json({ error: "Error getting cartItems" });
   }
-
 }
 
-export async function addCartItem(req,res){
-   try {
-     const customer = await Customer.findById(req.params.customerId);
-     customer.cart.push(req.body);
-     const savedCustomer = await customer.save();
-     res.json(savedCustomer.cart);
-   } catch (error) {
-     console.log("Error adding cartItem: " + error);
-     res.status(400).json({ error: "Error adding cartItem" });
-   }
+export async function addCartItem(req, res) {
+  try {
+    const customer = await Customer.findById(req.params.customerId);
+    customer.cart.push(req.body);
+
+    const cakes = await Cake.find({ cakeId: req.body.cakeId });
+    if (cakes.length == 0) {
+      res.status(404).json({ error: "Cake not found" });
+    }
+
+    const cakePrice = cakes[0].price;
+    const quantity = req.body.quantity;
+    customer.totalCartValue += cakePrice * quantity;
+
+    const savedCustomer = await customer.save();
+    res.json([
+      {
+        cart: savedCustomer.cart,
+        totalCartValue: savedCustomer.totalCartValue,
+      },
+    ]);
+  } catch (error) {
+    console.log("Error adding cartItem: " + error);
+    res.status(500).json({ error: "Error adding cartItem" });
+  }
 }
 
-export async function updateCartItem(req,res){
+export async function updateCartItem(req, res) {
   try {
     const customer = await Customer.findById(req.params.customerId);
     const cartItem = customer.cart.id(req.params.cartItemId);
     if (cartItem) {
+      if (req.body.quantity != undefined) {
+        const cakePrice = (await Cake.find({ cakeId: cartItem.cakeId }))[0]
+          .price;
+        const current = req.body.quantity;
+        const prev = cartItem.quantity;
+        customer.totalCartValue += cakePrice * (current - prev);
+      }
       cartItem.set(req.body);
+      if (req.body.quantity == 0) {
+        customer.cart.pull({ _id: req.params.cartItemId });
+      }
       const savedCustomer = await customer.save();
-      res.json(savedCustomer.cart);
+      res.json([
+        {
+          cart: savedCustomer.cart,
+          totalCartValue: savedCustomer.totalCartValue,
+        },
+      ]);
     } else {
       res.status(404).json({ error: "Cart item not found" });
     }
   } catch (error) {
-    console.log("Error updating CartItem: "+error)
+    console.log("Error updating CartItem: " + error);
     res.status(500).json({ error: "Error updating CartItem" });
   }
 }
 
-export async function deleteCartItem(req,res){
+export async function deleteCartItem(req, res) {
   try {
     const customer = await Customer.findById(req.params.customerId);
-    customer.cart.id(req.params.cartItemId).remove();
+    const cartItem = customer.cart.id(req.params.cartItemId);
+    const cakePrice = (await Cake.find({ cakeId: cartItem.cakeId }))[0].price;
+    const quantity = cartItem.quantity;
+    customer.totalCartValue -= cakePrice * quantity;
+
+    customer.cart.pull({ _id: req.params.cartItemId });
     const savedCustomer = await customer.save();
-    res.json(savedCustomer.cart);
+    res.json([
+      {
+        cart: savedCustomer.cart,
+        totalCartValue: savedCustomer.totalCartValue,
+      },
+    ]);
   } catch (error) {
-    console.log("Error deleting cartItem"+error);
+    console.log("Error deleting cartItem" + error);
     res.status(400).json({ error: "Error deleting cartItem" });
   }
 }
@@ -145,16 +190,18 @@ export async function updateWishlistItem(req, res) {
 export async function deleteWishlistItem(req, res) {
   try {
     const customer = await Customer.findById(req.params.customerId);
-    customer.wishlist.id(req.params.wishlistItemId).remove();
+    customer.wishlist.pull({ cakeId: req.params.wishlistItemId });
     const savedCustomer = await customer.save();
-    res.status(200).json(savedCustomer.wishlist);
+    res
+      .status(200)
+      .json((await Customer.findById(req.params.customerId)).wishlist);
   } catch (error) {
     console.log("Error deleting wishlist item: " + error);
     res.status(500).json({ error: "Error deleting wishlist item" });
   }
 }
 
-// Address 
+// Address
 export async function getAddresses(req, res) {
   try {
     const customer = await Customer.findById(req.params.customerId);
@@ -198,7 +245,7 @@ export async function updateAddress(req, res) {
 export async function deleteAddress(req, res) {
   try {
     const customer = await Customer.findById(req.params.customerId);
-    customer.addresses.id(req.params.addressId).remove();
+    customer.addresses.pull({ _id: req.params.addressId });
     const savedCustomer = await customer.save();
     res.status(200).json(savedCustomer.addresses);
   } catch (error) {
@@ -209,21 +256,30 @@ export async function deleteAddress(req, res) {
 
 // Order
 
-export async function createOrder(req, res) {
+export async function placeOrder(req, res) {
   // Create a new order and add its ID to the customer's orders array
   try {
     // Fetch the customer and add the order's ID to the orders array
-    const customer = await Customer.findById(req.body.customerId);
-    if (!customer) {
+    const customer = await Customer.findById(req.params.customerId);
+    if (!customer || !customer.cart) {
       res.status(404).json({ error: "Customer not found" });
       return;
     }
+    const orderDetails = req.body;
+    const orderData = {
+      items: customer.cart,
+      totalAmount: customer.totalCartValue,
+      customerId: req.params.customerId,
+      ...orderDetails,
+    };
 
     // Create the order
-    const newOrder = new Order(req.body);
+    const newOrder = new Order(orderData);
     const savedOrder = await newOrder.save();
 
     customer.orders.push(savedOrder._id);
+    customer.cart = [];
+    customer.totalCartValue = 0;
     await customer.save();
 
     res.status(201).json(savedOrder);
@@ -290,7 +346,7 @@ export async function getOrderItem(req, res) {
   // Function to get a specific order item
   try {
     const orderId = req.params.orderId;
-    const itemId = req.params.itemId; 
+    const itemId = req.params.itemId;
     const order = await Order.findById(orderId);
 
     if (!order) {
@@ -312,33 +368,31 @@ export async function getOrderItem(req, res) {
   }
 }
 
-
 // Delete an order by ID
-  // Delete an order by ID and remove it from the customer's orders array
-  // export async function deleteOrder(req, res) {
-  //   try {
-  //     const orderId = req.params.orderId;
-  //     const customer = await Customer.findOneAndUpdate(
-  //       { orders: orderId },
-  //       { $pull: { orders: orderId } },
-  //       { new: true }
-  //     );
+// Delete an order by ID and remove it from the customer's orders array
+// export async function deleteOrder(req, res) {
+//   try {
+//     const orderId = req.params.orderId;
+//     const customer = await Customer.findOneAndUpdate(
+//       { orders: orderId },
+//       { $pull: { orders: orderId } },
+//       { new: true }
+//     );
 
-  //     if (!customer) {
-  //       res.status(404).json({ error: "Order not found" });
-  //       return;
-  //     }
+//     if (!customer) {
+//       res.status(404).json({ error: "Order not found" });
+//       return;
+//     }
 
-  //     const deletedOrder = await Order.findByIdAndRemove(orderId);
+//     const deletedOrder = await Order.findByIdAndRemove(orderId);
 
-  //     if (!deletedOrder) {
-  //       res.status(404).json({ error: "Order not found" });
-  //     } else {
-  //       res.status(200).json({ message: "Order deleted" });
-  //     }
-  //   } catch (error) {
-  //     console.error("Error deleting order: " + error);
-  //     res.status(500).json({ error: "Error deleting order" });
-  //   }
-  // }
-
+//     if (!deletedOrder) {
+//       res.status(404).json({ error: "Order not found" });
+//     } else {
+//       res.status(200).json({ message: "Order deleted" });
+//     }
+//   } catch (error) {
+//     console.error("Error deleting order: " + error);
+//     res.status(500).json({ error: "Error deleting order" });
+//   }
+// }

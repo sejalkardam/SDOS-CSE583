@@ -6,25 +6,42 @@ import Coupon from "../models/coupon.js";
 export async function getCakes(req, res) {
   try {
     let filteredCakes = await Cakes.find({});
-    // const { category, priceFrom, priceTo } = req.query;
+    const { category, priceFrom, priceTo } = req.query;
 
-    // if (category) {
-    //   filteredCakes = filteredCakes.filter((cake) => cake.category === category);
-    // }
-    // if (priceFrom) {
-    //   filteredCakes = filteredCakes.filter(
-    //     (cake) => cake.price >= parseFloat(priceFrom)
-    //   );
-    // }
-    // if (priceTo) {
-    //   filteredCakes = filteredCakes.filter(
-    //     (cake) => cake.price <= parseFloat(priceTo)
-    //   );
-    // }
+    if (category) {
+      filteredCakes = filteredCakes.filter(
+        (cake) => cake.category === category
+      );
+    }
+    if (priceFrom) {
+      filteredCakes = filteredCakes.filter(
+        (cake) => cake.price >= parseFloat(priceFrom)
+      );
+    }
+    if (priceTo) {
+      filteredCakes = filteredCakes.filter(
+        (cake) => cake.price <= parseFloat(priceTo)
+      );
+    }
     res.status(200).json(filteredCakes);
   } catch (err) {
     console.log("Error fetching getCakes: " + err);
     res.status(500).json({ error: "Error getting cakes" });
+  }
+}
+
+export async function getCakeById(req, res) {
+  try {
+    const cake = await Cakes.find({"cakeId":req.params.cakeId});
+
+    if (cake) {
+      res.status(200).json(cake); // Return the cake if found
+    } else {
+      res.status(404).json({ error: "Cake not found" }); // Return a 404 status if not found
+    }
+  } catch (err) {
+    console.log("Error in getCakeByID", err);
+    res.status(500).json({ error: "Error in getting Cake By Id" });
   }
 }
 
@@ -42,7 +59,6 @@ export async function addCake(req, res) {
     res.status(201).json(savedCakeItem);
   } catch (err) {
     console.log("Error adding cake: " + err);
-
     res.status(500).json({ error: "Error adding cake" });
   }
 }
@@ -110,6 +126,21 @@ export async function getOrders(req, res) {
   }
 }
 
+export async function getOrderById(req, res) {
+  // Get a single order by ID
+  try {
+    const order = await Order.findById(req.params.orderId);
+    if (!order) {
+      res.status(404).json({ error: "Order not found" });
+    } else {
+      res.status(200).json(order);
+    }
+  } catch (error) {
+    console.error("Error getting order by ID: " + error);
+    res.status(500).json({ error: "Error getting order by ID" });
+  }
+}
+
 export async function updateOrder(req, res) {
   const orderId = req.params.orderId;
   const updatedOrderData = req.body;
@@ -122,7 +153,7 @@ export async function updateOrder(req, res) {
       return res.status(404).json({ error: "Order not found" });
     }
 
-    res.status(200).json(updatedOrderData); // Respond with the updated data
+    res.status(200).json(await Order.findById(orderId)); // Respond with the updated data
   } catch (err) {
     console.log("Error updating Order" + err);
     res.status(500).json({ error: "Error updating Order" });
