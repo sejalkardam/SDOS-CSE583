@@ -44,10 +44,15 @@ const addressSchema = new mongoose.Schema({
 
 // Define the schema for CartItem
 const cartItemSchema = new mongoose.Schema({
-  cakeId: {
+  name: {
     type: String,
     description: "Unique identifier of the cake",
     required: true,
+  },
+  price:{
+   type: Number,
+   description: "Price of item",
+   required: true
   },
   quantity: {
     type: Number,

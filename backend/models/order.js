@@ -2,13 +2,20 @@ import mongoose from "mongoose";
 
 // Define the schema for OrderedItem
 const orderedItemSchema = new mongoose.Schema({
-  cakeId: {
+  name: {
     type: String,
     description: "Unique identifier of the cake",
+    required: true,
+  },
+  price: {
+    type: Number,
+    description: "Price of Cake",
+    required: true,
   },
   quantity: {
     type: Number,
     description: "Quantity of the cake ordered",
+    required: true,
   },
   customization: {
     type: String,

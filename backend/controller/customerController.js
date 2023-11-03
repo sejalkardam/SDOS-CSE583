@@ -70,12 +70,7 @@ export async function addCartItem(req, res) {
     const customer = await Customer.findById(req.params.customerId);
     customer.cart.push(req.body);
 
-    const cakes = await Cake.find({ cakeId: req.body.cakeId });
-    if (cakes.length == 0) {
-      res.status(404).json({ error: "Cake not found" });
-    }
-
-    const cakePrice = cakes[0].price;
+    const cakePrice =req.body.price;
     const quantity = req.body.quantity;
     customer.totalCartValue += cakePrice * quantity;
 
@@ -92,37 +87,37 @@ export async function addCartItem(req, res) {
   }
 }
 
-export async function updateCartItem(req, res) {
-  try {
-    const customer = await Customer.findById(req.params.customerId);
-    const cartItem = customer.cart.id(req.params.cartItemId);
-    if (cartItem) {
-      if (req.body.quantity != undefined) {
-        const cakePrice = (await Cake.find({ cakeId: cartItem.cakeId }))[0]
-          .price;
-        const current = req.body.quantity;
-        const prev = cartItem.quantity;
-        customer.totalCartValue += cakePrice * (current - prev);
-      }
-      cartItem.set(req.body);
-      if (req.body.quantity == 0) {
-        customer.cart.pull({ _id: req.params.cartItemId });
-      }
-      const savedCustomer = await customer.save();
-      res.json([
-        {
-          cart: savedCustomer.cart,
-          totalCartValue: savedCustomer.totalCartValue,
-        },
-      ]);
-    } else {
-      res.status(404).json({ error: "Cart item not found" });
-    }
-  } catch (error) {
-    console.log("Error updating CartItem: " + error);
-    res.status(500).json({ error: "Error updating CartItem" });
-  }
-}
+// export async function updateCartItem(req, res) {
+//   try {
+//     const customer = await Customer.findById(req.params.customerId);
+//     const cartItem = customer.cart.id(req.params.cartItemId);
+//     if (cartItem) {
+//       if (req.body.quantity != undefined) {
+//         const cakePrice = (await Cake.find({ cakeId: cartItem.cakeId }))[0]
+//           .price;
+//         const current = req.body.quantity;
+//         const prev = cartItem.quantity;
+//         customer.totalCartValue += cakePrice * (current - prev);
+//       }
+//       cartItem.set(req.body);
+//       if (req.body.quantity == 0) {
+//         customer.cart.pull({ _id: req.params.cartItemId });
+//       }
+//       const savedCustomer = await customer.save();
+//       res.json([
+//         {
+//           cart: savedCustomer.cart,
+//           totalCartValue: savedCustomer.totalCartValue,
+//         },
+//       ]);
+//     } else {
+//       res.status(404).json({ error: "Cart item not found" });
+//     }
+//   } catch (error) {
+//     console.log("Error updating CartItem: " + error);
+//     res.status(500).json({ error: "Error updating CartItem" });
+//   }
+// }
 
 export async function deleteCartItem(req, res) {
   try {
