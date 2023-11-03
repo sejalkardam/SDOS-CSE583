@@ -16,7 +16,7 @@ export default function Footer() {
       </div>
       <div className="follow-text">Follow us</div> {/* Added "Follow us" text */}
       
-      <div className="social-icons">
+      <div data-testid = "socialicons" className="social-icons">
         <a href="https://wa.me/919911114128" target="_blank" rel="noopener noreferrer">
           <img src={Whatsapp} alt="Whatsapp" />
         </a>
