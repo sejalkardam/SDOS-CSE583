@@ -1,14 +1,38 @@
 import React, { useEffect, useState } from 'react'
 import client from '../sanityClient'
-import { useParams } from 'react-router-dom';
+import { useParams, Link } from 'react-router-dom';
+import CakeCard from "../components/CakeCard";
+import Drift from "react-driftjs";
 // import axios from 'axios';
 export default function CakeProductPage() {
     const { slug } = useParams();
 
     const temporaryReq = () => {
-       
+
 
     }
+
+
+    const [partialCakesData, setPartialCakesData] = useState([]);
+
+    useEffect(() => {
+        client.fetch(`*[_type == "cakes"]{
+              name,
+              slugurl,
+              description,
+              price,
+              cakeimage{
+                asset->{
+                    _id,
+                    url
+                }
+            }   
+          }`).then((res) => {
+            console.log(res);
+            setPartialCakesData(res);
+
+        });
+    }, []);
     const [cakeDetails, setCakeDetails] = useState(null);
     useEffect(() => {
         const fetchCake = async () => {
@@ -17,6 +41,7 @@ export default function CakeProductPage() {
           name,
           description,
           price,
+          ingredients,
           "imageUrl": cakeimage.asset->url
         }`;
                 const params = { slug };
@@ -46,11 +71,19 @@ export default function CakeProductPage() {
                         {cakeDetails.name}
                     </div>
                     <div className="tracking-[0.94px] leading-[1.38rem] text-gray-700 text-left inline-block w-[34.19rem] h-[4rem]">
-                     { cakeDetails.description}
+                        {cakeDetails.description}
                     </div>
                     <b className="text-[1.5rem] font-h2-petite text-left">
-                        Rs. {cakeDetails.price }
+                        Rs. {cakeDetails.price}
                     </b>
+                    <div className="font-medium font-h2-petite text-left inline-block w-[11.38rem]">
+                        INGREDIENTS:
+                        {cakeDetails.ingredients.map(function (title, i) {
+                            return <li className="m-0 ml-4" key={i}>
+                                {title}
+                            </li>;
+                        })}
+                    </div>
                     <div className="font-medium font-h2-petite text-left inline-block w-[11.38rem]">
                         MESSAGE TO ORDER:
                     </div>
@@ -81,6 +114,34 @@ export default function CakeProductPage() {
                         </div>
                     </div>
                 </div>
+            </div>
+
+
+            <div className="items-center flex-col justify-center flex my-8">
+                <div>
+                    <h2 style={{ "border-bottom": "2px solid yellow" }} className='px-96 pb-2 font-righteous'>More Cakes</h2>
+                </div>
+                <div className="mx-12 my-6 flex-wrap justify-center flex flex-row z-10 text-[1.13rem]">
+
+                    {partialCakesData.slice(0, 4).map(function (cake, i) {
+                        return (
+                            <div key={i} className="mx-4 mt-4">
+                                <Link style={{ textDecoration: "none" }} to={'/' + cake.slugurl.current}>
+                                    <CakeCard info={cake} url={cake.cakeimage.asset.url} />
+                                </Link>
+                            </div>
+                        )
+                    })}
+                    <Drift
+                        appId="8c6e7txsysbf"
+                        userId="1234"
+                        attributes={{ email: "user@example.com", company: "Acme Inc" }}
+                    />
+                </div>
+
+                <button onClick={ ()=>{window.location.href='/catalogue'}} className="border border-black text-black bg-white py-2 px-4 rounded-md">
+                    View All
+                </button>
             </div>
 
         </div>

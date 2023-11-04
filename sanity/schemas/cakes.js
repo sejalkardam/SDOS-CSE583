@@ -30,6 +30,12 @@ export default {
             }
         },
         {
+            name: 'ingredients',
+            type: 'array',
+            of: [{ type: 'string' }],
+            title: 'Ingredients'
+        },
+        {
             name: 'slugurl',
             type: 'slug',
             title: 'Slug',
