@@ -5,7 +5,7 @@ import {
   useNavigationType,
   useLocation,
 } from "react-router-dom";
-import CakesPage from "./pages/CakesPage";
+// import CakesPage from "./pages/CakesPage";
 import Contact from "./pages/Contact";
 import About from "./pages/About";
 import ProductPage from "./pages/ProductPage";
@@ -79,9 +79,11 @@ function App() {
 
   return (
     <div className="app-container"> {/* Wrap the entire content in a container */}
+    {/* <Home/> */}
+    
       <Navbar />
       <Routes>
-        <Route path="/catalogue" element={<CakesPage />} />
+        {/* <Route path="/catalogue" element={<CakesPage />} /> */}
         <Route path="/contact" element={<Contact />} />
         <Route path="/about" element={<About />} />
         <Route path="/product-page" element={<ProductPage />} />
