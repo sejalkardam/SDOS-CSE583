@@ -42,16 +42,14 @@ const Navbar = () => {
         navigate("/SignIn");
       }, [navigate]);
 
-      const onCartTextClick = useCallback(() => {
-        navigate("/MyCart");
-      }, [navigate]);
+   
       
   
   const onPaaCreationsLogo11Click = useCallback(() => {
-    navigate("/home");
+    navigate("/");
   }, [navigate]);
   const catalogue = useCallback(() => {
-    navigate("/");
+    navigate("/catalogue");
   }, [navigate]);
     return (
       <nav className="bg-black h-22 w-full">

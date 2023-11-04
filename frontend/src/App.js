@@ -81,13 +81,13 @@ function App() {
     <div className="app-container"> {/* Wrap the entire content in a container */}
       <Navbar />
       <Routes>
-        <Route path="/" element={<CakesPage />} />
+        <Route path="/catalogue" element={<CakesPage />} />
         <Route path="/contact" element={<Contact />} />
         <Route path="/about" element={<About />} />
         <Route path="/product-page" element={<ProductPage />} />
         <Route path="/product-page2" element={<ProductPage1 />} />
         <Route path="/product-page1" element={<ProductPage2 />} />
-        <Route path="/home" element={<Home />} />
+        <Route path="/" element={<Home />} />
         <Route path="/:slug" element={<CakeProductPage />} />
       </Routes>
       <Footer />

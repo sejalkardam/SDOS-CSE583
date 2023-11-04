@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import client from '../sanityClient.js';
+import contactimg  from '../assets/contact.png';
 import Navbar from "../components/Navbar.js";
 const About = () => {
   const navigate = useNavigate();
@@ -13,9 +14,9 @@ const About = () => {
               title,
               description
           }`).then((res) => {
-            setSanityData(res);
-            setTitles(res[0].title);
-            setDescription(res[0].description);
+      setSanityData(res);
+      setTitles(res[0].title);
+      setDescription(res[0].description);
 
     });
   }
@@ -41,78 +42,60 @@ const About = () => {
 
           {titles.map(function (title, i) {
             return <p className="m-0" key={i}>
-              { title}
+              {title}
             </p>;
           })}
         </div>
       </div>
-      <div className="relative bg-white w-full mt-8  text-center text-[0.81rem] text-crimson font-roboto">
-        <div className="oerflow-hidden text-[1.25rem] text-black">
-          <div className="">
-            <div className="">
-              <div className="flex flex-row ">
-                <div className="mx-12 flex flex-col text-[2.5rem] font-righteous">
-                  <div className="mb-8 text-left tracking-[2.62px] inline-block w-[25.5rem]">
-                    Founders story
-                  </div>
-                  <div className=" w-[38.88rem]  text-[1.13rem] text-gray-400 font-roboto">
-                    <div className="tracking-[1.04px] leading-[1.88rem] inline-block w-[38.75rem]">
 
-                      {description.map(function (title, i) {
-                        return <p key={ i} className="m-0 text-left ">{ title}</p>
-                      })}
-                    </div>
-                  
-                  </div>
-                </div>
-
-                <div className="relative">
-                  <div className="absolute top-[10px] left-[20px] rounded-3xs box-border w-[24.5rem] h-[24.94rem] border-[1px] border-solid border-gray-400" />
-                  <img
-                    className="absolute top-0 left-[1px] rounded-3xs w-[24.5rem] h-[24.81rem] object-cover"
-                    alt=""
-                    src="/rectangle-127@2x.png"
-                  />
-                </div>
-              </div>
-            </div>
-
-            <div className="absolute top-[30rem] w-full text-[1rem] text-white">
-
-
-              <div className="absolute top-[7.63rem] left-[0rem] h-[23.06rem]  text-left text-[1.13rem] text-chocolate">
-                <div className="absolute top-[12.69rem] left-[0rem] bg-ivory w-[75rem] h-[9.44rem]" />
-                <div className="absolute top-[17.75rem] left-[38.13rem] rounded-3xs bg-gold-200 w-[10.13rem] h-[2.88rem]" />
-                <div className="absolute top-[18.63rem] left-[40.25rem] text-[0.88rem] leading-[1.08rem] uppercase inline-block w-[5.81rem]">
-                  Get in Touch
-                </div>
-                <div className="absolute top-[0rem] left-[38.13rem] text-[2.5rem] tracking-[2.1px] font-righteous inline-block w-[16.56rem]">
-                  Say Hello
-                </div>
-                <div className="absolute top-[4.63rem] left-[38.13rem] tracking-[0.94px] leading-[1.63rem] text-gray-100 inline-block w-[34.38rem]">
-                  Paa Creations would love to be at your next event. Our cakes are
-                  the perfect delicacy to celebrate any occasion. Be it your
-                  birthday, anniversary or any other occasion, Paa Creations is
-                  here to serve you.
-                </div>
-                <b className="absolute top-[13.63rem] left-[38.13rem] tracking-[0.94px] leading-[1.38rem] inline-block text-black w-[16.63rem]">
-                  Get in touch
-                </b>
-                <div className="absolute top-[15.06rem] left-[38.13rem] tracking-[0.94px] leading-[1.38rem] text-gray-700 inline-block w-[9.38rem]">
-                  with us today!
-                </div>
-                <div className="absolute top-[0.94rem] left-[2.5rem] rounded-3xs box-border w-[24.63rem] h-[22.13rem] border-[1px] border-solid border-gray-400" />
-                <img
-                  className="absolute top-[0rem] left-[3.38rem] rounded-3xs w-[24.63rem] h-[22.13rem] object-cover"
-                  alt=""
-                  src="/image8@2x.png"
-                />
-              </div>
-            </div>
-
+      <div className="flex flex-row my-4 justify-evenly flex-wrap">
+        <div className="flex flex-col space-y-4">
+          <div className="font-righteous text-3xl">
+            Founder's Story
           </div>
+          <div className="tracking-[1.04px]  leading-[1.88rem] inline-block w-[38.75rem]">
+
+            {description.map(function (title, i) {
+              return <p key={i} className="m-0 text-left ">{title}</p>
+            })}
+          </div>
+
+        </div>
+        <div className="flex">
+
+          <img
+            className="ml-8 z-10 rounded-3xs w-[24.5rem] h-[24.81rem]"
+            alt=""
+            src="/rectangle-127@2x.png"
+          />
+        </div>
+
+      </div>
+
+      <div style={{ 'font-family': 'Roboto' }} className="space-x-10 text-gray-300 font-bold flex flex-row justify-center items-center">
+        <p>1. CHOOSE UR CAKE</p>
+        <p>2. CONTACT US</p>
+        <p>3. EAT UR CAKE</p>
+      </div>
+      <div className="justify-evenly flex flex-row flex-wrap">
+        <div>
+          <img className = 'w-[25rem]'src={ contactimg} alt="" />
+        </div>
+        <div className="flex flex-col">
+          <p className="font-righteous text-3xl">Say Hello</p>
+          <p className="whitespace-normal">Paa Creations would love to be at your next event. Our cakes are the perfect delicacy to celebrate any occasion. Be it your birthday, anniversary or any other occasion, Paa Creations is here to serve you.</p>
+
         </div>
       </div>
+
+
+
+
+
+
+
+
+
     </>
   );
 };
