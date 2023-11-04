@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import client from '../sanityClient.js';
-import contactimg  from '../assets/contact.png';
+import contactimg from '../assets/contact.png';
 import Navbar from "../components/Navbar.js";
 const About = () => {
   const navigate = useNavigate();
@@ -51,7 +51,9 @@ const About = () => {
       <div className="flex flex-row my-4 justify-evenly flex-wrap">
         <div className="flex flex-col space-y-4">
           <div className="font-righteous text-3xl">
+            <h3>
             Founder's Story
+            </h3>
           </div>
           <div className="tracking-[1.04px]  leading-[1.88rem] inline-block w-[38.75rem]">
 
@@ -72,21 +74,51 @@ const About = () => {
 
       </div>
 
+
       <div style={{ 'font-family': 'Roboto' }} className="space-x-10 text-gray-300 font-bold flex flex-row justify-center items-center">
         <p>1. CHOOSE UR CAKE</p>
         <p>2. CONTACT US</p>
         <p>3. EAT UR CAKE</p>
       </div>
-      <div className="justify-evenly flex flex-row flex-wrap">
-        <div>
-          <img className = 'w-[25rem]'src={ contactimg} alt="" />
-        </div>
-        <div className="flex flex-col">
-          <p className="font-righteous text-3xl">Say Hello</p>
-          <p className="whitespace-normal">Paa Creations would love to be at your next event. Our cakes are the perfect delicacy to celebrate any occasion. Be it your birthday, anniversary or any other occasion, Paa Creations is here to serve you.</p>
+
+
+      <div className="relative">
+        <div className="absolute w-full h-24 bg-yellow-100 bottom-[4rem] z-0" />
+
+        <div className="flex flex-row my-4 justify-evenly flex-wrap">
+          <div className="flex">
+
+            <img
+              className="ml-8 z-10 rounded-3xs w-[24.5rem] h-[24.81rem]"
+              alt=""
+              src={contactimg}
+            />
+          </div>
+          <div className="z-10 justify-center flex flex-col space-y-4">
+            <div className="font-righteous text-3xl">
+              <h3>
+              Say Hello
+              </h3>
+            </div>
+            <div className="tracking-[1.04px]  leading-[1.88rem] inline-block w-[38.75rem]">
+
+
+              <p className="m-0 text-left ">Paa Creations would love to be at your next event. Our cakes are the perfect delicacy to celebrate any occasion. Be it your birthday, anniversary or any other occasion, Paa Creations is here to serve you.</p>
+            </div>
+            <div>
+              <b>
+                Get in touch</b> <br></br>with us today!
+            </div>
+
+            <button onClick={() => { window.location.href = "/contact" }} className="w-[6rem] bg-yellow-300 p-2 rounded">
+              Get in Touch
+            </button>
+          </div>
 
         </div>
       </div>
+
+
 
 
 
