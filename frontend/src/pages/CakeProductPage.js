@@ -3,13 +3,46 @@ import client from '../sanityClient'
 import { useParams, Link } from 'react-router-dom';
 import CakeCard from "../components/CakeCard";
 import Drift from "react-driftjs";
+import axios from 'axios';
 // import axios from 'axios';
 export default function CakeProductPage() {
     const { slug } = useParams();
 
+    const temporaryReq2 = () => { 
+            
+        const data = {
+            "addressId": "654527837b95613a10c62c1e",
+            "modeOfPayment": "cashOnDelivery",
+            "status": "PENDING"
+        }
+            console.log("where");
+            axios.post('http://localhost:5000/api/customers/6545274f7b95613a10c62c17/placeOrder', data)
+                .then(response => {
+                    // Handle the response here
+                    console.log(response);
+                })
+                .catch(error => {
+                    // Handle the error here
+                    console.error(error);
+                });
+    }
     const temporaryReq = () => {
 
-
+        const data = {
+            "name": "Lemon Zest Cake",
+            "price": 1500,
+            "quantity": 1,
+        }
+        console.log("where");
+        axios.post('http://localhost:5000/api/customers/6545274f7b95613a10c62c17/cart', data)
+            .then(response => {
+                // Handle the response here
+                console.log(response);
+            })
+            .catch(error => {
+                // Handle the error here
+                console.error(error);
+            });
     }
 
 
@@ -101,7 +134,7 @@ export default function CakeProductPage() {
                             </div>
                         </div>
 
-                        <div className="flex space-x-2 flex-row items-center justify-center rounded-3xs w-[10.13rem] h-[3.13rem] border-4" >
+                        <div onClick={temporaryReq2} className="flex space-x-2 flex-row items-center justify-center rounded-3xs w-[10.13rem] h-[3.13rem] border-4" >
 
                             <img
                                 className="w-[1.75rem] h-[1.75rem] overflow-hidden"
