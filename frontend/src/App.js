@@ -1,21 +1,22 @@
 import { useEffect } from "react";
 import {
-  Routes,
   Route,
-  useNavigationType,
+  Routes,
   useLocation,
+  useNavigationType,
 } from "react-router-dom";
-import CakesPage from "./pages/CakesPage";
-import Contact from "./pages/Contact";
-import About from "./pages/About";
-import ProductPage from "./pages/ProductPage";
-import CakeProductPage from "./pages/CakeProductPage";
-import ProductPage1 from "./pages/ProductPage1";
-import ProductPage2 from "./pages/ProductPage2";
-import Home from "./pages/Home";
+import './App.css';
 import Footer from './components/Footer';
 import Navbar from './components/Navbar';
-import './App.css';
+import About from "./pages/About";
+import CakeProductPage from "./pages/CakeProductPage";
+import CakesPage from "./pages/CakesPage";
+import Contact from "./pages/Contact";
+import Home from "./pages/Home";
+import OrderPage from "./pages/Order_Page";
+import ProductPage from "./pages/ProductPage";
+import ProductPage1 from "./pages/ProductPage1";
+import ProductPage2 from "./pages/ProductPage2";
 
 function App() {
   const action = useNavigationType();
@@ -61,6 +62,10 @@ function App() {
         title = "";
         metaDescription = "";
         break;
+      case "/orders":
+        title = "";
+        metaDescription = "";
+        break;
     }
 
     if (title) {
@@ -91,6 +96,7 @@ function App() {
         <Route path="/product-page1" element={<ProductPage2 />} />
         <Route path="/" element={<Home />} />
         <Route path="/:slug" element={<CakeProductPage />} />
+        <Route path="/orders" element={<OrderPage />} />
       </Routes>
       <Footer />
     </div>

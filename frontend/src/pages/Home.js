@@ -1,6 +1,9 @@
-import { useCallback } from "react";
+import { useCallback, useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import xyz from "../images/cake.jpeg"
+import xyz from "../images/cake.jpeg";
+import client from "../sanityClient";
+import { useParams, Link } from "react-router-dom";
+import CakeCard from "../components/CakeCard";
 
 const Home = () => {
   const navigate = useNavigate();
@@ -36,29 +39,148 @@ const Home = () => {
     navigate("/contact");
   }, [navigate]);
 
+  const [partialCakesData, setPartialCakesData] = useState([]);
+
+  useEffect(() => {
+    client
+      .fetch(
+        `*[_type == "cakes"]{
+            name,
+            slugurl,
+            description,
+            price,
+            cakeimage{
+              asset->{
+                  _id,
+                  url
+              }
+          }   
+        }`
+      )
+      .then((res) => {
+        console.log(res);
+        setPartialCakesData(res);
+      });
+  }, []);
+
   return (
-    
-<div>
-  <div className="w-full h-12 bg-white-400 border-2 border-black flex justify-center items-center">
-    </div>
-    <div className="w-full h-96 bg-yellow-400 border-2 border-black flex justify-center items-center">
-    {/* <div className="w-16 h-2 bg-yellow-300 ml-16 w-64 p-4">
+    <div>
+      <div className="w-full h-12 bg-white-400 border-2 border-black flex justify-center items-center"></div>
+      <div className="w-full h-96 bg-yellow-400 border-2 border-black flex justify-center items-center">
+        {/* <div className="w-16 h-2 bg-yellow-300 ml-16 w-64 p-4">
         
       </div> */}
-      {/* <div className="p-4 relative">
+        {/* <div className="p-4 relative">
         <div className="h-full w-1/2 absolute left-0 top-2 bg-yellow-200 ml-0"></div>
         <div className="h-full w-1/2 absolute right-0 top-10 bg-yellow-200"></div>
         <div className="h-full w-1/2 absolute left-1/4 top-0 bg-yellow-200"></div>
       </div> */}
-      
 
-      <div className=" pt-3 pb-3 pl-80">
-        <img src={xyz} alt="Your Image" className="w-96 h-80" />
+        <div className="text-[2.25rem] tracking-[0.84px] uppercase font-righteous text-center inline-block ">
+          FRESHLY BAKED EGGLESS CAKES
+        </div>
+        <div className="text-[1.13rem] tracking-[0.84px] uppercase text-center inline-block ">
+        <br></br><br></br><br></br><br></br><br></br><br></br>hand made with care, PERFECT FOR EVERY CELEBRATION
+        </div>
+
+        <div className=" pt-3 pb-3 pl-80">
+          <img src={xyz} alt="Your Image" className="w-96 h-80" />
+        </div>
+      </div>
+      <div className="w-full h-12 bg-white-400 border-2 border-black flex justify-center items-center"></div>
+      <div className="flex items-center justify-center text-[2.5rem] tracking-[1.31px] font-righteous">
+        Eggless Cakes
+      </div>
+      <div className="mb -2 flex items-center justify-center text-[2.5rem] tracking-[1.31px] font-righteous">
+        Grand flavour
+      </div>
+      <div className="flex items-center justify-center">
+        <div className="mb-2 w-2/3 h-1 bg-yellow-400"></div>
+      </div>
+      <div className="mb-32 text-center flex items-center justify-center text-[1.13rem] tracking-[1.1px] leading-[1.84rem]">
+        Experience the magic of our homemade, eggless cakes. Each one is a
+        flavorful work of art,<br></br> perfect for any occasion. From elegant
+        designs to tempting flavors, there's something<br></br> for every taste.
+        Savor them with
+        your loved ones or enjoy them at a special party. <br></br> Every bite will leave
+        
+        you wanting more.
+      </div>
+      <div className="mb-4 flex items-center justify-center text-[2.5rem] tracking-[1.31px] font-righteous">
+        PAA Creations makes sure
+      </div>
+      <div className="flex text-center items-center justify-center text-[1.13rem] tracking-[1.1px] leading-[1.84rem]">
+        Your cakes are made with premium ingredients and wonderful flavors based<br></br>
+        on years of experience.<br></br><br></br><br></br><br></br>
+      </div>
+      <div className="w-full h-44 bg-yellow-200 border-2 border-black flex justify-center items-center">
+        <div className="w-16 h-16 bg-yellow-500 rounded-full flex justify-center items-center">
+          <div className=" text-[1.63rem] leading-[1.97rem] inline-block w-[0.63rem]">
+            1
+          </div>
+        </div>
+        <div className="mb-4 tracking-[0.84px] leading-[1.84rem] uppercase inline-block w-[14.44rem]">
+          <p>Home Made cakes</p>
+        </div>
+        <div className="w-16 h-16 bg-yellow-500 rounded-full flex justify-center items-center">
+          <div className="text-[1.63rem] leading-[1.97rem] inline-block w-[0.94rem]">
+            2
+          </div>
+        </div>
+        <div className="tracking-[0.84px] leading-[1.84rem] uppercase inline-block w-[16.56rem]">
+          No Artificial Flavors or Preservatives
+        </div>
+        <div className="w-16 h-16 bg-yellow-500 rounded-full flex justify-center items-center">
+          <div className="text-[1.63rem] leading-[1.97rem] inline-block w-[1.06rem]">
+            3
+          </div>
+        </div>
+        <div className="tracking-[0.84px] leading-[1.84rem] uppercase inline-block w-[16.56rem]">
+          QUALITY INGREDIENTS
+        </div>
+        <div className="w-16 h-16 bg-yellow-500 rounded-full flex justify-center items-center">
+          <div className="text-[1.63rem] leading-[1.97rem] inline-block w-[0.81rem]">
+            4
+          </div>
+        </div>
+        <div className="tracking-[0.84px] leading-[1.84rem] uppercase inline-block w-[16.56rem]">
+          Equal parts: Flavor + Fun
+        </div>
+      </div>
+      <div className="items-center flex-col justify-center flex my-8">
+        <div>
+          <h2
+            style={{ "border-bottom": "2px solid yellow" }}
+            className="px-96 pb-2 font-righteous"
+          >
+            More Cakes
+          </h2>
+        </div>
+        <div className="mx-12 my-6 flex-wrap justify-center flex flex-row z-10 text-[1.13rem]">
+          {partialCakesData.slice(0, 4).map(function (cake, i) {
+            return (
+              <div key={i} className="mx-4 mt-4">
+                <Link
+                  style={{ textDecoration: "none" }}
+                  to={"/" + cake.slugurl.current}
+                >
+                  <CakeCard info={cake} url={cake.cakeimage.asset.url} />
+                </Link>
+              </div>
+            );
+          })}
+        </div>
+
+        <button
+          onClick={() => {
+            window.location.href = "/catalogue";
+          }}
+          className="border border-black text-black bg-white py-2 px-4 rounded-md"
+        >
+          View All
+        </button>
       </div>
     </div>
-    <div className="w-full h-12 bg-white-400 border-2 border-black flex justify-center items-center">
-    </div>
-</div>
 
     // <p>hello</p>
     // <div className="relative bg-white w-full h-[255.38rem] overflow-hidden text-center text-[1rem] text-chocolate font-roboto">
