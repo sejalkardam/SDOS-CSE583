@@ -1,34 +1,44 @@
+import dotenv from "dotenv";
+dotenv.config();
 import { createTransport } from "nodemailer";
-import { renderFile } from "ejs";
-import { join } from "path";
+import { google } from "googleapis";
 
-import { NODEMAILER_EMAIL_ID, NODEMAILER_PASS } from "../config/config";
+const OAuth2 = google.auth.OAuth2;
+const oauth2Client = new OAuth2(
+  process.env.CLIENT_ID,
+  process.env.CLIENT_SECRET,
+  "https://developers.google.com/oauthplayground"
+);
 
-let transporter = createTransport({
-  service: "gmail",
-  host: "smtp.gmail.com",
-  port: 587,
-  secure: false,
-  auth: {
-    user: `${NODEMAILER_EMAIL_ID}`,
-    pass: `${NODEMAILER_PASS}`,
-  },
+oauth2Client.setCredentials({
+  refresh_token: process.env.REFRESH_TOKEN,
 });
 
-let renderTemplate = (data, relativePath) => {
-  let mailHTML;
-  renderFile(
-    join(__dirname, "../views/mailers", relativePath),
-    data,
-    function (err, template) {
+function createTransporter() {
+  try {
+    
+    const accessToken = oauth2Client.getAccessToken((err, token) => {
       if (err) {
-        console.log("Error in rendering email template: ", err);
-        return;
+        console.log("Error in getting Access Token: ", err);
       }
-      mailHTML = template;
-    }
-  );
-  return mailHTML;
-};
+      return token;
+    });
 
-export {transporter , renderTemplate};
+    const transporter = createTransport({
+      service: "gmail",
+      auth: {
+        type: "OAuth2",
+        user: process.env.USER_EMAIL,
+        accessToken: accessToken,
+        clientId: process.env.CLIENT_ID,
+        clientSecret: process.env.CLIENT_SECRET,
+        refreshToken: process.env.REFRESH_TOKEN,
+      },
+    });
+    return transporter;
+  } catch (err) {
+    return err;
+  }
+}
+
+export let emailTransporter=createTransporter();
