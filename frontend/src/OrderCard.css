@@ -11,9 +11,10 @@
   }
   
   .cake-image {
-    height: 85%;
+    /* height: 85%; */
+    height: 250px;
     border-radius: 8px; /* Adjust border-radius for the image */
-    object-fit: contain; /* Ensure the image adjusts according to the height */
+    object-fit: contain; /*Ensure the image adjusts according to the height */
     margin-right: 20px; /* Add margin between image and text */
   }
 

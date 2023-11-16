@@ -8,7 +8,7 @@ function OrderCard({ date, cakeName, address, amount, imageUrl }) {
     
     <div className="order-card">
       <div className="cake-info">
-        <img src='../images/cake.jpeg' alt="Cake" className="cake-image" />
+        <img src={imageUrl} alt="Cake" className="cake-image" />
         <div>
           <p className="cake-name">{cakeName}</p>
           <div className="order-details">
