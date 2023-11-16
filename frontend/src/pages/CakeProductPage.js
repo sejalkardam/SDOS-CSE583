@@ -4,9 +4,40 @@ import { useParams, Link } from 'react-router-dom';
 import CakeCard from "../components/CakeCard";
 import Drift from "react-driftjs";
 import axios from 'axios';
-// import axios from 'axios';
+
 export default function CakeProductPage() {
     const { slug } = useParams();
+    
+    const paymentHandler = async (e) => {
+        // alert("ss")
+        const API_URL = 'http://localhost:5000/'
+        e.preventDefault();
+        const orderUrl = `${API_URL}payment`;
+        const response = await axios.get(orderUrl);
+        const { data } = response;
+        console.log(data);
+        const options = {
+            key: process.env.RAZOR_KEY_ID,
+            name: "PAA Creations",
+            description: "Cakes made easy!",
+            order_id: data.id,
+            handler: async (response) => {
+                try {
+                    const paymentId = response.razorpay_payment_id;
+                    const url = `${API_URL}capture/${paymentId}`;
+                    const captureResponse = await axios.post(url, {})
+                    console.log(captureResponse.data);
+                } catch (err) {
+                    console.log(err);
+                }
+            },
+            theme: {
+                color: "#686CFD",
+            },
+        };
+        const rzp1 = new window.Razorpay(options);
+        rzp1.open();
+    };
 
     const temporaryReq2 = () => { 
             
@@ -15,14 +46,12 @@ export default function CakeProductPage() {
             "modeOfPayment": "cashOnDelivery",
             "status": "PENDING"
         }
-            console.log("where");
+         
             axios.post('http://localhost:5000/api/customers/6545274f7b95613a10c62c17/placeOrder', data)
                 .then(response => {
-                    // Handle the response here
                     console.log(response);
                 })
                 .catch(error => {
-                    // Handle the error here
                     console.error(error);
                 });
     }
@@ -122,7 +151,7 @@ export default function CakeProductPage() {
                     </div>
                     <div className="flex flex-row space-x-4">
 
-                        <div data-testid="whatsapp-button" onClick={temporaryReq} className="flex space-x-2 flex-row items-center justify-center rounded-3xs bg-lightgreen w-[10.13rem] h-[3.13rem]" >
+                        <div data-testid="whatsapp-button" onClick={paymentHandler} className="flex space-x-2 flex-row items-center justify-center rounded-3xs bg-lightgreen w-[10.13rem] h-[3.13rem]" >
 
                             <img
                                 className="w-[1.75rem] h-[1.75rem] overflow-hidden"
