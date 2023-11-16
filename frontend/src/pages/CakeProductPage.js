@@ -17,7 +17,7 @@ export default function CakeProductPage() {
         const { data } = response;
         console.log(data);
         const options = {
-            key: process.env.RAZOR_KEY_ID,
+            key: "rzp_test_cdAOF7anh4Wyon",
             name: "PAA Creations",
             description: "Cakes made easy!",
             order_id: data.id,
