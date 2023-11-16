@@ -7,7 +7,7 @@ import axios from 'axios';
 
 export default function CakeProductPage() {
     const { slug } = useParams();
-    
+
     const paymentHandler = async (e) => {
         // alert("ss")
         const API_URL = 'http://localhost:5000/'
@@ -39,21 +39,21 @@ export default function CakeProductPage() {
         rzp1.open();
     };
 
-    const temporaryReq2 = () => { 
-            
+    const temporaryReq2 = () => {
+
         const data = {
             "addressId": "654527837b95613a10c62c1e",
             "modeOfPayment": "cashOnDelivery",
             "status": "PENDING"
         }
-         
-            axios.post('http://localhost:5000/api/customers/6545274f7b95613a10c62c17/placeOrder', data)
-                .then(response => {
-                    console.log(response);
-                })
-                .catch(error => {
-                    console.error(error);
-                });
+
+        axios.post('http://localhost:5000/api/customers/6545274f7b95613a10c62c17/placeOrder', data)
+            .then(response => {
+                console.log(response);
+            })
+            .catch(error => {
+                console.error(error);
+            });
     }
     const temporaryReq = () => {
 
@@ -146,39 +146,45 @@ export default function CakeProductPage() {
                             </li>;
                         })}
                     </div>
-                    <div className="font-medium font-h2-petite text-left inline-block w-[11.38rem]">
-                        MESSAGE TO ORDER:
+                    <div className="font-h2-petite text-left text-grey-300">
+                        For any queries and customizations, please contact us on whatsapp
                     </div>
-                    <div className="flex flex-row space-x-4">
 
-                        <div data-testid="whatsapp-button" onClick={paymentHandler} className="flex space-x-2 flex-row items-center justify-center rounded-3xs bg-lightgreen w-[10.13rem] h-[3.13rem]" >
-
-                            <img
-                                className="w-[1.75rem] h-[1.75rem] overflow-hidden"
-                                alt=""
-                                src="/akariconswhatsappfill2.svg"
-                            />
-                            <div className="text-[0.88rem] uppercase font-medium inline-block w-[6.13rem]">
-                                Whatsapp
-                            </div>
-                        </div>
-
-                        <div onClick={temporaryReq2} className="flex space-x-2 flex-row items-center justify-center rounded-3xs w-[10.13rem] h-[3.13rem] border-4" >
-
-                            <img
-                                className="w-[1.75rem] h-[1.75rem] overflow-hidden"
-                                alt=""
-                                src="/carbonemail.svg"
-                            />
-                            <div className="text-[0.88rem] uppercase font-medium inline-block w-[6.13rem]">
-                                Email
-                            </div>
-                        </div>
-                    </div>
                 </div>
             </div>
 
+            <div className="items-center flex-col justify-center flex flex-wrap border-solid border-2 mx-64 bg-gray-200 rounded-lg border-gray-600">
+                <h3>Size</h3>
+                <div className='items-center flex space-x-12 flex-row mb-4 flex-wrap justify-center'>
+                    <button id="halfkg" className="bg-opacity-0 border-solid border-2 text-lg px-12 py-2 rounded-lg">1/2 kg</button>
+                    <button id="onekg" className="bg-opacity-0 border-solid border-2 text-lg px-12 py-2 rounded-lg">1 kg</button>
+                    <button id="twokg" className="bg-opacity-0 border-solid border-2 text-lg px-12 py-2 rounded-lg">2 kg</button>
+                </div>
+                <h3>Instructions</h3>
+                <input className="mb-8 h-24" type="text" />
+            </div>
 
+            <div className="flex flex-row items-center justify-center mt-8 space-x-4">
+
+                <div data-testid="whatsapp-button" onClick={paymentHandler} className="flex space-x-2 flex-row items-center justify-center rounded-3xs bg-lightgreen w-[10.13rem] h-[3.13rem]" >
+
+                    <img
+                        className="w-[1.75rem] h-[1.75rem] overflow-hidden"
+                        alt=""
+                        src="/akariconswhatsappfill2.svg"
+                    />
+                    <div className="text-[0.88rem] uppercase font-medium inline-block w-[6.13rem]">
+                        Enquire
+                    </div>
+                </div>
+
+                <div onClick={temporaryReq2} className="border-solid border-2 flex space-x-2 flex-row items-center justify-center rounded-3xs w-[10.13rem] h-[3.13rem] border-4" >
+
+                    <div className="text-[0.88rem] uppercase font-medium inline-block w-[6.13rem]">
+                        Order Now
+                    </div>
+                </div>
+            </div>
             <div className="items-center flex-col justify-center flex my-8">
                 <div>
                     <h2 style={{ "border-bottom": "2px solid yellow" }} className='px-96 pb-2 font-righteous'>More Cakes</h2>
@@ -201,7 +207,7 @@ export default function CakeProductPage() {
                     />
                 </div>
 
-                <button onClick={ ()=>{window.location.href='/catalogue'}} className="border border-black text-black bg-white py-2 px-4 rounded-md">
+                <button onClick={() => { window.location.href = '/catalogue' }} className="border border-black text-black bg-white py-2 px-4 rounded-md">
                     View All
                 </button>
             </div>
