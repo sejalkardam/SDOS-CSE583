@@ -2,12 +2,14 @@ import { useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 import { auth, provider } from "../googleAuthClient";
 import { signInWithPopup, GoogleAuthProvider } from "firebase/auth";
+import Popup from 'reactjs-popup';
 import React from 'react';
 import { useState } from 'react';
+import user from '../images/user.png';
 
 const Navbar = () => {
   const [loggedInUser, setLoggedInUser] = useState(null);
-  
+
   const navigate = useNavigate();
   const onAboutTextClick = useCallback(() => {
     navigate("/about");
@@ -65,7 +67,29 @@ const Navbar = () => {
 
           {loggedInUser ? (
             <div>
-              <img className="rounded-full w-20 my-2" src={ loggedInUser.photoURL} alt="" />
+              {loggedInUser.photoURL ? (
+                <Popup trigger=
+                  {
+                    <img className="rounded-full w-20 my-2" src={loggedInUser.photoURL} alt="" />
+                  }
+                  position="bottom center">
+                  <div>
+                    Sign Out
+                  </div>
+                  <div>My Orders</div>
+                </Popup>
+
+              ) : (
+                  <Popup trigger=
+                    {
+                      <img className="rounded-full w-20 my-2" src={user} alt="" />
+                    }
+                    position="bottom center">
+                    <div>
+                      Sign Out
+                    </div>
+                    <div>My Orders</div>
+                  </Popup>)}
             </div>
 
           ) : (
