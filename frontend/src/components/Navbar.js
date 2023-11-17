@@ -73,23 +73,34 @@ const Navbar = () => {
                     <img className="rounded-full w-20 my-2" src={loggedInUser.photoURL} alt="" />
                   }
                   position="bottom center">
-                  <div>
-                    Sign Out
+                  <div className="bg-yellow-300 rounded-lg p-4">
+
+                    <div className="bg-white my-2 p-4 rounded-lg">
+                      Sign Out
+                    </div>
+                    <div onClick={() => { window.location.href='orders'}} className="bg-white my-4 p-4 rounded-lg">
+                      My Orders
+                    </div>
                   </div>
-                  <div>My Orders</div>
                 </Popup>
 
               ) : (
-                  <Popup trigger=
-                    {
-                      <img className="rounded-full w-20 my-2" src={user} alt="" />
-                    }
-                    position="bottom center">
-                    <div>
+                <Popup trigger=
+                  {
+                    <img className="rounded-full w-20 my-2" src={user} alt="" />
+                  }
+                  position="bottom center">
+                  <div>
+
+                    <div className="bg-white my-4 p-4">
+                      Sign Out
+                    </div>
+                    <div className="bg-white my-4 p-4">
                       Sign Out
                     </div>
                     <div>My Orders</div>
-                  </Popup>)}
+                  </div>
+                </Popup>)}
             </div>
 
           ) : (

@@ -6,11 +6,16 @@ import Drift from "react-driftjs";
 import CakeCard from "../components/CakeCard";
 import client from '../sanityClient.js';
 import { Link } from "react-router-dom";
+import Popup from 'reactjs-popup';
+
 const CakesPage = () => {
-  const customizeCake = () => {
-    window.scrollTo(0, 0);
-  };
-  
+
+
+  const sendWhatsappCustomMessage = () => { 
+    const message = document.getElementById('whatsappmessage').value;
+    console.log(message);
+    window.open('https://api.whatsapp.com/send/?phone=919911114128&text=' + message +'&type=phone_number&app_absent=0', '_blank');
+  }
   const navigate = useNavigate();
 
   const onIMAGEClick = useCallback(() => {
@@ -81,13 +86,34 @@ const CakesPage = () => {
         />
       </div>
 
-      <div className="space-y-6 font-righteous my-8 flex flex-col items-center justify-center bg-yellow-200" onClick={customizeCake}>
-        
+      <div className="space-y-6 font-righteous my-8 flex flex-col items-center justify-center bg-yellow-200" >
+
         <p className="text-3xl">Customize your Cake today!</p>
-        <div className="">
-          <img className="font-righteous w-[100%] h-[25rem] mb-8" src={custom} alt="" />
-        </div>
-        <div style={{fontSize:"4rem", textShadow:"6rem"}} className="font-bold text-white drop-shadow-xl  absolute">
+
+
+        <Popup trigger=
+          {
+            <div className="">
+              <img className="font-righteous w-[100%] h-[25rem] mb-8" src={custom} alt="" />
+            </div>
+          }
+          modal nested>
+          {
+            close => (
+              <div className='border border-solid border-black modal bg-yellow-200 p-8 space-y-8 flex flex-col rounded-xl'>
+                <p>Chat with us on whatsapp for custom orders!</p>
+                <input id='whatsappmessage' className="h-[4rem] w-[15rem]" type="text" placeholder="Enter message" />
+                <button onClick={sendWhatsappCustomMessage} class="rounded-full p-4 w-[8rem] bg-blue-300">Send Message</button>
+
+                
+
+              </div>
+            )
+          }
+        </Popup>
+
+
+        <div style={{ fontSize: "4rem", textShadow: "6rem" }} className="font-bold text-white drop-shadow-xl  absolute">
           Custom your cake
         </div>
       </div>
