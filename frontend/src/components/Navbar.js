@@ -1,4 +1,4 @@
-import { useCallback } from "react";
+import { useCallback, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { auth, provider } from "../googleAuthClient";
 import { signInWithPopup, GoogleAuthProvider } from "firebase/auth";
@@ -9,6 +9,22 @@ import user from '../images/user.png';
 
 const Navbar = () => {
   const [loggedInUser, setLoggedInUser] = useState(null);
+
+  useEffect(() => {
+    const a = localStorage.getItem('paa_emailID');
+    const b = localStorage.getItem('paa_displayName');
+    const c = localStorage.getItem('paa_imageURL');
+    if (a) {
+      setLoggedInUser({
+        email: a,
+        displayName: b,
+        photoURL: c
+      });
+    }
+
+  }, [loggedInUser]);
+
+
 
   const navigate = useNavigate();
   const onAboutTextClick = useCallback(() => {
@@ -27,6 +43,9 @@ const Navbar = () => {
         const token = credential.accessToken;
         const user = result.user;
         console.log(user);
+        localStorage.setItem('paa_emailID', user.email);
+        localStorage.setItem('paa_displayName', user.displayName);
+        localStorage.setItem('paa_imageURL', user.photoURL);
         setLoggedInUser(user);
       }).catch((error) => {
         const errorCode = error.code;
@@ -37,6 +56,17 @@ const Navbar = () => {
   }, [navigate]);
 
 
+  const onSignOutTextClick = useCallback(() => {
+    console.log("sign out");
+    auth.signOut().then(() => {
+      localStorage.removeItem('paa_emailID');
+      localStorage.removeItem('paa_displayName');
+      localStorage.removeItem('paa_imageURL');
+      setLoggedInUser(null);
+    }).catch((error) => {
+      console.log(error);
+    });
+  }, [navigate]);
 
 
   const onPaaCreationsLogo11Click = useCallback(() => {
@@ -73,23 +103,34 @@ const Navbar = () => {
                     <img className="rounded-full w-20 my-2" src={loggedInUser.photoURL} alt="" />
                   }
                   position="bottom center">
-                  <div>
-                    Sign Out
+                  <div className="bg-yellow-300 rounded-lg p-4">
+
+                    <div onClick={onSignOutTextClick} className="bg-white my-2 p-4 rounded-lg">
+                      Sign Out
+                    </div>
+                    <div onClick={() => { window.location.href = 'orders' }} className="bg-white my-4 p-4 rounded-lg">
+                      My Orders
+                    </div>
                   </div>
-                  <div>My Orders</div>
                 </Popup>
 
               ) : (
-                  <Popup trigger=
-                    {
-                      <img className="rounded-full w-20 my-2" src={user} alt="" />
-                    }
-                    position="bottom center">
-                    <div>
+                <Popup trigger=
+                  {
+                    <img className="rounded-full w-20 my-2" src={user} alt="" />
+                  }
+                  position="bottom center">
+                  <div>
+
+                    <div className="bg-white my-4 p-4">
+                      Sign Out
+                    </div>
+                    <div className="bg-white my-4 p-4">
                       Sign Out
                     </div>
                     <div>My Orders</div>
-                  </Popup>)}
+                  </div>
+                </Popup>)}
             </div>
 
           ) : (
