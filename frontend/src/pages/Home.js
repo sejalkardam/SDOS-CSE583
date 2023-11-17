@@ -75,12 +75,19 @@ const Home = () => {
         <div className="h-full w-1/2 absolute right-0 top-10 bg-yellow-200"></div>
         <div className="h-full w-1/2 absolute left-1/4 top-0 bg-yellow-200"></div>
       </div> */}
-
-        <div className="text-[2.25rem] tracking-[0.84px] uppercase font-righteous text-center inline-block ">
-          FRESHLY BAKED EGGLESS CAKES
-        </div>
-        <div className="text-[1.13rem] tracking-[0.84px] uppercase text-center inline-block ">
-        <br></br><br></br><br></br><br></br><br></br><br></br>hand made with care, PERFECT FOR EVERY CELEBRATION
+        <div classname="flex flex-row">
+          <div className="text-[3.25rem] tracking-[0.84px] uppercase font-righteous text-center ">
+            FRESHLY BAKED <br></br>EGGLESS CAKES
+          </div>
+          <div className="text-[1.25rem] uppercase text-left ">
+            hand made with care,
+          </div>
+          <div className="text-[1.25rem] uppercase text-left ">
+          PERFECT FOR EVERY CELEBRATION
+          </div>
+          <button className="bg-white font-bold font-sans text-black rounded py-2 px-8 my-4">
+            OUR CAKES
+          </button>
         </div>
 
         <div className=" pt-3 pb-3 pl-80">
@@ -101,17 +108,19 @@ const Home = () => {
         Experience the magic of our homemade, eggless cakes. Each one is a
         flavorful work of art,<br></br> perfect for any occasion. From elegant
         designs to tempting flavors, there's something<br></br> for every taste.
-        Savor them with
-        your loved ones or enjoy them at a special party. <br></br> Every bite will leave
-        
-        you wanting more.
+        Savor them with your loved ones or enjoy them at a special party.{" "}
+        <br></br> Every bite will leave you wanting more.
       </div>
       <div className="mb-4 flex items-center justify-center text-[2.5rem] tracking-[1.31px] font-righteous">
         PAA Creations makes sure
       </div>
       <div className="flex text-center items-center justify-center text-[1.13rem] tracking-[1.1px] leading-[1.84rem]">
-        Your cakes are made with premium ingredients and wonderful flavors based<br></br>
-        on years of experience.<br></br><br></br><br></br><br></br>
+        Your cakes are made with premium ingredients and wonderful flavors based
+        <br></br>
+        on years of experience.<br></br>
+        <br></br>
+        <br></br>
+        <br></br>
       </div>
       <div className="w-full h-44 bg-yellow-200 border-2 border-black flex justify-center items-center">
         <div className="w-16 h-16 bg-yellow-500 rounded-full flex justify-center items-center">
