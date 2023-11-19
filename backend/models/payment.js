@@ -6,17 +6,17 @@ const paymentSchema = new mongoose.Schema({
     type: String,
     description: "Unique identifier of the order",
   },
-  transactionId: {
+  paymentId: {
     type: String,
     description: "Unique identifier of the payment transaction",
   },
-  amount: {
-    type: Number,
-    description: "Amount paid for the order",
+  status: {
+    type: String,
+    description: "Status of the order",
   },
-  paymentDate: {
-    type: Date,
-    description: "Date and time when the payment was made",
+  recieptId: {
+    type: String,
+    description: "Unique identifier of the reciept",
   },
 });
 

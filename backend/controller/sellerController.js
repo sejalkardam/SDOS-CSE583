@@ -1,6 +1,7 @@
 import Cakes from "../models/cake.js";
 import { Order } from "../models/order.js";
 import Coupon from "../models/coupon.js";
+import razorpay from "./config/razorpay.js";
 
 // Cakes
 export async function getCakes(req, res) {
@@ -243,5 +244,71 @@ export async function deleteCoupon(req, res) {
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: "Internal Server Error" });
+  }
+}
+
+// Verify Payment
+
+export async function verifyPayment(req, res) {
+  try {
+    const paymentId = res.body.rzp_paymentId;
+    const psp_orderId = res.body.psp_orderId;
+    const signature = res.body.rzp_signature;
+
+    // Verify signature using razorpay.utils.validatePaymentVerification Method
+    const isValidSignature = await razorpay.utils.validatePaymentVerification(
+      { order_id: psp_orderId, payment_id: paymentId },
+      signature,
+      process.env.RAZOR_KEY_SECRET
+    );
+
+    // Check if signature is valid or not
+    if (isValidSignature) {
+      const updatedOrder = await Order.findByIdAndUpdate(
+        req.params.orderId,
+        { paymentStatus: "Captured" },
+        {
+          new: true,
+        }
+      );
+      res.status(200).json("Payment Successful");
+    } else {
+      const updatedOrder = await Order.findByIdAndUpdate(
+        req.params.orderId,
+        { paymentStatus: "Failed" },
+        {
+          new: true,
+        }
+      );
+      res.status(500).json("Invalid Payment");
+    }
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({
+      message: "Invalid Payement. Something Went Wrong",
+    });
+  }
+}
+
+export async function verifyWebHookPayment(req, res) {
+  try {
+    // Verify signature using razorpay.utils.validateWebhookSignature method
+    const isValidSignature = razorpay.utils.validateWebhookSignature(
+      req.body,
+      req.body.signature,
+      process.env.RAZOR_KEY_SECRET
+    );
+
+    // Check if signature is valid or not
+    if (isValidSignature) {
+      res.status(200).json("Payment Successful");
+    } else {
+      res.status(500).json("Invalid Payment");
+    }
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({
+      message: "Invalid Payement. Something Went Wrong",
+    });
   }
 }

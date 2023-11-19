@@ -56,18 +56,26 @@ const orderSchema = new mongoose.Schema({
   },
   modeOfPayment: {
     type: String,
-    enum: ["cashOnDelivery", "netBanking", "upi", "wallet"],
+    enum: ["cashOnDelivery", "onlinePayment"],
     description: "Mode of payment of the order",
     required: true,
   },
-  paymentId: {
+  psp_paymentId: {
     type: String,
-    description: "Details of the payment",
+    description: "Payment Service Provider's paymentId",
   },
-  status: {
+  psp_orderId: {
+    type: String,
+    description: "Payment Service Provider's orderId",
+  },
+  paymentStatus:{
+    type: String,
+    description: "Payment's Status"
+  },
+  orderStatus: {
     type: String,
     description: "Current status of the order (e.g., pending, completed)",
-    enum: ["PENDING", "COMPLETED", "CANCELLED" , "IN PROCESS"],
+    enum: ["PENDING", "COMPLETED", "CANCELLED", "IN PROCESS"],
     required: true,
   },
   feedback: {

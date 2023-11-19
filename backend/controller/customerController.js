@@ -1,6 +1,7 @@
 import { Customer } from "../models/customer.js";
 import { Order } from "../models/order.js";
 import Cake from "../models/cake.js";
+import razorpay from "./config/razorpay.js";
 
 // Customer
 export async function getCustomerDetails(req, res) {
@@ -70,7 +71,7 @@ export async function addCartItem(req, res) {
     const customer = await Customer.findById(req.params.customerId);
     customer.cart.push(req.body);
 
-    const cakePrice =req.body.price;
+    const cakePrice = req.body.price;
     const quantity = req.body.quantity;
     customer.totalCartValue += cakePrice * quantity;
 
@@ -253,6 +254,7 @@ export async function deleteAddress(req, res) {
 
 export async function placeOrder(req, res) {
   // Create a new order and add its ID to the customer's orders array
+
   try {
     // Fetch the customer and add the order's ID to the orders array
     const customer = await Customer.findById(req.params.customerId);
@@ -261,23 +263,54 @@ export async function placeOrder(req, res) {
       return;
     }
     const orderDetails = req.body;
-    const orderData = {
+    let orderData = {
+      _id: Order.size() + 1,
       items: customer.cart,
       totalAmount: customer.totalCartValue,
       customerId: req.params.customerId,
       ...orderDetails,
     };
 
-    // Create the order
-    const newOrder = new Order(orderData);
-    const savedOrder = await newOrder.save();
+    if (orderDetails.modeOfPayment === "onlinePayment") {
+      const options = {
+        amount: orderData.totalAmount * 100, // amount == Rs 10
+        currency: "INR",
+        receipt: orderData["_id"],
+        payment_capture: 1,
+        // 1 for automatic capture // 0 for manual capture
+      };
 
-    customer.orders.push(savedOrder._id);
-    customer.cart = [];
-    customer.totalCartValue = 0;
-    await customer.save();
+      await razorpay.orders.create(options, async function (err, psp_order) {
+        if (err) {
+          return res.status(500).json({
+            message: "Something Went Wrong",
+          });
+        }
 
-    res.status(201).json(savedOrder);
+        orderData["psp_orderId"] = psp_order.id;
+
+        // Create the order
+        const newOrder = new Order(orderData);
+        const savedOrder = await newOrder.save();
+
+        customer.orders.push(savedOrder._id);
+        customer.cart = [];
+        customer.totalCartValue = 0;
+        await customer.save();
+
+        return res.status(201).json(savedOrder);
+      });
+    } else {
+      const newOrder = new Order(orderData);
+      const savedOrder = await newOrder.save();
+
+      customer.orders.push(savedOrder._id);
+      customer.cart = [];
+      customer.totalCartValue = 0;
+      await customer.save();
+
+      return res.status(201).json(savedOrder);
+    }
   } catch (error) {
     console.error("Error creating order: " + error);
     res.status(500).json({ error: "Error creating order" });
@@ -392,32 +425,3 @@ export async function getOrderItem(req, res) {
 //   }
 // }
 
-// Payment
-
-export async function createPayment(res,req){
-  console.log("where");
-  try {
-    const options = {
-      amount: 10 * 100, // amount == Rs 10
-      currency: "INR",
-      receipt: "receipt#1",
-      payment_capture: 1,
-      // 1 for automatic capture // 0 for manual capture
-    };
-    instance.orders.create(options, async function (err, order) {
-      if (err) {
-        console.log(err);
-        return res.status(500).json({
-          message: "Something Went Wrong",
-        });
-      }
-      console.log(order);
-      return res.status(200).json(order);
-    });
-  } catch (err) {
-    console.log(err);
-    return res.status(500).json({
-      message: "Something Went Wrong",
-    });
-  }
-};
