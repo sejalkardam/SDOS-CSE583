@@ -1,7 +1,7 @@
 import Cakes from "../models/cake.js";
 import { Order } from "../models/order.js";
 import Coupon from "../models/coupon.js";
-import razorpay from "../config/razorpay.js";
+import { validatePaymentVerification,validateWebhookSignature } from "razorpay/dist/utils/razorpay-utils.js";
 
 // Cakes
 export async function getCakes(req, res) {
@@ -26,7 +26,7 @@ export async function getCakes(req, res) {
     }
     res.status(200).json(filteredCakes);
   } catch (err) {
-    console.log("Error fetching getCakes: " + err);
+    console.log("Error fetching getCakes: " + JSON.stringify(err));
     res.status(500).json({ error: "Error getting cakes" });
   }
 }
@@ -59,7 +59,7 @@ export async function addCake(req, res) {
 
     res.status(201).json(savedCakeItem);
   } catch (err) {
-    console.log("Error adding cake: " + err);
+    console.log("Error adding cake: " + JSON.stringify(err));
     res.status(500).json({ error: "Error adding cake" });
   }
 }
@@ -78,7 +78,7 @@ export async function updateCake(req, res) {
 
     res.status(200).json(updatedCakeData); // Respond with the updated data
   } catch (err) {
-    console.log("Error updating cake" + err);
+    console.log("Error updating cake" + JSON.stringify(err));
     res.status(500).json({ error: "Error updating cake" });
   }
 }
@@ -96,7 +96,7 @@ export async function deleteCake(req, res) {
 
     res.status(204).end();
   } catch (err) {
-    console.log("Error deleting cake" + err);
+    console.log("Error deleting cake" + JSON.stringify(err));
     res.status(500).json({ error: "Error deleting cake" });
   }
 }
@@ -122,7 +122,7 @@ export async function getOrders(req, res) {
     // }
     res.status(200).json(filteredOrders);
   } catch (err) {
-    console.log("Error fetching getOrders: " + err);
+    console.log("Error fetching getOrders: " + JSON.stringify(err));
     res.status(500).json({ error: "Error getting Orders" });
   }
 }
@@ -137,7 +137,7 @@ export async function getOrderById(req, res) {
       res.status(200).json(order);
     }
   } catch (error) {
-    console.error("Error getting order by ID: " + error);
+    console.error("Error getting order by ID: " + JSON.stringify(error));
     res.status(500).json({ error: "Error getting order by ID" });
   }
 }
@@ -156,7 +156,7 @@ export async function updateOrder(req, res) {
 
     res.status(200).json(await Order.findById(orderId)); // Respond with the updated data
   } catch (err) {
-    console.log("Error updating Order" + err);
+    console.log("Error updating Order" + JSON.stringify(err));
     res.status(500).json({ error: "Error updating Order" });
   }
 }
@@ -182,7 +182,7 @@ export async function getOrderItem(req, res) {
       res.status(200).json(item);
     }
   } catch (error) {
-    console.error("Error getting order item: " + error);
+    console.error("Error getting order item: " + JSON.stringify(error));
     res.status(500).json({ error: "Error getting order item" });
   }
 }
@@ -256,7 +256,7 @@ export async function verifyPayment(req, res) {
     const signature = req.body.rzp_signature;
 
     // Verify signature using razorpay.utils.validatePaymentVerification Method
-    const isValidSignature = await razorpay.utils.validatePaymentVerification(
+    const isValidSignature = validatePaymentVerification(
       { order_id: psp_orderId, payment_id: paymentId },
       signature,
       process.env.RAZOR_KEY_SECRET
@@ -265,12 +265,16 @@ export async function verifyPayment(req, res) {
     // Check if signature is valid or not
     if (isValidSignature) {
       const updatedOrder = await Order.findByIdAndUpdate(
-        req.params.orderId,
+        req.body.orderId,
         { paymentStatus: "Captured" },
         {
           new: true,
         }
       );
+      if (!updatedOrder) {
+        throw new Error("Error in Updating Order Success"+ JSON.stringify(req.body));
+      }
+      console.log("Payment Successful");
       res.status(200).json("Payment Successful");
     } else {
       const updatedOrder = await Order.findByIdAndUpdate(
@@ -280,9 +284,16 @@ export async function verifyPayment(req, res) {
           new: true,
         }
       );
+      if(!updatedOrder){
+        throw new Error(
+          "Error in Updating Order Failed" + JSON.stringify(req.body)
+        );
+      }
+      console.log("Payment Failed");
       res.status(500).json("Invalid Payment");
     }
   } catch (error) {
+    console.error("Error in Verify Payment");
     console.error(error);
     return res.status(500).json({
       message: "Invalid Payement. Something Went Wrong",
@@ -293,7 +304,7 @@ export async function verifyPayment(req, res) {
 export async function verifyWebHookPayment(req, res) {
   try {
     // Verify signature using razorpay.utils.validateWebhookSignature method
-    const isValidSignature = razorpay.utils.validateWebhookSignature(
+    const isValidSignature = validateWebhookSignature(
       req.body,
       req.body.signature,
       process.env.RAZOR_KEY_SECRET

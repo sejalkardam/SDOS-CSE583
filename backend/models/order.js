@@ -68,6 +68,11 @@ const orderSchema = new mongoose.Schema({
     type: String,
     description: "Payment Service Provider's orderId",
   },
+  receipt_id:{
+    type: String,
+    description: "Unique receipt Id",
+    required: true
+  },
   paymentStatus:{
     type: String,
     description: "Payment's Status"
@@ -76,6 +81,7 @@ const orderSchema = new mongoose.Schema({
     type: String,
     description: "Current status of the order (e.g., pending, completed)",
     enum: ["PENDING", "COMPLETED", "CANCELLED", "IN PROCESS"],
+    default: "PENDING",
     required: true,
   },
   feedback: {

@@ -123,7 +123,7 @@ const customerSchema = new mongoose.Schema({
     description:"The total value of all products in the customer's cart",
     default: 0
   }
-});
+},{ versionKey: false });
 
 const Customer = mongoose.model("Customer", customerSchema);
 

@@ -2,14 +2,15 @@ import { Customer } from "../models/customer.js";
 import { Order } from "../models/order.js";
 import Cake from "../models/cake.js";
 import razorpay from "../config/razorpay.js";
-
+import uniqid from "uniqid";
+import generateUniqueId from "generate-unique-id";
 // Customer
 export async function getCustomerDetails(req, res) {
   try {
     let customerDetails = await Customer.find({ _id: req.params.customerId });
     res.status(200).json(customerDetails);
   } catch (err) {
-    console.log("Error fetching customerDetails: " + err);
+    console.log("Error fetching customerDetails: " + JSON.stringify(err));
     res.status(500).json({ error: "Error getting customer details" });
   }
 }
@@ -20,7 +21,7 @@ export async function addCustomerAccount(req, res) {
     const savedCustomer = await newCustomer.save();
     res.status(201).json(savedCustomer);
   } catch (error) {
-    console.log("Error adding Customer: " + error);
+    console.log("Error adding Customer: " + JSON.stringify(error));
     res.status(500).json({ error: "Error adding customer" });
   }
 }
@@ -34,7 +35,7 @@ export async function updateCustomerDetails(req, res) {
     );
     res.status(200).json(updatedCustomer);
   } catch (error) {
-    console.log("Error updating Customer: " + error);
+    console.log("Error updating Customer: " + JSON.stringify(error));
     res.status(500).json({ error: "Error updating Customer" });
   }
 }
@@ -44,7 +45,7 @@ export async function deleteCustomerAccount(req, res) {
     await Customer.findByIdAndRemove(req.params.customerId);
     res.status(204).json({ message: "Customer deleted" });
   } catch (error) {
-    console.log("Error deleting Customer: " + error);
+    console.log("Error deleting Customer: " + JSON.stringify(error));
     res.status(500).json({ error: "Error deleting Customer" });
   }
 }
@@ -61,7 +62,7 @@ export async function getCartItems(req, res) {
       },
     ]);
   } catch (error) {
-    console.log("Error getting CartItems: " + error);
+    console.log("Error getting CartItems: " + JSON.stringify(error));
     res.status(400).json({ error: "Error getting cartItems" });
   }
 }
@@ -83,7 +84,7 @@ export async function addCartItem(req, res) {
       },
     ]);
   } catch (error) {
-    console.log("Error adding cartItem: " + error);
+    console.log("Error adding cartItem: " + JSON.stringify(error));
     res.status(500).json({ error: "Error adding cartItem" });
   }
 }
@@ -115,7 +116,7 @@ export async function addCartItem(req, res) {
 //       res.status(404).json({ error: "Cart item not found" });
 //     }
 //   } catch (error) {
-//     console.log("Error updating CartItem: " + error);
+//     console.log("Error updating CartItem: " + JSON.stringify(error));
 //     res.status(500).json({ error: "Error updating CartItem" });
 //   }
 // }
@@ -137,7 +138,7 @@ export async function deleteCartItem(req, res) {
       },
     ]);
   } catch (error) {
-    console.log("Error deleting cartItem" + error);
+    console.log("Error deleting cartItem" + JSON.stringify(error));
     res.status(400).json({ error: "Error deleting cartItem" });
   }
 }
@@ -145,8 +146,8 @@ export async function deleteCartItem(req, res) {
 export async function clearCart(req, res) {
   try {
     const customer = await Customer.findById(req.params.customerId);
-    customer.totalCartValue =0;
-    customer.cart=[]
+    customer.totalCartValue = 0;
+    customer.cart = [];
     const savedCustomer = await customer.save();
     res.json([
       {
@@ -155,11 +156,10 @@ export async function clearCart(req, res) {
       },
     ]);
   } catch (error) {
-    console.log("Error clearing cart" + error);
+    console.log("Error clearing cart" + JSON.stringify(error));
     res.status(400).json({ error: "Error clearing cart" });
   }
 }
-
 
 // Wishlist
 export async function getWishlistItems(req, res) {
@@ -168,7 +168,7 @@ export async function getWishlistItems(req, res) {
     const wishlistItems = customer.wishlist;
     res.status(200).json(wishlistItems);
   } catch (error) {
-    console.log("Error getting Wishlist Items: " + error);
+    console.log("Error getting Wishlist Items: " + JSON.stringify(error));
     res.status(500).json({ error: "Error getting wishlist items" });
   }
 }
@@ -180,7 +180,7 @@ export async function addWishlistItem(req, res) {
     const savedCustomer = await customer.save();
     res.status(200).json(savedCustomer.wishlist);
   } catch (error) {
-    console.log("Error adding wishlist item: " + error);
+    console.log("Error adding wishlist item: " + JSON.stringify(error));
     res.status(500).json({ error: "Error adding wishlist item" });
   }
 }
@@ -197,7 +197,7 @@ export async function updateWishlistItem(req, res) {
       res.status(404).json({ error: "Wishlist item not found" });
     }
   } catch (error) {
-    console.log("Error updating Wishlist Item: " + error);
+    console.log("Error updating Wishlist Item: " + JSON.stringify(error));
     res.status(500).json({ error: "Error updating wishlist item" });
   }
 }
@@ -211,7 +211,7 @@ export async function deleteWishlistItem(req, res) {
       .status(200)
       .json((await Customer.findById(req.params.customerId)).wishlist);
   } catch (error) {
-    console.log("Error deleting wishlist item: " + error);
+    console.log("Error deleting wishlist item: " + JSON.stringify(error));
     res.status(500).json({ error: "Error deleting wishlist item" });
   }
 }
@@ -223,7 +223,7 @@ export async function getAddresses(req, res) {
     const addresses = customer.addresses;
     res.status(200).json(addresses);
   } catch (error) {
-    console.log("Error getting Addresses: " + error);
+    console.log("Error getting Addresses: " + JSON.stringify(error));
     res.status(500).json({ error: "Error getting addresses" });
   }
 }
@@ -235,7 +235,7 @@ export async function addAddress(req, res) {
     const savedCustomer = await customer.save();
     res.status(200).json(savedCustomer.addresses);
   } catch (error) {
-    console.log("Error adding address: " + error);
+    console.log("Error adding address: " + JSON.stringify(error));
     res.status(500).json({ error: "Error adding address" });
   }
 }
@@ -252,7 +252,7 @@ export async function updateAddress(req, res) {
       res.status(404).json({ error: "Address not found" });
     }
   } catch (error) {
-    console.log("Error updating Address: " + error);
+    console.log("Error updating Address: " + JSON.stringify(error));
     res.status(500).json({ error: "Error updating address" });
   }
 }
@@ -264,7 +264,7 @@ export async function deleteAddress(req, res) {
     const savedCustomer = await customer.save();
     res.status(200).json(savedCustomer.addresses);
   } catch (error) {
-    console.log("Error deleting address: " + error);
+    console.log("Error deleting address: " + JSON.stringify(error));
     res.status(500).json({ error: "Error deleting address" });
   }
 }
@@ -276,14 +276,14 @@ export async function placeOrder(req, res) {
 
   try {
     // Fetch the customer and add the order's ID to the orders array
-    const customer = await Customer.findById(req.params.customerId);
+    let customer = await Customer.findById(req.params.customerId);
     if (!customer || !customer.cart) {
-      res.status(404).json({ error: "Customer not found" });
-      return;
+      console.error("Customer not found");
+      return res.status(404).json({ error: "Customer not found" });
     }
     const orderDetails = req.body;
     let orderData = {
-      _id: Order.size() + 1,
+      receipt_id:uniqid.process("RECEIPT-"),
       items: customer.cart,
       totalAmount: customer.totalCartValue,
       customerId: req.params.customerId,
@@ -294,17 +294,23 @@ export async function placeOrder(req, res) {
       const options = {
         amount: orderData.totalAmount * 100, // amount == Rs 10
         currency: "INR",
-        receipt: orderData["_id"],
+        receipt: orderData["receipt_id"],
         payment_capture: 1,
         // 1 for automatic capture // 0 for manual capture
       };
 
-      await razorpay.orders.create(options, async function (err, psp_order) {
+      razorpay.orders.create(options, async function (err, psp_order) {
         if (err) {
+          console.error(
+            "Error in creating razorpay order" + JSON.stringify(err)
+          );
+          console.error(options);
           return res.status(500).json({
             message: "Something Went Wrong",
           });
         }
+
+        console.log("Razorpay Order created: " + psp_order.id);
 
         orderData["psp_orderId"] = psp_order.id;
 
@@ -316,22 +322,29 @@ export async function placeOrder(req, res) {
         customer.cart = [];
         customer.totalCartValue = 0;
         await customer.save();
-
         return res.status(201).json(savedOrder);
       });
     } else {
       const newOrder = new Order(orderData);
-      const savedOrder = await newOrder.save();
+      const savedOrder = await newOrder.save((err) => {
+        if (err) {
+          throw err;
+        }
+      });
 
       customer.orders.push(savedOrder._id);
       customer.cart = [];
       customer.totalCartValue = 0;
-      await customer.save();
+      await customer.save((err) => {
+        if (err) {
+          throw err;
+        }
+      });
 
       return res.status(201).json(savedOrder);
     }
   } catch (error) {
-    console.error("Error creating order: " + error);
+    console.error("Error creating order: " + JSON.stringify(error));
     res.status(500).json({ error: "Error creating order" });
   }
 }
@@ -346,7 +359,7 @@ export async function getOrderById(req, res) {
       res.status(200).json(order);
     }
   } catch (error) {
-    console.error("Error getting order by ID: " + error);
+    console.error("Error getting order by ID: " + JSON.stringify(error));
     res.status(500).json({ error: "Error getting order by ID" });
   }
 }
@@ -363,7 +376,7 @@ export async function getCustomerOrders(req, res) {
       res.status(200).json(customer.orders);
     }
   } catch (error) {
-    console.error("Error getting customer's orders: " + error);
+    console.error("Error getting customer's orders: " + JSON.stringify(error));
     res.status(500).json({ error: "Error getting customer's orders" });
   }
 }
@@ -384,7 +397,7 @@ export async function updateOrder(req, res) {
       res.status(200).json(updatedOrder);
     }
   } catch (error) {
-    console.error("Error updating order: " + error);
+    console.error("Error updating order: " + JSON.stringify(error));
     res.status(500).json({ error: "Error updating order" });
   }
 }
@@ -410,7 +423,7 @@ export async function getOrderItem(req, res) {
       res.status(200).json(item);
     }
   } catch (error) {
-    console.error("Error getting order item: " + error);
+    console.error("Error getting order item: " + JSON.stringify(error));
     res.status(500).json({ error: "Error getting order item" });
   }
 }
@@ -439,8 +452,7 @@ export async function getOrderItem(req, res) {
 //       res.status(200).json({ message: "Order deleted" });
 //     }
 //   } catch (error) {
-//     console.error("Error deleting order: " + error);
+//     console.error("Error deleting order: " + JSON.stringify(error));
 //     res.status(500).json({ error: "Error deleting order" });
 //   }
 // }
-
