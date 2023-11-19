@@ -12,71 +12,87 @@ export default function CakeProductPage() {
     const [size, setSize] = useState("");
 
     const paymentHandler = async (e) => {
-        // alert("ss")
-        const API_URL = 'http://localhost:5000/'
         e.preventDefault();
-        const orderUrl = `${API_URL}payment`;
-        const response = await axios.get(orderUrl);
-        const { data } = response;
-        console.log(data);
-        const options = {
-            key: "rzp_test_cdAOF7anh4Wyon",
-            name: "PAA Creations",
-            description: "Cakes made easy!",
-            order_id: data.id,
-            handler: async (response) => {
-                try {
-                    const paymentId = response.razorpay_payment_id;
-                    console.log(response);
-                    const url = `${API_URL}capture/${paymentId}`;
-                    const captureResponse = await axios.post(url, {})
-                    console.log(captureResponse.data);
-                } catch (err) {
-                    console.log(err);
-                }
-            },
-            theme: {
-                color: "#686CFD",
-            },
+
+        const API_URL = 'http://localhost:5000'
+        const CUSTOMER_ID = "6545274f7b95613a10c62c17";
+
+        //Adding Element to Cart
+        const cartData = {
+          name: "Lemon Zest Cake",
+          price: 1500,
+          quantity: 1,
         };
-        const rzp1 = new window.Razorpay(options);
-        rzp1.open();
+        
+        const cart_response=await axios.post(
+            `${API_URL}/api/customers/${CUSTOMER_ID}/cart`,
+            cartData
+          );
+        if(cart_response.status!=200){
+            console.log(cart_response);
+            return;
+        }
+
+        //Placing Order
+        const orderData = {
+            addressId: "654527837b95613a10c62c1e",
+            modeOfPayment: "onlinePayment",
+            status: "PENDING",
+        };
+
+        const order_response = axios.post(
+          `${API_URL}/api/customers/${CUSTOMER_ID}/placeOrder`,
+          orderData
+        );
+
+        if(order_response.status!=200){
+            console.log(order_response);
+
+            const clear_cart_response = await axios.delete(
+            `${API_URL}/api/customers/${CUSTOMER_ID}/clearCart`
+            );
+            if (clear_cart_response.status != 200) {
+            console.log(clear_cart_response);
+            return;
+            }
+
+            return;
+        }
+
+        else if(order_response.modeOfPayment=="onlinePayment"){
+
+            //Payment Gateway
+
+            const options = {
+              key: "rzp_test_cdAOF7anh4Wyon",
+              name: "PAA Creations",
+              description: "Cakes made easy!",
+              order_id: order_response.psp_orderId,
+              handler: async (response) => {
+                try {
+                  const verifyData = {
+                    rzp_paymentId: response.razorpay_payment_id,
+                    rzp_signature: response.razorpay_signature,
+                    psp_orderId: order_response.psp_orderId,
+                    orderId: order_response._id,
+                  };
+                  console.log(response);
+                  const url = `${API_URL}/api/seller/verifyPayment`;
+                  const verifyResponse = await axios.post(url, verifyData);
+                  console.log(verifyResponse);
+                } catch (err) {
+                  console.log(err);
+                }
+              },
+              theme: {
+                color: "#686CFD",
+              },
+            };
+            const rzp1 = new window.Razorpay(options);
+            rzp1.open();
+        }
+        
     };
-
-    const temporaryReq2 = () => {
-
-        const data = {
-            "addressId": "654527837b95613a10c62c1e",
-            "modeOfPayment": "cashOnDelivery",
-            "status": "PENDING"
-        }
-
-        axios.post('http://localhost:5000/api/customers/6545274f7b95613a10c62c17/placeOrder', data)
-            .then(response => {
-                console.log(response);
-            })
-            .catch(error => {
-                console.error(error);
-            });
-    }
-    const temporaryReq = () => {
-
-        const data = {
-            "name": "Lemon Zest Cake",
-            "price": 1500,
-            "quantity": 1,
-        }
-        console.log("where");
-        axios.post('http://localhost:5000/api/customers/6545274f7b95613a10c62c17/cart', data)
-            .then(response => {
-                // Handle the response here
-                console.log(response);
-            })
-            .catch(error => {
-                // Handle the error here
-                console.error(error);
-            });
-    }
 
     const orderNow = () => {
         console.log("Order Now");
