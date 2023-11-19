@@ -391,3 +391,33 @@ export async function getOrderItem(req, res) {
 //     res.status(500).json({ error: "Error deleting order" });
 //   }
 // }
+
+// Payment
+
+export async function createPayment(res,req){
+  console.log("where");
+  try {
+    const options = {
+      amount: 10 * 100, // amount == Rs 10
+      currency: "INR",
+      receipt: "receipt#1",
+      payment_capture: 1,
+      // 1 for automatic capture // 0 for manual capture
+    };
+    instance.orders.create(options, async function (err, order) {
+      if (err) {
+        console.log(err);
+        return res.status(500).json({
+          message: "Something Went Wrong",
+        });
+      }
+      console.log(order);
+      return res.status(200).json(order);
+    });
+  } catch (err) {
+    console.log(err);
+    return res.status(500).json({
+      message: "Something Went Wrong",
+    });
+  }
+};

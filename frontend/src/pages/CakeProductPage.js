@@ -24,6 +24,7 @@ export default function CakeProductPage() {
             handler: async (response) => {
                 try {
                     const paymentId = response.razorpay_payment_id;
+                    console.log(response);
                     const url = `${API_URL}capture/${paymentId}`;
                     const captureResponse = await axios.post(url, {})
                     console.log(captureResponse.data);
