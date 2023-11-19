@@ -36,6 +36,6 @@ router.delete("/api/seller/couponCodes/:couponId", controller.deleteCoupon);
 
 //Verify Payment Apis
 
-router.put("/api/seller/verifyPayment",controller.verifyPayment);
+router.post("/api/seller/verifyPayment",controller.verifyPayment);
 
 export default router;

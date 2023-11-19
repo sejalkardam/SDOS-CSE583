@@ -14,7 +14,7 @@ oauth2Client.setCredentials({
   refresh_token: process.env.REFRESH_TOKEN,
 });
 
-function createTransporter() {
+async function createTransporter() {
   try {
     
     const accessToken = oauth2Client.getAccessToken((err, token) => {
@@ -24,7 +24,7 @@ function createTransporter() {
       return token;
     });
 
-    const transporter = createTransport({
+    const transporter = await createTransport({
       service: "gmail",
       auth: {
         type: "OAuth2",
@@ -41,4 +41,8 @@ function createTransporter() {
   }
 }
 
-export let emailTransporter=createTransporter();
+const emailTransporter=await createTransporter();
+
+export default emailTransporter;
+
+

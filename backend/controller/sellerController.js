@@ -1,7 +1,7 @@
 import Cakes from "../models/cake.js";
 import { Order } from "../models/order.js";
 import Coupon from "../models/coupon.js";
-import razorpay from "./config/razorpay.js";
+import razorpay from "../config/razorpay.js";
 
 // Cakes
 export async function getCakes(req, res) {
@@ -251,9 +251,9 @@ export async function deleteCoupon(req, res) {
 
 export async function verifyPayment(req, res) {
   try {
-    const paymentId = res.body.rzp_paymentId;
-    const psp_orderId = res.body.psp_orderId;
-    const signature = res.body.rzp_signature;
+    const paymentId = req.body.rzp_paymentId;
+    const psp_orderId = req.body.psp_orderId;
+    const signature = req.body.rzp_signature;
 
     // Verify signature using razorpay.utils.validatePaymentVerification Method
     const isValidSignature = await razorpay.utils.validatePaymentVerification(

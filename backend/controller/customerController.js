@@ -1,7 +1,7 @@
 import { Customer } from "../models/customer.js";
 import { Order } from "../models/order.js";
 import Cake from "../models/cake.js";
-import razorpay from "./config/razorpay.js";
+import razorpay from "../config/razorpay.js";
 
 // Customer
 export async function getCustomerDetails(req, res) {
@@ -141,6 +141,25 @@ export async function deleteCartItem(req, res) {
     res.status(400).json({ error: "Error deleting cartItem" });
   }
 }
+
+export async function clearCart(req, res) {
+  try {
+    const customer = await Customer.findById(req.params.customerId);
+    customer.totalCartValue =0;
+    customer.cart=[]
+    const savedCustomer = await customer.save();
+    res.json([
+      {
+        cart: savedCustomer.cart,
+        totalCartValue: savedCustomer.totalCartValue,
+      },
+    ]);
+  } catch (error) {
+    console.log("Error clearing cart" + error);
+    res.status(400).json({ error: "Error clearing cart" });
+  }
+}
+
 
 // Wishlist
 export async function getWishlistItems(req, res) {

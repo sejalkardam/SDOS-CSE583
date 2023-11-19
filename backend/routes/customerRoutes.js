@@ -16,6 +16,8 @@ router.get("/api/customers/:customerId/cart",controller.getCartItems);
 
 router.post("/api/customers/:customerId/cart", controller.addCartItem);
 
+router.delete("/api/customers/:customerId/clearCart", controller.clearCart);
+
 // router.put("/api/customers/:customerId/cart/:cartItemId",controller.updateCartItem);
 
 router.delete("/api/customers/:customerId/cart/:cartItemId", controller.deleteCartItem);
