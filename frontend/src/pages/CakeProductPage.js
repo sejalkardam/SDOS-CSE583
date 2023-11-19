@@ -4,9 +4,12 @@ import { useParams, Link } from 'react-router-dom';
 import CakeCard from "../components/CakeCard";
 import Drift from "react-driftjs";
 import axios from 'axios';
+import Popup from 'reactjs-popup';
 
 export default function CakeProductPage() {
     const { slug } = useParams();
+
+    const [size, setSize] = useState("");
 
     const paymentHandler = async (e) => {
         // alert("ss")
@@ -75,6 +78,9 @@ export default function CakeProductPage() {
             });
     }
 
+    const orderNow = () => {
+        console.log("Order Now");
+    }
 
     const [partialCakesData, setPartialCakesData] = useState([]);
 
@@ -157,9 +163,27 @@ export default function CakeProductPage() {
             <div className="items-center flex-col justify-center flex flex-wrap border-solid border-2 mx-64 bg-gray-200 rounded-lg border-gray-600">
                 <h3>Size</h3>
                 <div className='items-center flex space-x-12 flex-row mb-4 flex-wrap justify-center'>
-                    <button id="halfkg" className="bg-opacity-0 border-solid border-2 text-lg px-12 py-2 rounded-lg">1/2 kg</button>
-                    <button id="onekg" className="bg-opacity-0 border-solid border-2 text-lg px-12 py-2 rounded-lg">1 kg</button>
-                    <button id="twokg" className="bg-opacity-0 border-solid border-2 text-lg px-12 py-2 rounded-lg">2 kg</button>
+                    {
+                        size === "halfkg" ? (
+                            <button id="halfkg2" className="bg-yellow-200 border-solid border-2 text-lg px-12 py-2 rounded-lg my-4">1/2 kg</button>
+                        ) : (
+                            <button onClick={() => setSize("halfkg")} id="halfkg" className="bg-opacity-0 border-solid border-2 text-lg px-12 py-2 rounded-lg my-4">1/2 kg</button>
+                        )
+                    }
+                    {
+                        size === "onekg" ? (
+                            <button id="onekg2" className="bg-yellow-200 border-solid border-2 text-lg px-12 py-2 rounded-lg">1 kg</button>
+                        ) : (
+                            <button onClick={() => setSize("onekg")} id="onekg" className="bg-opacity-0 border-solid border-2 text-lg px-12 py-2 rounded-lg">1 kg</button>
+                        )
+                    }
+                    {
+                        size === "twokg" ? (
+                            <button id="twokg2" className="bg-yellow-200 border-solid border-2 text-lg px-12 py-2 rounded-lg">2 kg</button>
+                        ) : (
+                            <button onClick={() => setSize("twokg")} id="twokg" className="bg-opacity-0 border-solid border-2 text-lg px-12 py-2 rounded-lg">2 kg</button>
+                        )
+                    }
                 </div>
                 <h3>Instructions</h3>
                 <input className="mb-8 h-24" type="text" />
@@ -167,24 +191,101 @@ export default function CakeProductPage() {
 
             <div className="flex flex-row items-center justify-center mt-8 space-x-4">
 
-                <div data-testid="whatsapp-button" onClick={paymentHandler} className="flex space-x-2 flex-row items-center justify-center rounded-3xs bg-lightgreen w-[10.13rem] h-[3.13rem]" >
+                <a href="https://wa.me/919911114128" target="_blank" rel="noopener noreferrer">
 
-                    <img
-                        className="w-[1.75rem] h-[1.75rem] overflow-hidden"
-                        alt=""
-                        src="/akariconswhatsappfill2.svg"
-                    />
-                    <div className="text-[0.88rem] uppercase font-medium inline-block w-[6.13rem]">
-                        Enquire
+                    <div data-testid="whatsapp-button" className="flex space-x-2 flex-row items-center justify-center rounded-3xs bg-lightgreen w-[10.13rem] h-[3.13rem]" >
+
+                        <img
+                            className="w-[1.75rem] h-[1.75rem] overflow-hidden"
+                            alt=""
+                            src="/akariconswhatsappfill2.svg"
+                        />
+                        <div className="text-[0.88rem] uppercase font-medium inline-block w-[6.13rem]">
+                            Enquire
+                        </div>
                     </div>
-                </div>
+                </a>
 
-                <div onClick={temporaryReq2} className="border-solid border-2 flex space-x-2 flex-row items-center justify-center rounded-3xs w-[10.13rem] h-[3.13rem] border-4" >
 
-                    <div className="text-[0.88rem] uppercase font-medium inline-block w-[6.13rem]">
-                        Order Now
-                    </div>
-                </div>
+
+
+                <Popup trigger=
+                    {<div className="text-[0.88rem] uppercase font-medium inline-block w-[6.13rem]">
+                        <div onClick={orderNow} className="border-solid border-2 flex space-x-2 flex-row items-center justify-center rounded-3xs w-[10.13rem] h-[3.13rem] border-4" >
+                            Order Now
+                        </div>
+                    </div>}
+                    modal nested>
+                    {
+                        close => (
+                            <div className='modal bg-yellow-200 p-8 rounded-xl'>
+                                <form>
+                                    <div className="mb-4">
+                                        <label htmlFor="address" className="block text-gray-700 text-sm font-bold mb-2">
+                                            Address:
+                                        </label>
+                                        <textarea
+                                            id="address"
+                                            name="address"
+                                            className="w-full px-3 py-2 border rounded focus:outline-none focus:border-blue-500"
+                                            required
+                                        />
+                                    </div>
+                                    <div className="mb-4">
+                                        <label htmlFor="pincode" className="block text-gray-700 text-sm font-bold mb-2">
+                                            Pin Code:
+                                        </label>
+                                        <input
+                                            type="text"
+                                            id="pincode"
+                                            name="pincode"
+                                            className="w-full px-3 py-2 border rounded focus:outline-none focus:border-blue-500"
+                                            required
+                                        />
+                                    </div>
+                                    <div className="mb-4">
+                                        <label htmlFor="state" className="block text-gray-700 text-sm font-bold mb-2">
+                                            State:
+                                        </label>
+                                        <input
+                                            type="text"
+                                            id="state"
+                                            name="state"
+                                            className="w-full px-3 py-2 border rounded focus:outline-none focus:border-blue-500"
+                                            required
+                                        />
+                                    </div>
+                                    <div className="mb-4">
+                                        <label htmlFor="phoneNumber" className="block text-gray-700 text-sm font-bold mb-2">
+                                            Phone Number:
+                                        </label>
+                                        <input
+                                            type="tel"
+                                            id="phoneNumber"
+                                            name="phoneNumber"
+                                            className="w-full px-3 py-2 border rounded focus:outline-none focus:border-blue-500"
+                                            required
+                                        />
+                                    </div>
+                                    <button
+                                        type="button"
+                                        className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-700 focus:outline-none focus:shadow-outline-blue active:bg-blue-800"
+                                    >
+                                        Submit
+                                    </button>
+                                    <button
+                                        onClick=
+                                        {() => close()}
+                                        type="button"
+                                        className="ml-8 bg-red-500 text-white px-4 py-2 rounded hover:bg-red-700 focus:outline-none focus:shadow-outline-red active:bg-red-800"
+                                    >
+                                        Close
+                                    </button>
+                                </form>
+                            </div>
+                        )
+                    }
+                </Popup>
             </div>
             <div className="items-center flex-col justify-center flex my-8">
                 <div>
