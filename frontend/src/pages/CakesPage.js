@@ -9,6 +9,14 @@ import { Link } from "react-router-dom";
 import Popup from 'reactjs-popup';
 
 const CakesPage = () => {
+  const [loggedInUserEmail, setLoggedInUserEmail] = useState('user@example.com');
+  useEffect(() => {
+    const a = localStorage.getItem('paa_emailID');
+    console.log(a);
+    if (a) {
+      setLoggedInUserEmail(a);
+    }
+  }, [loggedInUserEmail]);
 
 
   const sendWhatsappCustomMessage = () => { 
@@ -80,9 +88,9 @@ const CakesPage = () => {
           )
         })}
         <Drift
-          appId="8c6e7txsysbf"
+          appId="6b7bi4bsu785"
           userId="1234"
-          attributes={{ email: "user@example.com", company: "Acme Inc" }}
+          attributes={{ email: loggedInUserEmail, company: "Acme Inc" }}
         />
       </div>
 
