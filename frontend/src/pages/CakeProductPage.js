@@ -7,7 +7,26 @@ import axios from 'axios';
 import Popup from 'reactjs-popup';
 
 export default function CakeProductPage() {
-    const { slug } = useParams();
+  const { slug } = useParams();
+  const createOrder = async () => {
+    console.log("create order");
+    try {
+      console.log("create order1");
+      await client.create({
+        _type: "orders",
+        title: ["order", 'lol'],
+        description: ["order"],
+      })
+        .then((res) => {
+          console.log(`doc was created, document ID is ${res._id}`);
+        });
+      console.log("create order3");
+    } catch (err) {
+      console.error(err);
+
+    }
+    console.log("create order2");
+  }
 
     const [size, setSize] = useState("");
 
@@ -232,6 +251,9 @@ export default function CakeProductPage() {
                 2 kg
               </button>
             )}
+            <button onClick={createOrder}>
+              TEMP
+            </button>
           </div>
           <h3>Instructions</h3>
           <input className="mb-8 h-24" type="text" />
