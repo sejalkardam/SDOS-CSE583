@@ -5,7 +5,7 @@ import cors from "cors";
 import sellerRoutes from "./routes/sellerRoutes.js";
 import customerRoutes from "./routes/customerRoutes.js";
 import db from "./config/mongoose.js";
-// import emailTransporter from "./config/nodemailer.js";
+import emailTransporter from "./config/nodemailer.js";
 import razorpay from "./config/razorpay.js";
 import bodyParser from "body-parser";
 import expressListEndpoints from "express-list-endpoints";
