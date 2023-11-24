@@ -29,7 +29,10 @@ export default function CakeProductPage() {
       return;
     }
     const dateOfOrder = new Date();
-
+    if (size == "") {
+      alert("Please select a size");
+      return;
+    }
     const orderCost = cakeDetails.price;
     const cakeName = cakeDetails.name;
     const cakeSlug = slug;
@@ -46,11 +49,13 @@ export default function CakeProductPage() {
         dateOfOrder: dateOfOrder,
         modeOfPayment: "",
         orderStatus: "",
+        cakeSize: size,
         orderTotal: orderCost,
         paymentStatus: "",
         productName: cakeName,
         productSlug: cakeSlug,
         productImgUrl: cakeUrl,
+        instructions: document.getElementById("instructions").value
       })
         .then((res) => {
           console.log(`doc was created, document ID is ${res._id}`);
@@ -193,7 +198,7 @@ export default function CakeProductPage() {
             }
         };
         fetchCake();
-    }, [slug]);
+    }, []);
 
     if (!cakeDetails) {
         return <div>Loading...</div>;
@@ -286,12 +291,10 @@ export default function CakeProductPage() {
                 2 kg
               </button>
             )}
-            <button onClick={createOrder}>
-              TEMP
-            </button>
+
           </div>
           <h3>Instructions</h3>
-          <input className="mb-8 h-24" type="text" />
+          <input id='instructions' className="mb-8 h-24" type="text" />
         </div>
 
         <div className="flex flex-row items-center justify-center mt-8 space-x-4">

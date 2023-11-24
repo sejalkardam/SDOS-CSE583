@@ -16,7 +16,7 @@ const CakesPage = () => {
     if (a) {
       setLoggedInUserEmail(a);
     }
-  }, [loggedInUserEmail]);
+  }, []);
 
 
   const sendWhatsappCustomMessage = () => { 

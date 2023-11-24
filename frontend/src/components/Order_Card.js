@@ -3,7 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import '../OrderCard.css'; // Import CSS for styling
 
-function OrderCard({ date, cakeName, address, amount, imageUrl }) {
+function OrderCard({ date, cakeName, address, amount, imageUrl, status }) {
   return (
     
     <div className="order-card">
@@ -15,6 +15,7 @@ function OrderCard({ date, cakeName, address, amount, imageUrl }) {
             <p><strong>Order Date:</strong> {date}</p>
             <p><strong>Order Amount:</strong> {amount}</p>
             <p><strong>Order Address:</strong> {address}</p>
+            <p><strong>Order Status:</strong> {status}</p>
           </div>
         </div>
       </div>
