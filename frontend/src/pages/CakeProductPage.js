@@ -8,14 +8,49 @@ import Popup from 'reactjs-popup';
 
 export default function CakeProductPage() {
   const { slug } = useParams();
+
   const createOrder = async () => {
     console.log("create order");
+    const email = localStorage.getItem('paa_emailID');
+    if (!email) {
+      alert("Please login to place an order");
+      return;
+    }
+    const name = localStorage.getItem('paa_displayName');
+    const phoneNum = document.getElementById('phoneNumber').value;
+    if (phoneNum.length != 10) {
+      alert("Please enter a valid phone number");
+      return;
+    }
+
+    const address = document.getElementById('address').value+" "+document.getElementById('pincode').value+" "+document.getElementById('state').value;
+    if (address.length < 10) {
+      alert("Please enter a valid address");
+      return;
+    }
+    const dateOfOrder = new Date();
+
+    const orderCost = cakeDetails.price;
+    const cakeName = cakeDetails.name;
+    const cakeSlug = slug;
+    const cakeUrl = cakeDetails.imageUrl;
+
     try {
       console.log("create order1");
       await client.create({
         _type: "orders",
-        title: ["order", 'lol'],
-        description: ["order"],
+        customerEmail: email,
+        customerName: name,
+        customerPhone: phoneNum,
+        deliveryAddress: address,
+        dateOfOrder: dateOfOrder,
+        modeOfPayment: "",
+        orderStatus: "",
+        orderTotal: orderCost,
+        paymentStatus: "",
+        productName: cakeName,
+        productSlug: cakeSlug,
+        productImgUrl: cakeUrl,
       })
         .then((res) => {
           console.log(`doc was created, document ID is ${res._id}`);
@@ -359,6 +394,7 @@ export default function CakeProductPage() {
                   <button
                     type="button"
                     className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-700 focus:outline-none focus:shadow-outline-blue active:bg-blue-800"
+                    onClick={createOrder}
                   >
                     Submit
                   </button>
