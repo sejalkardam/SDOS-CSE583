@@ -38,10 +38,12 @@ const Navbar = () => {
   const onSignInTextClick = useCallback(() => {
     console.log("sign in");
     signInWithPopup(auth, provider)
-      .then((result) => {
+      .then(async (result) => {
         const credential = GoogleAuthProvider.credentialFromResult(result);
-        const token = credential.accessToken;
+        
         const user = result.user;
+        const token = user && (await user.getIdToken());
+        console.log(token);
         console.log(user);
         localStorage.setItem('paa_emailID', user.email);
         localStorage.setItem('paa_displayName', user.displayName);

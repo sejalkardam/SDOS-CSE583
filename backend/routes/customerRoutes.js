@@ -3,52 +3,52 @@ import * as controller from "../controller/customerController.js";
 const router = express.Router();
 
 // Customer APIs
-router.get("/api/customers/:customerId", controller.getCustomerDetails);
+router.get("/api/customers", controller.getCustomerDetails);
 
 router.post("/api/customers", controller.addCustomerAccount);
 
-router.put("/api/customers/:customerId", controller.updateCustomerDetails);
+router.put("/api/customers", controller.updateCustomerDetails);
 
-router.delete("/api/customers/:customerId", controller.deleteCustomerAccount);
+router.delete("/api/customers", controller.deleteCustomerAccount);
 
 // Cart APIs
-router.get("/api/customers/:customerId/cart",controller.getCartItems);
+router.get("/api/customers/cart",controller.getCartItems);
 
-router.post("/api/customers/:customerId/cart", controller.addCartItem);
+router.post("/api/customers/cart", controller.addCartItem);
 
-router.delete("/api/customers/:customerId/clearCart", controller.clearCart);
+router.delete("/api/customers/clearCart", controller.clearCart);
 
-// router.put("/api/customers/:customerId/cart/:cartItemId",controller.updateCartItem);
+// router.put("/api/customers/cart/:cartItemId",controller.updateCartItem);
 
-router.delete("/api/customers/:customerId/cart/:cartItemId", controller.deleteCartItem);
+router.delete("/api/customers/cart/:cartItemId", controller.deleteCartItem);
 
 // Wishlist APIs
-router.get("/api/customers/:customerId/wishlist", controller.getWishlistItems);
+router.get("/api/customers/wishlist", controller.getWishlistItems);
 
-router.post("/api/customers/:customerId/wishlist", controller.addWishlistItem);
+router.post("/api/customers/wishlist", controller.addWishlistItem);
 
-router.put("/api/customers/:customerId/wishlist/:wishlistItemId", controller.updateWishlistItem);
+router.put("/api/customers/wishlist/:wishlistItemId", controller.updateWishlistItem);
 
-router.delete("/api/customers/:customerId/wishlist/:wishlistItemId", controller.deleteWishlistItem);
+router.delete("/api/customers/wishlist/:wishlistItemId", controller.deleteWishlistItem);
 
 // Address APIs
-router.get("/api/customers/:customerId/addresses", controller.getAddresses);
+router.get("/api/customers/addresses", controller.getAddresses);
 
-router.post("/api/customers/:customerId/addresses", controller.addAddress);
+router.post("/api/customers/addresses", controller.addAddress);
 
-router.put("/api/customers/:customerId/addresses/:addressId", controller.updateAddress);
+router.put("/api/customers/addresses/:addressId", controller.updateAddress);
 
-router.delete("/api/customers/:customerId/addresses/:addressId", controller.deleteAddress);
+router.delete("/api/customers/addresses/:addressId", controller.deleteAddress);
 
 // Order APIs
-router.post("/api/customers/:customerId/placeOrder", controller.placeOrder);
+router.post("/api/customers/placeOrder", controller.placeOrder);
 
-router.get("/api/customers/:customerId/orders/:orderId", controller.getOrderById);
+router.get("/api/customers/orders/:orderId", controller.getOrderById);
 
-router.get("/api/customers/:customerId/orders", controller.getCustomerOrders);
+router.get("/api/customers/orders", controller.getCustomerOrders);
 
-router.put("/api/customers/:customerId/orders/:orderId", controller.updateOrder);
+router.put("/api/customers/orders/:orderId", controller.updateOrder);
 
-router.get( "/api/customers/:customerId/orders/:orderId/items/:itemId", controller.getOrderItem);
+router.get( "/api/customers/orders/:orderId/items/:itemId", controller.getOrderItem);
 
 export default router;

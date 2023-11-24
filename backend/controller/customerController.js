@@ -3,49 +3,51 @@ import { Order } from "../models/order.js";
 import Cake from "../models/cake.js";
 import razorpay from "../config/razorpay.js";
 import uniqid from "uniqid";
-import generateUniqueId from "generate-unique-id";
 // Customer
 export async function getCustomerDetails(req, res) {
   try {
-    let customerDetails = await Customer.find({ _id: req.params.customerId });
+    let customerDetails = await Customer.find({ uid: req.user });
     res.status(200).json(customerDetails);
   } catch (err) {
-    console.log("Error fetching customerDetails: " + JSON.stringify(err));
+    console.log("Error fetching customerDetails: ");
+    console.log(err);
     res.status(500).json({ error: "Error getting customer details" });
   }
 }
 
 export async function addCustomerAccount(req, res) {
   try {
-    const newCustomer = new Customer(req.body);
+    const newCustomer = new Customer({ uid: req.user, ...req.body });
     const savedCustomer = await newCustomer.save();
     res.status(201).json(savedCustomer);
   } catch (error) {
-    console.log("Error adding Customer: " + JSON.stringify(error));
+    console.log("Error adding Customer: ");
+    console.log(error);
     res.status(500).json({ error: "Error adding customer" });
   }
 }
 
 export async function updateCustomerDetails(req, res) {
   try {
-    const updatedCustomer = await Customer.findByIdAndUpdate(
-      req.params.customerId,
+    const updatedCustomer = await Customer.findOneAndUpdate({ "uid": req.user },
       req.body,
       { new: true }
     );
     res.status(200).json(updatedCustomer);
   } catch (error) {
-    console.log("Error updating Customer: " + JSON.stringify(error));
+    console.log("Error updating Customer: ");
+    console.log(error);
     res.status(500).json({ error: "Error updating Customer" });
   }
 }
 
 export async function deleteCustomerAccount(req, res) {
   try {
-    await Customer.findByIdAndRemove(req.params.customerId);
+    await Customer.findOneAndDelete({ "uid": req.user });
     res.status(204).json({ message: "Customer deleted" });
   } catch (error) {
-    console.log("Error deleting Customer: " + JSON.stringify(error));
+    console.log("Error deleting Customer: ");
+    console.log(error);
     res.status(500).json({ error: "Error deleting Customer" });
   }
 }
@@ -53,7 +55,7 @@ export async function deleteCustomerAccount(req, res) {
 // Cart
 export async function getCartItems(req, res) {
   try {
-    const customer = await Customer.findById(req.params.customerId);
+    const customer = await Customer.find({ uid: req.user });
     const cartItems = customer.cart;
     res.json([
       {
@@ -62,14 +64,15 @@ export async function getCartItems(req, res) {
       },
     ]);
   } catch (error) {
-    console.log("Error getting CartItems: " + JSON.stringify(error));
+    console.log("Error getting CartItems: ");
+    console.log(error);
     res.status(400).json({ error: "Error getting cartItems" });
   }
 }
 
 export async function addCartItem(req, res) {
   try {
-    const customer = await Customer.findById(req.params.customerId);
+    const customer = await Customer.find({ uid: req.user });
     customer.cart.push(req.body);
 
     const cakePrice = req.body.price;
@@ -84,14 +87,15 @@ export async function addCartItem(req, res) {
       },
     ]);
   } catch (error) {
-    console.log("Error adding cartItem: " + JSON.stringify(error));
+    console.log("Error adding cartItem: ");
+    console.log(error);
     res.status(500).json({ error: "Error adding cartItem" });
   }
 }
 
 // export async function updateCartItem(req, res) {
 //   try {
-//     const customer = await Customer.findById(req.params.customerId);
+//     const customer = await Customer.find({ "uid": req.user });
 //     const cartItem = customer.cart.id(req.params.cartItemId);
 //     if (cartItem) {
 //       if (req.body.quantity != undefined) {
@@ -116,14 +120,15 @@ export async function addCartItem(req, res) {
 //       res.status(404).json({ error: "Cart item not found" });
 //     }
 //   } catch (error) {
-//     console.log("Error updating CartItem: " + JSON.stringify(error));
+//     console.log("Error updating CartItem: " );
+//      console.log(error);
 //     res.status(500).json({ error: "Error updating CartItem" });
 //   }
 // }
 
 export async function deleteCartItem(req, res) {
   try {
-    const customer = await Customer.findById(req.params.customerId);
+    const customer = await Customer.find({ uid: req.user });
     const cartItem = customer.cart.id(req.params.cartItemId);
     const cakePrice = (await Cake.find({ cakeId: cartItem.cakeId }))[0].price;
     const quantity = cartItem.quantity;
@@ -138,14 +143,15 @@ export async function deleteCartItem(req, res) {
       },
     ]);
   } catch (error) {
-    console.log("Error deleting cartItem" + JSON.stringify(error));
+    console.log("Error deleting cartItem");
+    console.log(error);
     res.status(400).json({ error: "Error deleting cartItem" });
   }
 }
 
 export async function clearCart(req, res) {
   try {
-    const customer = await Customer.findById(req.params.customerId);
+    const customer = await Customer.find({ uid: req.user });
     customer.totalCartValue = 0;
     customer.cart = [];
     const savedCustomer = await customer.save();
@@ -156,7 +162,8 @@ export async function clearCart(req, res) {
       },
     ]);
   } catch (error) {
-    console.log("Error clearing cart" + JSON.stringify(error));
+    console.log("Error clearing cart");
+    console.log(error);
     res.status(400).json({ error: "Error clearing cart" });
   }
 }
@@ -164,30 +171,32 @@ export async function clearCart(req, res) {
 // Wishlist
 export async function getWishlistItems(req, res) {
   try {
-    const customer = await Customer.findById(req.params.customerId);
+    const customer = await Customer.find({ uid: req.user });
     const wishlistItems = customer.wishlist;
     res.status(200).json(wishlistItems);
   } catch (error) {
-    console.log("Error getting Wishlist Items: " + JSON.stringify(error));
+    console.log("Error getting Wishlist Items: ");
+    console.log(error);
     res.status(500).json({ error: "Error getting wishlist items" });
   }
 }
 
 export async function addWishlistItem(req, res) {
   try {
-    const customer = await Customer.findById(req.params.customerId);
+    const customer = await Customer.find({ uid: req.user });
     customer.wishlist.push(req.body);
     const savedCustomer = await customer.save();
     res.status(200).json(savedCustomer.wishlist);
   } catch (error) {
-    console.log("Error adding wishlist item: " + JSON.stringify(error));
+    console.log("Error adding wishlist item: ");
+    console.log(error);
     res.status(500).json({ error: "Error adding wishlist item" });
   }
 }
 
 export async function updateWishlistItem(req, res) {
   try {
-    const customer = await Customer.findById(req.params.customerId);
+    const customer = await Customer.find({ uid: req.user });
     const wishlistItem = customer.wishlist.id(req.params.wishlistItemId);
     if (wishlistItem) {
       wishlistItem.set(req.body);
@@ -197,21 +206,21 @@ export async function updateWishlistItem(req, res) {
       res.status(404).json({ error: "Wishlist item not found" });
     }
   } catch (error) {
-    console.log("Error updating Wishlist Item: " + JSON.stringify(error));
+    console.log("Error updating Wishlist Item: ");
+    console.log(error);
     res.status(500).json({ error: "Error updating wishlist item" });
   }
 }
 
 export async function deleteWishlistItem(req, res) {
   try {
-    const customer = await Customer.findById(req.params.customerId);
+    const customer = await Customer.find({ uid: req.user });
     customer.wishlist.pull({ cakeId: req.params.wishlistItemId });
     const savedCustomer = await customer.save();
-    res
-      .status(200)
-      .json((await Customer.findById(req.params.customerId)).wishlist);
+    res.status(200).json((await Customer.find({ uid: req.user })).wishlist);
   } catch (error) {
-    console.log("Error deleting wishlist item: " + JSON.stringify(error));
+    console.log("Error deleting wishlist item: ");
+    console.log(error);
     res.status(500).json({ error: "Error deleting wishlist item" });
   }
 }
@@ -219,30 +228,32 @@ export async function deleteWishlistItem(req, res) {
 // Address
 export async function getAddresses(req, res) {
   try {
-    const customer = await Customer.findById(req.params.customerId);
+    const customer = await Customer.find({ uid: req.user });
     const addresses = customer.addresses;
     res.status(200).json(addresses);
   } catch (error) {
-    console.log("Error getting Addresses: " + JSON.stringify(error));
+    console.log("Error getting Addresses: ");
+    console.log(error);
     res.status(500).json({ error: "Error getting addresses" });
   }
 }
 
 export async function addAddress(req, res) {
   try {
-    const customer = await Customer.findById(req.params.customerId);
+    const customer = await Customer.find({ uid: req.user });
     customer.addresses.push(req.body);
     const savedCustomer = await customer.save();
     res.status(200).json(savedCustomer.addresses);
   } catch (error) {
-    console.log("Error adding address: " + JSON.stringify(error));
+    console.log("Error adding address: ");
+    console.log(error);
     res.status(500).json({ error: "Error adding address" });
   }
 }
 
 export async function updateAddress(req, res) {
   try {
-    const customer = await Customer.findById(req.params.customerId);
+    const customer = await Customer.find({ uid: req.user });
     const address = customer.addresses.id(req.params.addressId);
     if (address) {
       address.set(req.body);
@@ -252,19 +263,21 @@ export async function updateAddress(req, res) {
       res.status(404).json({ error: "Address not found" });
     }
   } catch (error) {
-    console.log("Error updating Address: " + JSON.stringify(error));
+    console.log("Error updating Address: ");
+    console.log(error);
     res.status(500).json({ error: "Error updating address" });
   }
 }
 
 export async function deleteAddress(req, res) {
   try {
-    const customer = await Customer.findById(req.params.customerId);
+    const customer = await Customer.find({ uid: req.user });
     customer.addresses.pull({ _id: req.params.addressId });
     const savedCustomer = await customer.save();
     res.status(200).json(savedCustomer.addresses);
   } catch (error) {
-    console.log("Error deleting address: " + JSON.stringify(error));
+    console.log("Error deleting address: ");
+    console.log(error);
     res.status(500).json({ error: "Error deleting address" });
   }
 }
@@ -276,17 +289,17 @@ export async function placeOrder(req, res) {
 
   try {
     // Fetch the customer and add the order's ID to the orders array
-    let customer = await Customer.findById(req.params.customerId);
+    let customer = await Customer.find({ uid: req.user });
     if (!customer || !customer.cart) {
       console.error("Customer not found");
       return res.status(404).json({ error: "Customer not found" });
     }
     const orderDetails = req.body;
     let orderData = {
-      receipt_id:uniqid.process("RECEIPT-"),
+      receipt_id: uniqid.process("RECEIPT-"),
       items: customer.cart,
       totalAmount: customer.totalCartValue,
-      customerId: req.params.customerId,
+      customerId: req.user,
       ...orderDetails,
     };
 
@@ -344,7 +357,8 @@ export async function placeOrder(req, res) {
       return res.status(201).json(savedOrder);
     }
   } catch (error) {
-    console.error("Error creating order: " + JSON.stringify(error));
+    console.error("Error creating order: ");
+    console.log(error);
     res.status(500).json({ error: "Error creating order" });
   }
 }
@@ -367,9 +381,7 @@ export async function getOrderById(req, res) {
 export async function getCustomerOrders(req, res) {
   // Retrieve a customer's orders by customer ID
   try {
-    const customer = await Customer.findById(req.params.customerId).populate(
-      "orders"
-    );
+    const customer = await Customer.find({ uid: req.user }).populate("orders");
     if (!customer) {
       res.status(404).json({ error: "Customer not found" });
     } else {

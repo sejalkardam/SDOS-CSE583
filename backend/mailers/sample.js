@@ -1,7 +1,6 @@
 import { emailTransporter } from "../config/nodemailer.js";
 import dotenv from "dotenv";
 dotenv.config();
-console.log();
 export const sendMail = async (email) => {
   try {
     const html = `
