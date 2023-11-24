@@ -1,8 +1,7 @@
-import { emailTransporter } from "../config/nodemailer.js";
+import emailTransporter  from "../config/nodemailer.js";
 import dotenv from "dotenv";
 dotenv.config();
-console.log();
-export const sendMail = async (email) => {
+const sendMail = async (email) => {
   try {
     const html = `
     <div style="font-family: 'Arial', sans-serif; background-color: #f7f7f7; margin: 0; padding: 20px;">
@@ -58,3 +57,5 @@ export const sendMail = async (email) => {
     console.log("ERROR in sending sample mail: ", err);
   }
 };
+
+export default sendMail;

@@ -16,14 +16,7 @@ oauth2Client.setCredentials({
 
 async function createTransporter() {
   try {
-    
-    const accessToken = oauth2Client.getAccessToken((err, token) => {
-      if (err) {
-        console.log("Error in getting Access Token: ", err);
-      }
-      return token;
-    });
-
+    const accessToken = await oauth2Client.getAccessToken();
     const transporter = await createTransport({
       service: "gmail",
       auth: {
@@ -37,6 +30,8 @@ async function createTransporter() {
     });
     return transporter;
   } catch (err) {
+    console.log("Error in createTransporter function");
+    console.log(err);
     return err;
   }
 }

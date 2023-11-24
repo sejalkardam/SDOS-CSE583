@@ -67,63 +67,72 @@ const cartItemSchema = new mongoose.Schema({
 });
 
 // Define the schema for Customer
-const customerSchema = new mongoose.Schema({
-  firstName: {
-    type: String,
-    description: "First name of the customer",
-    required: true,
+const customerSchema = new mongoose.Schema(
+  {
+    uid:{
+      type:String,
+      required:true,
+      unique:true
+    },
+    firstName: {
+      type: String,
+      description: "First name of the customer",
+      required: true,
+    },
+    lastName: {
+      type: String,
+      description: "Last name of the customer",
+      required: true,
+    },
+    age: {
+      type: Number,
+      description: "Age of the customer",
+    },
+    email: {
+      type: String,
+      description: "Email address of the customer",
+    },
+    phoneNumber: {
+      type: String,
+      description: "Phone number of the customer",
+    },
+    addresses: {
+      type: [addressSchema],
+      description: "List of customer addresses",
+      default: [],
+    },
+    birthDate: {
+      type: Date,
+      description: "Birthday of the customer",
+    },
+    anniversaryDate: {
+      type: Date,
+      description: "Anniversary of the customer",
+    },
+    wishlist: {
+      type: [wishlistItemSchema],
+      description: "List of product IDs in the customer's wishlist",
+      default: [],
+    },
+    orders: {
+      type: [String],
+      description: "List of customer's order IDs",
+      default: [],
+    },
+    cart: {
+      type: [cartItemSchema],
+      description: "List of items in the customer's cart",
+      default: [],
+    },
+    totalCartValue: {
+      type: Number,
+      description: "The total value of all products in the customer's cart",
+      default: 0,
+    },
   },
-  lastName: {
-    type: String,
-    description: "Last name of the customer",
-    required: true,
-  },
-  age: {
-    type: Number,
-    description: "Age of the customer",
-  },
-  email: {
-    type: String,
-    description: "Email address of the customer",
-  },
-  phoneNumber: {
-    type: String,
-    description: "Phone number of the customer",
-  },
-  addresses: {
-    type: [addressSchema],
-    description: "List of customer addresses",
-    default: [],
-  },
-  birthDate: {
-    type: Date,
-    description: "Birthday of the customer",
-  },
-  anniversaryDate: {
-    type: Date,
-    description: "Anniversary of the customer",
-  },
-  wishlist: {
-    type: [wishlistItemSchema],
-    description: "List of product IDs in the customer's wishlist",
-    default: [],
-  },
-  orders: {
-    type: [String],
-    description: "List of customer's order IDs",
-    default: [],
-  },
-  cart: {
-    type: [cartItemSchema],
-    description: "List of items in the customer's cart",
-    default: [],
-  },
-  totalCartValue:{
-    type:Number,
-    description:"The total value of all products in the customer's cart",
-    default: 0
-  }
-},{ versionKey: false });
+  { versionKey: false},
+  
+);
 
 const Customer = mongoose.model("Customer", customerSchema);
 
