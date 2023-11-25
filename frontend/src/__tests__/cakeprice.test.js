@@ -6,6 +6,7 @@ import Footer from "../components/Footer";
 import Contact from "../pages/Contact";
 import OrderPage from "../pages/Order_Page";
 import Home from "../pages/Home";
+import About from "../pages/About";
 import ProductPage from "../pages/ProductPage";
 import add from "../pages/sum";
 import '@testing-library/jest-dom';
@@ -37,6 +38,7 @@ describe('Footer component', () => {
     });
 });
 
+/////////////////////// CONTACT PAGE ////////////////////////////////
 test("renders contact page with form", () => {
     render(
       <MemoryRouter>
@@ -60,6 +62,18 @@ test("renders contact page with form", () => {
     expect(phoneInput).toBeInTheDocument();
     expect(messageInput).toBeInTheDocument();
     expect(submitButton).toBeInTheDocument();
+
+    const whatsappIcon = screen.getByAltText("Whatsapp");
+    expect(whatsappIcon).toBeInTheDocument();
+    expect(whatsappIcon.closest("a")).toHaveAttribute("href", "https://wa.me/919911114128");
+
+    const instagramIcon = screen.getByAltText("Instagram");
+    expect(instagramIcon).toBeInTheDocument();
+    expect(instagramIcon.closest("a")).toHaveAttribute("href", "https://www.instagram.com/paa.creations");
+
+    const facebookIcon = screen.getByAltText("Facebook");
+    expect(facebookIcon).toBeInTheDocument();
+    expect(facebookIcon.closest("a")).toHaveAttribute("href", "https://www.facebook.com/paacreations");
 
   });
 
@@ -223,6 +237,110 @@ test('renders the WhatsApp button', () => {
     fireEvent.click(image2);
   
     expect(require('react-router-dom').useNavigate).toHaveBeenCalledWith('/ProductPage1');
+  });
+
+  /////////////// ABOUT PAGE ////////////////////
+
+  test("renders About page with proper content", async () => {
+    render(
+      <MemoryRouter>
+        <About />
+      </MemoryRouter>
+    );
+  
+    // Check if the main title is rendered
+    const mainTitle = screen.getByText("About Paa Creations");
+    expect(mainTitle).toBeInTheDocument();
+  
+    // Check if the founder's story section is rendered
+    const foundersStoryTitle = screen.getByText("Founder's Story");
+    expect(foundersStoryTitle).toBeInTheDocument();
+  
+    // Mock data for description
+    const mockDescription = "Sample description text";
+    const descriptionElement = await screen.findByText(mockDescription);
+    expect(descriptionElement).toBeInTheDocument();
+  
+    // Check if the 'Get in Touch' button is present and clicking navigates to '/contact'
+    const getInTouchButton = screen.getByText("Get in Touch");
+    expect(getInTouchButton).toBeInTheDocument();
+  
+    // Simulate click event and verify if it navigates to '/contact'
+    getInTouchButton.click();
+    await waitFor(() => {
+      expect(window.location.href).toContain("/contact");
+    });
+  });
+
+  test("opens Instagram profile in a new tab on Instagram link click", () => {
+    render(
+      <MemoryRouter>
+        <Home />
+      </MemoryRouter>
+    );
+  
+    // Simulate clicking on the Instagram link
+    const instagramLink = screen.getByAltText("Instagram"); // Replace "Instagram" with the alt text of the Instagram image
+    fireEvent.click(instagramLink);
+  
+    // Ensure that a new tab for the Instagram profile is opened
+    expect(window.open).toHaveBeenCalledWith("https://www.instagram.com/paacreations");
+    // Add more specific checks or assertions for the link functionality
+  });
+
+  test("navigates to 'about' page when clicking on a specific section", () => {
+    render(
+      <MemoryRouter>
+        <Home />
+      </MemoryRouter>
+    );
+  
+    // Simulate navigation clicks
+    const aboutSection = screen.getByText("About"); // Replace "About" with the text used to navigate to the About page
+    fireEvent.click(aboutSection);
+    
+    // Ensure that navigation to the 'about' page occurred
+    expect(window.location.pathname).toBe("/about");
+    // Add more assertions or expectations based on the specific navigation action or behavior
+  });
+
+  ////////////////// ORDER PAGE /////////////////////
+
+  test("renders Previous Orders section with order details", async () => {
+    render(
+      <MemoryRouter>
+        <OrderPage />
+      </MemoryRouter>
+    );
+  
+    // Check if the heading for Previous Orders is rendered
+    const headingElement = screen.getByText("Previous Orders");
+    expect(headingElement).toBeInTheDocument();
+  
+    // Mocked order data
+    const mockedOrder = {
+      dateOfOrder: "2023-11-20",
+      productName: "Chocolate Cake",
+      deliveryAddress: "123 Main St",
+      orderTotal: 30,
+      productImgUrl: "https://example.com/chocolate-cake.jpg",
+      orderStatus: "Delivered",
+    };
+  
+    // Check if the OrderCard component is rendered with order details
+    const dateElement = await screen.findByText(mockedOrder.dateOfOrder);
+    expect(dateElement).toBeInTheDocument();
+  
+    const cakeNameElement = screen.getByText(mockedOrder.productName);
+    expect(cakeNameElement).toBeInTheDocument();
+  
+    const addressElement = screen.getByText(mockedOrder.deliveryAddress);
+    expect(addressElement).toBeInTheDocument();
+  
+    const amountElement = screen.getByText(`$${mockedOrder.orderTotal}`);
+    expect(amountElement).toBeInTheDocument();
+  
+    // Add more specific checks for other order details displayed on the page
   });
 
 // jest.mock('react-router-dom', () => ({
