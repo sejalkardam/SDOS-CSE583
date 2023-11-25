@@ -20,7 +20,7 @@ app.use(cors());
 // Middleware to parse JSON requests
 app.use(bodyParser.json());
 
-//Middleware to verify routes
+// Middleware to verify routes
 app.use(verifyToken);
 
 app.use("/", sellerRoutes);

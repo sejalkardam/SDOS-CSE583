@@ -1,10 +1,10 @@
-import React, { useEffect, useState } from 'react'
-import client from '../sanityClient'
-import { useParams, Link } from 'react-router-dom';
+import React, { useEffect, useState } from "react";
+import client from "../sanityClient";
+import { useParams, Link } from "react-router-dom";
 import CakeCard from "../components/CakeCard";
 import Drift from "react-driftjs";
-import axios from 'axios';
-import Popup from 'reactjs-popup';
+import axios from "axios";
+import Popup from "reactjs-popup";
 import { auth, provider } from "../googleAuthClient";
 
 export default function CakeProductPage() {
@@ -12,19 +12,24 @@ export default function CakeProductPage() {
 
   const createOrder = async () => {
     console.log("create order");
-    const email = localStorage.getItem('paa_emailID');
+    const email = localStorage.getItem("paa_emailID");
     if (!email) {
       alert("Please login to place an order");
       return;
     }
-    const name = localStorage.getItem('paa_displayName');
-    const phoneNum = document.getElementById('phoneNumber').value;
+    const name = localStorage.getItem("paa_displayName");
+    const phoneNum = document.getElementById("phoneNumber").value;
     if (phoneNum.length != 10) {
       alert("Please enter a valid phone number");
       return;
     }
 
-    const address = document.getElementById('address').value + " " + document.getElementById('pincode').value + " " + document.getElementById('state').value;
+    const address =
+      document.getElementById("address").value +
+      " " +
+      document.getElementById("pincode").value +
+      " " +
+      document.getElementById("state").value;
     if (address.length < 10) {
       alert("Please enter a valid address");
       return;
@@ -41,52 +46,52 @@ export default function CakeProductPage() {
 
     try {
       console.log("create order1");
-      await client.create({
-        _type: "orders",
-        customerEmail: email,
-        customerName: name,
-        customerPhone: phoneNum,
-        deliveryAddress: address,
-        dateOfOrder: dateOfOrder,
-        modeOfPayment: "cod",
-        orderStatus: "pending",
-        cakeSize: size,
-        orderTotal: orderCost,
-        paymentStatus: "pending",
-        productName: cakeName,
-        productSlug: cakeSlug,
-        productImgUrl: cakeUrl,
-        instructions: document.getElementById("instructions").value
-      })
+      await client
+        .create({
+          _type: "orders",
+          customerEmail: email,
+          customerName: name,
+          customerPhone: phoneNum,
+          deliveryAddress: address,
+          dateOfOrder: dateOfOrder,
+          modeOfPayment: "cod",
+          orderStatus: "pending",
+          cakeSize: size,
+          orderTotal: orderCost,
+          paymentStatus: "pending",
+          productName: cakeName,
+          productSlug: cakeSlug,
+          productImgUrl: cakeUrl,
+          instructions: document.getElementById("instructions").value,
+        })
         .then((res) => {
           console.log(`doc was created, document ID is ${res._id}`);
-          alert("Order placed successfully. Please continue to browse for more!");
+          alert(
+            "Order placed successfully. Please continue to browse for more!"
+          );
           window.location.href = "/catalogue";
         });
-
     } catch (err) {
       console.error(err);
-
     }
-
-  }
+  };
 
   const [size, setSize] = useState("");
 
   const paymentHandler = async (e) => {
     e.preventDefault();
 
-    const API_URL = 'http://localhost:5000'
-    const CUSTOMER_ID = "6545274f7b95613a10c62c17";
-
-    //Adding Element to Cart
-    const cartData = {
-      name: "Lemon Zest Cake",
-      price: 1500,
-      quantity: 1,
-    };
-
     try {
+      const API_URL = "http://localhost:5000";
+      
+
+      //Adding Element to Cart
+      const cartData = {
+        name: "Lemon Zest Cake",
+        price: 1500,
+        quantity: 1,
+      };
+
       const user = auth.currentUser;
       const token = user && (await user.getIdToken());
 
@@ -96,88 +101,89 @@ export default function CakeProductPage() {
           Authorization: `Bearer ${token}`,
         },
       };
-      
+
       const cart_response = await axios.post(
-        `${API_URL}/api/customers/${CUSTOMER_ID}/cart`,
-        cartData, 
+        `${API_URL}/api/customers/cart`,
+        cartData,
         payloadHeader
       );
-      // const res = await fetch("http://localhost:3001", payloadHeader);
-      // console.log(await res.text());
-    } catch (e) {
-      console.log(e);
-    }
 
-    
-    if (cart_response.status != 200) {
-      console.log(cart_response);
-      return;
-    }
-
-    //Placing Order
-    const orderData = {
-      addressId: "654527837b95613a10c62c1e",
-      modeOfPayment: "onlinePayment",
-      status: "PENDING",
-    };
-
-    const order_response = await axios.post(
-      `${API_URL}/api/customers/${CUSTOMER_ID}/placeOrder`,
-      orderData
-    );
-
-
-    if (order_response.status != 201) {
-      console.log(order_response);
-
-      const clear_cart_response = await axios.delete(
-        `${API_URL}/api/customers/${CUSTOMER_ID}/clearCart`
-      );
-      if (clear_cart_response.status != 200) {
-        console.log(clear_cart_response);
+      if (cart_response.status != 200) {
+        console.log(cart_response);
         return;
       }
 
+      //Placing Order
+      const orderData = {
+        addressId: "654527837b95613a10c62c1e",
+        modeOfPayment: "onlinePayment",
+        status: "PENDING",
+      };
+
+      const order_response = await axios.post(
+        `${API_URL}/api/customers/placeOrder`,
+        orderData,
+        payloadHeader
+      );
+
+      if (order_response.status != 201) {
+        console.log(order_response);
+
+        const clear_cart_response = await axios.delete(
+          `${API_URL}/api/customers/clearCart`,
+          payloadHeader
+        );
+        if (clear_cart_response.status != 200) {
+          console.log(clear_cart_response);
+          return;
+        }
+
+        return;
+      } else if (order_response.data["modeOfPayment"] === "onlinePayment") {
+        const options = {
+          key: "rzp_test_cdAOF7anh4Wyon",
+          name: "PAA Creations",
+          description: "Cakes made easy!",
+          order_id: order_response.data.psp_orderId,
+          handler: async (response) => {
+            try {
+              const verifyData = {
+                rzp_paymentId: response.razorpay_payment_id,
+                rzp_signature: response.razorpay_signature,
+                psp_orderId: order_response.data.psp_orderId,
+                orderId: order_response.data._id,
+              };
+
+              const url = `${API_URL}/api/seller/verifyPayment`;
+              const verifyResponse = await axios.post(
+                url,
+                verifyData,
+                payloadHeader
+              );
+              alert(verifyResponse.data);
+            } catch (err) {
+              console.log(err);
+            }
+          },
+          theme: {
+            color: "#686CFD",
+          },
+        };
+        const rzp1 = new window.Razorpay(options);
+        rzp1.open();
+      }
+    } catch (err) {
+      console.log(err);
       return;
     }
-
-    else if (order_response.data["modeOfPayment"] === "onlinePayment") {
-
-      const options = {
-        key: "rzp_test_cdAOF7anh4Wyon",
-        name: "PAA Creations",
-        description: "Cakes made easy!",
-        order_id: order_response.data.psp_orderId,
-        handler: async (response) => {
-          try {
-            const verifyData = {
-              rzp_paymentId: response.razorpay_payment_id,
-              rzp_signature: response.razorpay_signature,
-              psp_orderId: order_response.data.psp_orderId,
-              orderId: order_response.data._id,
-            };
-
-            const url = `${API_URL}/api/seller/verifyPayment`;
-            const verifyResponse = await axios.post(url, verifyData);
-            alert(verifyResponse.data);
-          } catch (err) {
-            console.log(err);
-          }
-        },
-        theme: {
-          color: "#686CFD",
-        },
-      };
-      const rzp1 = new window.Razorpay(options);
-      rzp1.open();
-    }
-
   };
 
   const [partialCakesData, setPartialCakesData] = useState([]);
 
   useEffect(() => {
-    client.fetch(`*[_type == "cakes"]{
+    client
+      .fetch(
+        `*[_type == "cakes"]{
               name,
               slugurl,
               description,
@@ -188,11 +194,12 @@ export default function CakeProductPage() {
                     url
                 }
             }   
-          }`).then((res) => {
-      console.log(res);
-      setPartialCakesData(res);
-
-    });
+          }`
+      )
+      .then((res) => {
+        console.log(res);
+        setPartialCakesData(res);
+      });
   }, []);
   const [cakeDetails, setCakeDetails] = useState(null);
   useEffect(() => {
@@ -210,7 +217,7 @@ export default function CakeProductPage() {
         console.log(result);
         setCakeDetails(result);
       } catch (error) {
-        console.error('Error fetching cake details:', error.message);
+        console.error("Error fetching cake details:", error.message);
       }
     };
     fetchCake();
@@ -308,10 +315,15 @@ export default function CakeProductPage() {
             </button>
           )}
 
-          <button className="bg-opacity-0 border-solid border-2 text-lg px-12 py-2 rounded-lg" onClick={paymentHandler}>Temporary</button>
+          <button
+            className="bg-opacity-0 border-solid border-2 text-lg px-12 py-2 rounded-lg"
+            onClick={paymentHandler}
+          >
+            Temporary
+          </button>
         </div>
         <h3>Instructions</h3>
-        <input id='instructions' className="mb-8 h-24" type="text" />
+        <input id="instructions" className="mb-8 h-24" type="text" />
       </div>
 
       <div className="flex flex-row items-center justify-center mt-8 space-x-4">
@@ -338,10 +350,7 @@ export default function CakeProductPage() {
         <Popup
           trigger={
             <div className="text-[0.88rem] uppercase font-medium inline-block w-[6.13rem]">
-              <div
-
-                className="border-solid border-2 flex space-x-2 flex-row items-center justify-center rounded-3xs w-[10.13rem] h-[3.13rem] border-4"
-              >
+              <div className="border-solid border-2 flex space-x-2 flex-row items-center justify-center rounded-3xs w-[10.13rem] h-[3.13rem] border-4">
                 Order Now
               </div>
             </div>

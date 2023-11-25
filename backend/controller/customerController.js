@@ -6,7 +6,7 @@ import uniqid from "uniqid";
 // Customer
 export async function getCustomerDetails(req, res) {
   try {
-    let customerDetails = await Customer.find({ uid: req.user });
+    let customerDetails = await Customer.findOne({ uid: req.user });
     res.status(200).json(customerDetails);
   } catch (err) {
     console.log("Error fetching customerDetails: ");
@@ -17,9 +17,20 @@ export async function getCustomerDetails(req, res) {
 
 export async function addCustomerAccount(req, res) {
   try {
-    const newCustomer = new Customer({ uid: req.user, ...req.body });
-    const savedCustomer = await newCustomer.save();
-    res.status(201).json(savedCustomer);
+    let customerDetails = await Customer.findOne({ uid: req.user });
+    if(customerDetails){
+      console.log("Customer already exists");
+      res.status(200);
+    }
+    else{
+       console.log("Customer needs to be added");
+       const newCustomer = new Customer({ uid: req.user, ...req.body });
+       const savedCustomer = await newCustomer.save();
+       console.log(savedCustomer);
+       res.status(201).json(savedCustomer);
+
+    }
+   
   } catch (error) {
     console.log("Error adding Customer: ");
     console.log(error);
@@ -55,7 +66,7 @@ export async function deleteCustomerAccount(req, res) {
 // Cart
 export async function getCartItems(req, res) {
   try {
-    const customer = await Customer.find({ uid: req.user });
+    const customer = await Customer.findOne({ uid: req.user });
     const cartItems = customer.cart;
     res.json([
       {
@@ -72,7 +83,7 @@ export async function getCartItems(req, res) {
 
 export async function addCartItem(req, res) {
   try {
-    const customer = await Customer.find({ uid: req.user });
+    const customer = await Customer.findOne({ uid: req.user });
     customer.cart.push(req.body);
 
     const cakePrice = req.body.price;
@@ -128,7 +139,7 @@ export async function addCartItem(req, res) {
 
 export async function deleteCartItem(req, res) {
   try {
-    const customer = await Customer.find({ uid: req.user });
+    const customer = await Customer.findOne({ uid: req.user });
     const cartItem = customer.cart.id(req.params.cartItemId);
     const cakePrice = (await Cake.find({ cakeId: cartItem.cakeId }))[0].price;
     const quantity = cartItem.quantity;
@@ -151,7 +162,7 @@ export async function deleteCartItem(req, res) {
 
 export async function clearCart(req, res) {
   try {
-    const customer = await Customer.find({ uid: req.user });
+    const customer = await Customer.findOne({ uid: req.user });
     customer.totalCartValue = 0;
     customer.cart = [];
     const savedCustomer = await customer.save();
@@ -171,7 +182,7 @@ export async function clearCart(req, res) {
 // Wishlist
 export async function getWishlistItems(req, res) {
   try {
-    const customer = await Customer.find({ uid: req.user });
+    const customer = await Customer.findOne({ uid: req.user });
     const wishlistItems = customer.wishlist;
     res.status(200).json(wishlistItems);
   } catch (error) {
@@ -183,7 +194,7 @@ export async function getWishlistItems(req, res) {
 
 export async function addWishlistItem(req, res) {
   try {
-    const customer = await Customer.find({ uid: req.user });
+    const customer = await Customer.findOne({ uid: req.user });
     customer.wishlist.push(req.body);
     const savedCustomer = await customer.save();
     res.status(200).json(savedCustomer.wishlist);
@@ -196,7 +207,7 @@ export async function addWishlistItem(req, res) {
 
 export async function updateWishlistItem(req, res) {
   try {
-    const customer = await Customer.find({ uid: req.user });
+    const customer = await Customer.findOne({ uid: req.user });
     const wishlistItem = customer.wishlist.id(req.params.wishlistItemId);
     if (wishlistItem) {
       wishlistItem.set(req.body);
@@ -214,10 +225,10 @@ export async function updateWishlistItem(req, res) {
 
 export async function deleteWishlistItem(req, res) {
   try {
-    const customer = await Customer.find({ uid: req.user });
+    const customer = await Customer.findOne({ uid: req.user });
     customer.wishlist.pull({ cakeId: req.params.wishlistItemId });
     const savedCustomer = await customer.save();
-    res.status(200).json((await Customer.find({ uid: req.user })).wishlist);
+    res.status(200).json((await Customer.findOne({ uid: req.user })).wishlist);
   } catch (error) {
     console.log("Error deleting wishlist item: ");
     console.log(error);
@@ -228,7 +239,7 @@ export async function deleteWishlistItem(req, res) {
 // Address
 export async function getAddresses(req, res) {
   try {
-    const customer = await Customer.find({ uid: req.user });
+    const customer = await Customer.findOne({ uid: req.user });
     const addresses = customer.addresses;
     res.status(200).json(addresses);
   } catch (error) {
@@ -240,7 +251,7 @@ export async function getAddresses(req, res) {
 
 export async function addAddress(req, res) {
   try {
-    const customer = await Customer.find({ uid: req.user });
+    const customer = await Customer.findOne({ uid: req.user });
     customer.addresses.push(req.body);
     const savedCustomer = await customer.save();
     res.status(200).json(savedCustomer.addresses);
@@ -253,7 +264,7 @@ export async function addAddress(req, res) {
 
 export async function updateAddress(req, res) {
   try {
-    const customer = await Customer.find({ uid: req.user });
+    const customer = await Customer.findOne({ uid: req.user });
     const address = customer.addresses.id(req.params.addressId);
     if (address) {
       address.set(req.body);
@@ -271,7 +282,7 @@ export async function updateAddress(req, res) {
 
 export async function deleteAddress(req, res) {
   try {
-    const customer = await Customer.find({ uid: req.user });
+    const customer = await Customer.findOne({ uid: req.user });
     customer.addresses.pull({ _id: req.params.addressId });
     const savedCustomer = await customer.save();
     res.status(200).json(savedCustomer.addresses);
@@ -289,7 +300,7 @@ export async function placeOrder(req, res) {
 
   try {
     // Fetch the customer and add the order's ID to the orders array
-    let customer = await Customer.find({ uid: req.user });
+    let customer = await Customer.findOne({ uid: req.user });
     if (!customer || !customer.cart) {
       console.error("Customer not found");
       return res.status(404).json({ error: "Customer not found" });
@@ -381,7 +392,7 @@ export async function getOrderById(req, res) {
 export async function getCustomerOrders(req, res) {
   // Retrieve a customer's orders by customer ID
   try {
-    const customer = await Customer.find({ uid: req.user }).populate("orders");
+    const customer = await Customer.findOne({ uid: req.user }).populate("orders");
     if (!customer) {
       res.status(404).json({ error: "Customer not found" });
     } else {
