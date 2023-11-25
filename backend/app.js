@@ -9,7 +9,6 @@ import emailTransporter from "./config/nodemailer.js";
 import razorpay from "./config/razorpay.js";
 import bodyParser from "body-parser";
 import expressListEndpoints from "express-list-endpoints";
-import { verifyToken } from "./middleware/verifyToken.js";
 
 
 const app = express();
@@ -19,9 +18,6 @@ app.use(cors());
 
 // Middleware to parse JSON requests
 app.use(bodyParser.json());
-
-// Middleware to verify routes
-app.use(verifyToken);
 
 app.use("/", sellerRoutes);
 app.use("/", customerRoutes);
