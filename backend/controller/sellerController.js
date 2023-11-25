@@ -2,6 +2,9 @@ import Cakes from "../models/cake.js";
 import { Order } from "../models/order.js";
 import Coupon from "../models/coupon.js";
 import { validatePaymentVerification,validateWebhookSignature } from "razorpay/dist/utils/razorpay-utils.js";
+import sendContactMail from "../mailers/contactUs.js";
+import dotenv from "dotenv";
+dotenv.config();
 
 // Cakes
 export async function getCakes(req, res) {
@@ -322,4 +325,9 @@ export async function verifyWebHookPayment(req, res) {
       message: "Invalid Payement. Something Went Wrong",
     });
   }
+}
+
+export function contactMail (req,res){
+  sendContactMail(process.env.USER_EMAIL,req.body);
+  res.status(200);
 }

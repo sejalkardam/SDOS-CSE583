@@ -50,4 +50,8 @@ router.delete(
 
 router.post("/api/seller/verifyPayment", verifyToken, controller.verifyPayment);
 
+//Mails Apis
+
+router.post("/api/seller/contactUsMail",controller.contactMail);
+
 export default router;
