@@ -20,6 +20,15 @@ const Contact = () => {
     navigate("/home");
   }, [navigate]);
 
+  const contactFormSubmit = () => {
+    const message = document.getElementById("message").value;
+    const name = document.getElementById("name").value;
+    const phone = document.getElementById("phone").value;
+    const email = document.getElementById("email").value;
+    console.log(message, name, phone, email);
+
+  }
+
   return (
     <div className="contact-container">
       <div className="Bg_Pic">
@@ -92,7 +101,7 @@ const Contact = () => {
               </div>
 
 
-            <button type="submit" className="button-formatting">Let's Talk</button>
+            <button onClick={contactFormSubmit} type="button" className="button-formatting">Let's Talk</button>
           </form>
           {/* Content for the second column */}
         </div>

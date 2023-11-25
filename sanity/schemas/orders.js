@@ -68,6 +68,16 @@ export default {
             type: 'string',
             title: 'Image of cake'
         },
+        {
+            name: 'cakeSize',
+            type: 'string',
+            title: 'Size of cake'
+        },
+        {
+            name: 'instructions',
+            type: 'string',
+            title: 'Instructions'
+        },
         
     ]
 
