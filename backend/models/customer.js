@@ -55,9 +55,8 @@ const cartItemSchema = new mongoose.Schema({
    required: true
   },
   quantity: {
-    type: Number,
-    description: "Quantity of the cake ordered",
-    required: true,
+    type: String,
+    description: "Quantity of the cake ordered"
   },
   customization: {
     type: String,
@@ -97,7 +96,7 @@ const customerSchema = new mongoose.Schema(
       description: "Phone number of the customer",
     },
     addresses: {
-      type: [addressSchema],
+      type: [String],
       description: "List of customer addresses",
       default: [],
     },

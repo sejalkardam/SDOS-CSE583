@@ -9,8 +9,24 @@ import { auth, provider } from "../googleAuthClient";
 
 export default function CakeProductPage() {
   const { slug } = useParams();
+  const [modeOfPayment, setModeOfPayment] = useState("cashOnDelivery");
+  const [paymentStatus, setPaymentStatus] = useState("");
+  const [isChecked, setIsChecked] = useState(false);
+  const handleCheckboxChange = () => {
+    setIsChecked(!isChecked);
+    if (isChecked) {
+      console.log("Went to online");
+      
+      setModeOfPayment("onlinePayment");
 
-  const createOrder = async () => {
+    } else {
+      console.log("Went to offline");
+      setModeOfPayment("cashOnDelivery");
+    }
+    console.log(modeOfPayment);
+  };
+
+  const createOrder = async (mode_Payment,status_Payment) => {
     console.log("create order");
     const email = localStorage.getItem("paa_emailID");
     if (!email) {
@@ -54,11 +70,11 @@ export default function CakeProductPage() {
           customerPhone: phoneNum,
           deliveryAddress: address,
           dateOfOrder: dateOfOrder,
-          modeOfPayment: "cod",
+          modeOfPayment: mode_Payment,
           orderStatus: "pending",
           cakeSize: size,
           orderTotal: orderCost,
-          paymentStatus: "pending",
+          paymentStatus: status_Payment,
           productName: cakeName,
           productSlug: cakeSlug,
           productImgUrl: cakeUrl,
@@ -83,13 +99,13 @@ export default function CakeProductPage() {
 
     try {
       const API_URL = "http://localhost:5000";
-      
 
       //Adding Element to Cart
       const cartData = {
-        name: "Lemon Zest Cake",
-        price: 1500,
-        quantity: 1,
+        name: cakeDetails.name,
+        price: cakeDetails.price,
+        quantity: size,
+        customization: document.getElementById("instructions").value,
       };
 
       const user = auth.currentUser;
@@ -112,13 +128,33 @@ export default function CakeProductPage() {
         console.log(cart_response);
         return;
       }
+      const address =
+        document.getElementById("address").value +
+        " " +
+        document.getElementById("pincode").value +
+        " " +
+        document.getElementById("state").value;
 
       //Placing Order
-      const orderData = {
-        addressId: "654527837b95613a10c62c1e",
-        modeOfPayment: "onlinePayment",
-        status: "PENDING",
-      };
+      let orderData={}
+      if(isChecked){
+        orderData = {
+          address: address,
+          modeOfPayment: "onlinePayment",
+        };
+
+      }
+      else{
+        orderData = {
+          address: address,
+          modeOfPayment:"cashOnDelivery",
+        };
+
+      }
+      
+      
+
+      console.log(orderData);
 
       const order_response = await axios.post(
         `${API_URL}/api/customers/placeOrder`,
@@ -160,7 +196,8 @@ export default function CakeProductPage() {
                 verifyData,
                 payloadHeader
               );
-              alert(verifyResponse.data);
+              
+              await createOrder("onlinePayment","Captured");
             } catch (err) {
               console.log(err);
             }
@@ -171,6 +208,9 @@ export default function CakeProductPage() {
         };
         const rzp1 = new window.Razorpay(options);
         rzp1.open();
+      } else {
+        
+        await createOrder("cashOnDelivery","Pending");
       }
     } catch (err) {
       console.log(err);
@@ -314,13 +354,6 @@ export default function CakeProductPage() {
               2 kg
             </button>
           )}
-
-          <button
-            className="bg-opacity-0 border-solid border-2 text-lg px-12 py-2 rounded-lg"
-            onClick={paymentHandler}
-          >
-            Temporary
-          </button>
         </div>
         <h3>Instructions</h3>
         <input id="instructions" className="mb-8 h-24" type="text" />
@@ -359,7 +392,7 @@ export default function CakeProductPage() {
           nested
         >
           {(close) => (
-            <div className="modal bg-yellow-200 p-8 rounded-xl">
+            <div className="modal bg-yellow-200 p-8  w-[60vw] rounded-xl">
               <form>
                 <div className="mb-4">
                   <label
@@ -420,10 +453,25 @@ export default function CakeProductPage() {
                     required
                   />
                 </div>
+                <div className="mb-4">
+                  <label
+                    htmlFor="modeOfPayment"
+                    className="block text-gray-700 text-sm font-bold mb-2"
+                  >
+                    Pay Online?
+                    <input
+                      type="checkbox"
+                      id="modeOfPayment"
+                      checked={isChecked}
+                      onChange={handleCheckboxChange}
+                      className="w-full px-3 py-2 border rounded focus:outline-none focus:border-blue-500"
+                    />
+                  </label>
+                </div>
                 <button
                   type="button"
                   className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-700 focus:outline-none focus:shadow-outline-blue active:bg-blue-800"
-                  onClick={createOrder}
+                  onClick={paymentHandler}
                 >
                   Submit
                 </button>

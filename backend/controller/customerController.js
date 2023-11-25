@@ -84,11 +84,11 @@ export async function getCartItems(req, res) {
 export async function addCartItem(req, res) {
   try {
     const customer = await Customer.findOne({ uid: req.user });
-    customer.cart.push(req.body);
+    customer.cart=[req.body];
 
     const cakePrice = req.body.price;
-    const quantity = req.body.quantity;
-    customer.totalCartValue += cakePrice * quantity;
+   
+    customer.totalCartValue += cakePrice ;
 
     const savedCustomer = await customer.save();
     res.json([
@@ -349,21 +349,14 @@ export async function placeOrder(req, res) {
         return res.status(201).json(savedOrder);
       });
     } else {
+      
       const newOrder = new Order(orderData);
-      const savedOrder = await newOrder.save((err) => {
-        if (err) {
-          throw err;
-        }
-      });
+      const savedOrder = await newOrder.save();
 
       customer.orders.push(savedOrder._id);
       customer.cart = [];
       customer.totalCartValue = 0;
-      await customer.save((err) => {
-        if (err) {
-          throw err;
-        }
-      });
+      await customer.save();
 
       return res.status(201).json(savedOrder);
     }

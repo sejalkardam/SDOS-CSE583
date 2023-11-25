@@ -13,9 +13,8 @@ const orderedItemSchema = new mongoose.Schema({
     required: true,
   },
   quantity: {
-    type: Number,
+    type: String,
     description: "Quantity of the cake ordered",
-    required: true,
   },
   customization: {
     type: String,
@@ -31,9 +30,9 @@ const orderSchema = new mongoose.Schema({
     description: "Id of the customer who placed the order",
     required: true,
   },
-  addressId: {
+  address: {
     type: String,
-    description: "Id of the destination address",
+    description: "the destination address",
     required: true,
   },
   recieverPhoneNo: {
@@ -56,7 +55,6 @@ const orderSchema = new mongoose.Schema({
   },
   modeOfPayment: {
     type: String,
-    enum: ["cashOnDelivery", "onlinePayment"],
     description: "Mode of payment of the order",
     required: true,
   },
@@ -75,14 +73,14 @@ const orderSchema = new mongoose.Schema({
   },
   paymentStatus:{
     type: String,
-    description: "Payment's Status"
+    description: "Payment's Status",
+    default: "Pending"
   },
   orderStatus: {
     type: String,
     description: "Current status of the order (e.g., pending, completed)",
     enum: ["PENDING", "COMPLETED", "CANCELLED", "IN PROCESS"],
-    default: "PENDING",
-    required: true,
+    default: "PENDING"
   },
   feedback: {
     rating: {
