@@ -5,6 +5,7 @@ import CakeCard from "../components/CakeCard";
 import Drift from "react-driftjs";
 import axios from 'axios';
 import Popup from 'reactjs-popup';
+import { auth, provider } from "../googleAuthClient";
 
 export default function CakeProductPage() {
   const { slug } = useParams();
@@ -85,10 +86,29 @@ export default function CakeProductPage() {
       quantity: 1,
     };
 
-    const cart_response = await axios.post(
-      `${API_URL}/api/customers/${CUSTOMER_ID}/cart`,
-      cartData
-    );
+    try {
+      const user = auth.currentUser;
+      const token = user && (await user.getIdToken());
+
+      const payloadHeader = {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      };
+      
+      const cart_response = await axios.post(
+        `${API_URL}/api/customers/${CUSTOMER_ID}/cart`,
+        cartData, 
+        payloadHeader
+      );
+      // const res = await fetch("http://localhost:3001", payloadHeader);
+      // console.log(await res.text());
+    } catch (e) {
+      console.log(e);
+    }
+
+    
     if (cart_response.status != 200) {
       console.log(cart_response);
       return;
@@ -288,6 +308,7 @@ export default function CakeProductPage() {
             </button>
           )}
 
+          <button className="bg-opacity-0 border-solid border-2 text-lg px-12 py-2 rounded-lg" onClick={paymentHandler}>Temporary</button>
         </div>
         <h3>Instructions</h3>
         <input id='instructions' className="mb-8 h-24" type="text" />
