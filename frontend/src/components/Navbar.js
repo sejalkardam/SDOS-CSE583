@@ -48,7 +48,7 @@ const Navbar = () => {
         localStorage.setItem("paa_imageURL", user.photoURL);
         setLoggedInUser(user);
 
-        const API_URL = "http://localhost:5000";
+        const API_URL = "http://3.6.76.192";
 
         const payloadHeader = {
           headers: {

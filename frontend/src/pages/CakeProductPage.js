@@ -98,7 +98,7 @@ export default function CakeProductPage() {
     e.preventDefault();
 
     try {
-      const API_URL = "http://localhost:5000";
+      const API_URL = "http://3.6.76.192";
 
       //Adding Element to Cart
       const cartData = {
