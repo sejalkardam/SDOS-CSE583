@@ -85,10 +85,11 @@ export async function addCartItem(req, res) {
   try {
     const customer = await Customer.findOne({ uid: req.user });
     customer.cart=[req.body];
+    customer.totalCartValue=0;
 
     const cakePrice = req.body.price;
-   
-    customer.totalCartValue += cakePrice ;
+    
+    customer.totalCartValue = cakePrice ;
 
     const savedCustomer = await customer.save();
     res.json([
@@ -106,12 +107,11 @@ export async function addCartItem(req, res) {
 
 // export async function updateCartItem(req, res) {
 //   try {
-//     const customer = await Customer.find({ "uid": req.user });
+//     const customer = await Customer.findOne({ "uid": req.user });
 //     const cartItem = customer.cart.id(req.params.cartItemId);
 //     if (cartItem) {
 //       if (req.body.quantity != undefined) {
-//         const cakePrice = (await Cake.find({ cakeId: cartItem.cakeId }))[0]
-//           .price;
+//         const cakePrice = cartItem.price;
 //         const current = req.body.quantity;
 //         const prev = cartItem.quantity;
 //         customer.totalCartValue += cakePrice * (current - prev);
@@ -141,9 +141,8 @@ export async function deleteCartItem(req, res) {
   try {
     const customer = await Customer.findOne({ uid: req.user });
     const cartItem = customer.cart.id(req.params.cartItemId);
-    const cakePrice = (await Cake.find({ cakeId: cartItem.cakeId }))[0].price;
-    const quantity = cartItem.quantity;
-    customer.totalCartValue -= cakePrice * quantity;
+    const cakePrice = cartItem.price;
+    customer.totalCartValue = 0;
 
     customer.cart.pull({ _id: req.params.cartItemId });
     const savedCustomer = await customer.save();

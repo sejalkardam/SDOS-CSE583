@@ -6,7 +6,7 @@
   "main": "app.js",
   "scripts": {
     "start": "nodemon app.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "cross-env MONGODB_CLUSTERNAME=sdos.cve41y2 node app.js"
   },
   "author": "",
   "license": "ISC",
