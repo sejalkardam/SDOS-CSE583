@@ -361,7 +361,7 @@ export default function CakeProductPage() {
 
       <div className="flex flex-row items-center justify-center mt-8 space-x-4">
         <a
-          href="https://wa.me/919911114128"
+          href="https://api.whatsapp.com/send/?phone=919911114128&text=Hi%2C+I+wish+to+enquire+about+a+cake+on+your+website"
           target="_blank"
           rel="noopener noreferrer"
         >
