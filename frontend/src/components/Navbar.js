@@ -60,6 +60,7 @@ const Navbar = () => {
         const body = {
           firstName: user.displayName,
           lastName: user.displayName,
+          email: user.email
         };
 
         const customer_added = await axios.post(

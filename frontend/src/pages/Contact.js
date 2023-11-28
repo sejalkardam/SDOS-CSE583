@@ -34,7 +34,7 @@ const Contact = () => {
     };
 
     try {
-      const API_URL = "http://3.6.76.192:5000";
+      const API_URL = "http://localhost:5000";
 
       const response = axios.post(
         `${API_URL}/api/seller/contactUsMail`,

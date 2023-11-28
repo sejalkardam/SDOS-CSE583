@@ -3,6 +3,7 @@ import { Order } from "../models/order.js";
 import Cake from "../models/cake.js";
 import razorpay from "../config/razorpay.js";
 import uniqid from "uniqid";
+import sendWelcomeMail from "../mailers/welcome.js";
 // Customer
 export async function getCustomerDetails(req, res) {
   try {
@@ -28,6 +29,8 @@ export async function addCustomerAccount(req, res) {
        const savedCustomer = await newCustomer.save();
        console.log(savedCustomer);
        res.status(201).json(savedCustomer);
+       sendWelcomeMail(req.body.email);
+       
 
     }
    

@@ -1,7 +1,7 @@
 import emailTransporter from "../config/nodemailer.js";
 import dotenv from "dotenv";
 dotenv.config();
-const sendWelcomeMail = async (email) => {
+const sendWelcomeMail = async (email,data) => {
   try {
     const html = `
     <div style="font-family: 'Arial', sans-serif; background-color: #f7f7f7; margin: 0; padding: 20px;">
@@ -14,8 +14,20 @@ const sendWelcomeMail = async (email) => {
         <tr>
           <td style="padding: 5px 20px 20px 20px ; text-align: center;">
             <h1 style="color: #333333;">Hi there!</h1>
-            <p style="color: #555555; font-size: 16px;">We hope this email finds you well. Thank you for being part of PAA Creations.</p>
-            <p style="color: #555555; font-size: 16px;">Our ovens are fired up, and our bakers are ready to create something special for you.</p>
+            <p style="color: #555555; font-size: 16px;">Congratulations, your order is placed!</p>
+            <p style="color: #555555; font-size: 16px;"><ul>
+             ${Object.entries(data)
+               .map(([key, value]) => `<li>${key}: ${value}</li>`)
+               .join("")}
+            <li> Order Id: ${data.orderId}</li>
+            <li> Name: ${data.cakeName}</li>
+            <li> Amount: ${data.price}</li>
+            <li> Quantity: ${data.quantity}</li>
+            <li> Customization: ${data.customization}</li>
+            <li> Address: ${data.address}</li>
+            <li> Mode Of Payment: ${data.modeOfPayment} </li>
+            <li> Order Status: ${data.orderStatus}</li>
+            <li> Payment Status: ${data.paymentStatus}</li></ul></p>
             <p style="color: #555555; font-size: 16px;">Check out our latest treats and place your order for a delightful experience!</p>
             <a href="http://3.6.76.192:3000/" style="display: inline-block; background-color:  #ffee58; color: #000000; text-decoration: none; padding: 10px 20px; border-radius: 5px; margin-top: 20px;">Explore Now</a>
           </td>

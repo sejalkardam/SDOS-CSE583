@@ -9,8 +9,7 @@ import emailTransporter from "./config/nodemailer.js";
 import razorpay from "./config/razorpay.js";
 import bodyParser from "body-parser";
 import expressListEndpoints from "express-list-endpoints";
-
-
+import welcomeMail from "./mailers/welcome.js";
 const app = express();
 const PORT = 5000;
 
