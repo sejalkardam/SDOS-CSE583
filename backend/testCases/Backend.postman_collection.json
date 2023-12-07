@@ -1,0 +1,3813 @@
+{
+	"info": {
+		"_postman_id": "ea8b53f1-1c53-4863-a126-bb150e051ccd",
+		"name": "Backend",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "27528019",
+		"_collection_link": "https://crimson-escape-565100.postman.co/workspace/SDOS-PAA-Creations~6dde0ded-2aa8-4b1f-b5f8-30ea5d45560f/collection/27528019-ea8b53f1-1c53-4863-a126-bb150e051ccd?action=share&source=collection_link&creator=27528019"
+	},
+	"item": [
+		{
+			"name": "Server",
+			"item": [
+				{
+					"name": "Cake APIs",
+					"item": [
+						{
+							"name": "addCake",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"\r",
+											"pm.test(\"Response status code is 201\", function () {\r",
+											"  pm.expect(pm.response.code).to.equal(201);\r",
+											"});\r",
+											"\r",
+											"\r",
+											"pm.test(\"Response has the required fields\", function () {\r",
+											"    const responseData = pm.response.json();\r",
+											"    \r",
+											"    pm.expect(responseData).to.be.an('object');\r",
+											"    pm.expect(responseData.name).to.exist;\r",
+											"    pm.expect(responseData.id).to.exist;\r",
+											"    pm.expect(responseData.price).to.exist;\r",
+											"    pm.expect(responseData._id).to.exist;\r",
+											"    pm.expect(responseData.__v).to.exist;\r",
+											"});\r",
+											"\r",
+											"\r",
+											"pm.test(\"Name is a non-empty string\", function () {\r",
+											"    const responseData = pm.response.json();\r",
+											"\r",
+											"    pm.expect(responseData).to.be.an('object');\r",
+											"    pm.expect(responseData.name).to.exist.and.to.be.a('string');\r",
+											"    pm.expect(responseData.name).to.have.lengthOf.at.least(1, \"Name should not be empty\");\r",
+											"});\r",
+											"\r",
+											"\r",
+											"pm.test(\"Id is a non-empty string\", function () {\r",
+											"    const responseData = pm.response.json();\r",
+											"    \r",
+											"    pm.expect(responseData).to.be.an('object');\r",
+											"    pm.expect(responseData.id).to.be.a('string').and.to.have.lengthOf.at.least(1, \"Id should not be empty\");\r",
+											"});\r",
+											"\r",
+											"\r",
+											"pm.test(\"Price is a non-negative number\", function () {\r",
+											"    const responseData = pm.response.json();\r",
+											"    \r",
+											"    pm.expect(responseData.price).to.be.a('number').and.to.be.at.least(0, \"Price should be a non-negative number\");\r",
+											"});\r",
+											"\r",
+											"var responseBody = pm.response.json();\r",
+											"var cakeId = responseBody.id;\r",
+											"pm.collectionVariables.set(\"cakeId\", cakeId);\r",
+											"\r",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n        \"name\": \"Red Velevet\",\r\n        \"id\":\"red-velvet-3\",\r\n        \"price\": 19.95\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url}}/api/seller/cakes",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"api",
+										"seller",
+										"cakes"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "addCake Failed",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"\r",
+											"pm.test(\"Response status code is 400\", function () {\r",
+											"  pm.expect(pm.response.code).to.equal(400);\r",
+											"});\r",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n        \"name\": \"Red Velevet\",\r\n      \r\n        \"price\": 19.95\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url}}/api/seller/cakes",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"api",
+										"seller",
+										"cakes"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "addCake Failed 2",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"\r",
+											"pm.test(\"Response status code is 400\", function () {\r",
+											"  pm.expect(pm.response.code).to.equal(400);\r",
+											"});\r",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n        \"name\": \"Red Velevet\",\r\n        \"id\":\"red-velvet-3\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url}}/api/seller/cakes",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"api",
+										"seller",
+										"cakes"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "addCake Failed 3",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"\r",
+											"pm.test(\"Response status code is 400\", function () {\r",
+											"  pm.expect(pm.response.code).to.equal(400);\r",
+											"});\r",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n        \r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url}}/api/seller/cakes",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"api",
+										"seller",
+										"cakes"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "addCake Failed 3 Copy",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"\r",
+											"pm.test(\"Response status code is 404\", function () {\r",
+											"  pm.expect(pm.response.code).to.equal(404);\r",
+											"});\r",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "random",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n        \"name\": \"Red Velevet\",\r\n        \"id\":\"red-velvet-3\",\r\n        \"price\": 19.95\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url}}/api/seller/cakes",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"api",
+										"seller",
+										"cakes"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "getCakes",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"\r",
+											"pm.test(\"Response status code is 200\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});\r",
+											"\r",
+											"\r",
+											"pm.test(\"Response is an array with at least one element\", function () {\r",
+											"    const responseData = pm.response.json();\r",
+											"\r",
+											"    pm.expect(responseData).to.be.an('array').that.is.not.empty;\r",
+											"});\r",
+											"\r",
+											"\r",
+											"pm.test(\"Verify that the 'name' field is a non-empty string\", function () {\r",
+											"  const responseData = pm.response.json();\r",
+											"  \r",
+											"  pm.expect(responseData).to.be.an('array');\r",
+											"  \r",
+											"  responseData.forEach(function (cake) {\r",
+											"    pm.expect(cake.name).to.be.a('string').and.to.have.lengthOf.at.least(1, \"Value should not be empty\");\r",
+											"  });\r",
+											"});\r",
+											"\r",
+											"\r",
+											"pm.test(\"Verify that the 'price' field is a non-negative number\", function () {\r",
+											"    const responseData = pm.response.json();\r",
+											"    \r",
+											"    pm.expect(responseData).to.be.an('array').that.is.not.empty;\r",
+											"    \r",
+											"    responseData.forEach(function(cake) {\r",
+											"        pm.expect(cake.price).to.be.a('number').and.to.be.at.least(0);\r",
+											"    });\r",
+											"});\r",
+											"\r",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{url}}/api/public/cakes",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"api",
+										"public",
+										"cakes"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "getCakeById",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"\r",
+											"pm.test(\"Response status code is 200\", function () {\r",
+											"  pm.response.to.have.status(200);\r",
+											"});\r",
+											"\r",
+											"\r",
+											"pm.test(\"Response is an array\", function () {\r",
+											"    const responseData = pm.response.json();\r",
+											"    \r",
+											"    pm.expect(responseData).to.be.an('array');\r",
+											"});\r",
+											"\r",
+											"\r",
+											"pm.test(\"Array contains objects with required fields\", function () {\r",
+											"    const responseData = pm.response.json();\r",
+											"    \r",
+											"    pm.expect(responseData).to.be.an('array');\r",
+											"    \r",
+											"    responseData.forEach(function (cake) {\r",
+											"        pm.expect(cake).to.have.property('cakeId');\r",
+											"        pm.expect(cake).to.have.property('name');\r",
+											"        pm.expect(cake).to.have.property('description');\r",
+											"        pm.expect(cake).to.have.property('price');\r",
+											"    });\r",
+											"});\r",
+											"\r",
+											"\r",
+											"pm.test(\"Verify the number of cakes returned is within the expected range\", function () {\r",
+											"    const responseData = pm.response.json();\r",
+											"    \r",
+											"    pm.expect(responseData).to.be.an('array');\r",
+											"    pm.expect(responseData.length).to.be.within(0, 10);\r",
+											"});\r",
+											"\r",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{url}}/api/public/cakes/:cakeId",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"api",
+										"public",
+										"cakes",
+										":cakeId"
+									],
+									"variable": [
+										{
+											"key": "cakeId",
+											"value": "{{cakeId}}"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "updateCake",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"\r",
+											"pm.test(\"Response status code is 200\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});\r",
+											"\r",
+											"\r",
+											"pm.test(\"Validate that the 'name' field is a non-empty string\", function () {\r",
+											"    const responseData = pm.response.json();\r",
+											"    \r",
+											"    pm.expect(responseData).to.be.an('object');\r",
+											"    pm.expect(responseData.name).to.be.a('string').and.to.have.lengthOf.at.least(1, \"Value should not be empty\");\r",
+											"});\r",
+											"\r",
+											"\r",
+											"pm.test(\"Validate that the 'price' field is a non-negative number\", function () {\r",
+											"    const responseData = pm.response.json();\r",
+											"\r",
+											"    pm.expect(responseData).to.be.an('object');\r",
+											"    pm.expect(responseData.price).to.be.a('number');\r",
+											"    pm.expect(responseData.price).to.be.at.least(0);\r",
+											"});\r",
+											"\r",
+											"\r",
+											"pm.test(\"Validate that the 'name' field is updated correctly\", function () {\r",
+											"    const responseData = pm.response.json();\r",
+											"    \r",
+											"    pm.expect(responseData).to.be.an('object');\r",
+											"    pm.expect(responseData.name).to.exist.and.to.not.equal(\"\", \"Name field should not be empty\");\r",
+											"});\r",
+											"\r",
+											"\r",
+											"pm.test(\"Validate that the 'price' field is updated correctly\", function () {\r",
+											"    const responseData = pm.response.json();\r",
+											"    \r",
+											"    pm.expect(responseData).to.be.an('object');\r",
+											"    pm.expect(responseData.price).to.exist.and.to.be.a('number');\r",
+											"});\r",
+											"\r",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"name\": \"Delicious Chocolate Cake\",\r\n    \"price\": 30.99\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url}}/api/seller/cakes/:cakeId",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"api",
+										"seller",
+										"cakes",
+										":cakeId"
+									],
+									"variable": [
+										{
+											"key": "cakeId",
+											"value": "{{cakeId}}"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "updateCake Failed",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"\r",
+											"pm.test(\"Response status code is 404\", function () {\r",
+											"    pm.response.to.have.status(404);\r",
+											"});\r",
+											"\r",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "random",
+											"type": "string"
+										}
+									]
+								},
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"name\": \"Delicious Chocolate Cake\",\r\n    \"price\": 30.99\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url}}/api/seller/cakes/:cakeId",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"api",
+										"seller",
+										"cakes",
+										":cakeId"
+									],
+									"variable": [
+										{
+											"key": "cakeId",
+											"value": "{{cakeId}}"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "deleteCake",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Response status code is 204\", function () {\r",
+											"  pm.expect(pm.response.code).to.equal(204);\r",
+											"});\r",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{url}}/api/seller/cakes/:cakeId",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"api",
+										"seller",
+										"cakes",
+										":cakeId"
+									],
+									"variable": [
+										{
+											"key": "cakeId",
+											"value": "{{cakeId}}"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "deleteCake Failed",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Response status code is 404\", function () {\r",
+											"  pm.expect(pm.response.code).to.equal(404);\r",
+											"});\r",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "random",
+											"type": "string"
+										}
+									]
+								},
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{url}}/api/seller/cakes/:cakeId",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"api",
+										"seller",
+										"cakes",
+										":cakeId"
+									],
+									"variable": [
+										{
+											"key": "cakeId",
+											"value": "{{cakeId}}"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Order APIs",
+					"item": [
+						{
+							"name": "getOrders",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Response status code is 200\", function () {\r",
+											"  pm.expect(pm.response.code).to.equal(200);\r",
+											"});\r",
+											"\r",
+											"\r",
+											"pm.test(\"Each item in the 'items' array has a non-empty 'name'\", function () {\r",
+											"    const responseData = pm.response.json();\r",
+											"\r",
+											"    pm.expect(responseData).to.be.an('array');\r",
+											"\r",
+											"    responseData.forEach(function (order) {\r",
+											"        order.items.forEach(function (item) {\r",
+											"            pm.expect(item.name).to.exist.and.to.be.a('string').and.to.not.be.empty;\r",
+											"        });\r",
+											"    });\r",
+											"});\r",
+											"\r",
+											"var responseBody = pm.response.json();\r",
+											"var orderId = responseBody[0]._id;\r",
+											"pm.collectionVariables.set(\"s_orderId\", orderId);\r",
+											"var itemId=responseBody[0].items[0]._id;\r",
+											"pm.collectionVariables.set(\"s_orderItemId\", itemId);"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{url}}/api/seller/orders",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"api",
+										"seller",
+										"orders"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "getOrders Failed",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Response status code is 404\", function () {\r",
+											"  pm.expect(pm.response.code).to.equal(404);\r",
+											"});\r",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "random",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{url}}/api/seller/orders",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"api",
+										"seller",
+										"orders"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "getOrderById",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"\r",
+											"pm.test(\"Response status code is 200\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});\r",
+											"\r",
+											"\r",
+											"pm.test(\"Validate that the 'items' array is present and contains at least one element\", function () {\r",
+											"  const responseData = pm.response.json();\r",
+											"  \r",
+											"  pm.expect(responseData).to.be.an('object');\r",
+											"  pm.expect(responseData.items).to.exist.and.to.be.an('array').and.to.have.lengthOf.at.least(1);\r",
+											"});\r",
+											"\r",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{url}}/api/seller/orders/:orderId",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"api",
+										"seller",
+										"orders",
+										":orderId"
+									],
+									"variable": [
+										{
+											"key": "orderId",
+											"value": "{{s_orderId}}"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "getOrderById Failed",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"\r",
+											"pm.test(\"Response status code is 404\", function () {\r",
+											"    pm.response.to.have.status(404);\r",
+											"});\r",
+											"\r",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "random",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{url}}/api/seller/orders/:orderId",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"api",
+										"seller",
+										"orders",
+										":orderId"
+									],
+									"variable": [
+										{
+											"key": "orderId",
+											"value": "{{s_orderId}}"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "getOrderItem",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"\r",
+											"pm.test(\"Response status code is 200\", function () {\r",
+											"  pm.response.to.have.status(200);\r",
+											"});\r",
+											"\r",
+											"\r",
+											"pm.test(\"Name is a non-empty string\", function () {\r",
+											"    const responseData = pm.response.json();\r",
+											"    \r",
+											"    pm.expect(responseData.name).to.exist.and.to.be.a('string').and.to.have.lengthOf.at.least(1, \"Name should not be empty\");\r",
+											"});\r",
+											"\r",
+											"\r",
+											"pm.test(\"Price is a non-negative number\", function () {\r",
+											"    const responseData = pm.response.json();\r",
+											"    \r",
+											"    pm.expect(responseData.price).to.be.a('number');\r",
+											"    pm.expect(responseData.price).to.be.at.least(0);\r",
+											"});\r",
+											"\r",
+											"\r",
+											"pm.test(\"Verify that _id is a non-empty string\", function () {\r",
+											"    const responseData = pm.response.json();\r",
+											"    \r",
+											"    pm.expect(responseData._id).to.be.a('string').and.to.have.lengthOf.at.least(1, \"_id should not be empty\");\r",
+											"});\r",
+											"\r",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{url}}/api/seller/orders/:orderId/items/:itemId",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"api",
+										"seller",
+										"orders",
+										":orderId",
+										"items",
+										":itemId"
+									],
+									"variable": [
+										{
+											"key": "orderId",
+											"value": "{{s_orderId}}"
+										},
+										{
+											"key": "itemId",
+											"value": "{{s_orderItemId}}"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "getOrderItem Failed",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"\r",
+											"pm.test(\"Response status code is 404\", function () {\r",
+											"  pm.response.to.have.status(404);\r",
+											"});\r",
+											"\r",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "random",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{url}}/api/seller/orders/:orderId/items/:itemId",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"api",
+										"seller",
+										"orders",
+										":orderId",
+										"items",
+										":itemId"
+									],
+									"variable": [
+										{
+											"key": "orderId",
+											"value": "{{s_orderId}}"
+										},
+										{
+											"key": "itemId",
+											"value": "{{s_orderItemId}}"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "updateOrder",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"\r",
+											"pm.test(\"Response status code is 200\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});\r",
+											"\r",
+											"\r",
+											"pm.test(\"Response body is null\", function () {\r",
+											"    pm.expect(pm.response.text()).to.equal(\"null\");\r",
+											"});\r",
+											"\r",
+											"\r",
+											"\r",
+											"pm.test(\"Response time is within an acceptable range\", function () {\r",
+											"    pm.expect(pm.response.responseTime).to.be.below(500);\r",
+											"});\r",
+											"\r",
+											"\r",
+											"\r",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"status\":\"IN PROCESS\"\r\n}\r\n",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url}}/api/seller/orders/:orderId",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"api",
+										"seller",
+										"orders",
+										":orderId"
+									],
+									"variable": [
+										{
+											"key": "orderId",
+											"value": "6542ae2a0e31142da54b792e"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "updateOrder Failed",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"\r",
+											"pm.test(\"Response status code is 404\", function () {\r",
+											"    pm.response.to.have.status(404);\r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "random",
+											"type": "string"
+										}
+									]
+								},
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"status\":\"IN PROCESS\"\r\n}\r\n",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url}}/api/seller/orders/:orderId",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"api",
+										"seller",
+										"orders",
+										":orderId"
+									],
+									"variable": [
+										{
+											"key": "orderId",
+											"value": "6542ae2a0e31142da54b792e"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				}
+			],
+			"auth": {
+				"type": "bearer",
+				"bearer": [
+					{
+						"key": "token",
+						"value": "test_user",
+						"type": "string"
+					}
+				]
+			},
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		},
+		{
+			"name": "Customer",
+			"item": [
+				{
+					"name": "Cake APIs",
+					"item": [
+						{
+							"name": "getCakes",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"\r",
+											"pm.test(\"Response status code is 200\", function () {\r",
+											"  pm.response.to.have.status(200);\r",
+											"});\r",
+											"\r",
+											"\r",
+											"pm.test(\"Response is an array\", function () {\r",
+											"    const responseData = pm.response.json();\r",
+											"    \r",
+											"    pm.expect(responseData).to.be.an('array');\r",
+											"    pm.expect(responseData).to.have.lengthOf.at.least(0);\r",
+											"});\r",
+											"\r",
+											"\r",
+											"pm.test(\"Each element in the response array has the required fields\", function () {\r",
+											"    const responseData = pm.response.json();\r",
+											"    \r",
+											"    pm.expect(responseData).to.be.an('array');\r",
+											"    \r",
+											"    responseData.forEach(function (element) {\r",
+											"        pm.expect(element).to.have.property(\"_id\");\r",
+											"        pm.expect(element).to.have.property(\"name\");\r",
+											"        pm.expect(element).to.have.property(\"id\");\r",
+											"        pm.expect(element).to.have.property(\"price\");\r",
+											"        pm.expect(element).to.have.property(\"__v\");\r",
+											"    });\r",
+											"});\r",
+											"\r",
+											"\r",
+											"pm.test(\"Price is a non-negative number\", function () {\r",
+											"  const responseData = pm.response.json();\r",
+											"\r",
+											"  pm.expect(responseData).to.be.an('array');\r",
+											"  \r",
+											"  responseData.forEach(function (cake) {\r",
+											"    pm.expect(cake.price).to.be.a('number');\r",
+											"    pm.expect(cake.price).to.be.at.least(0);\r",
+											"  });\r",
+											"});\r",
+											"\r",
+											"\r",
+											"pm.test(\"Response time is within an acceptable range\", function () {\r",
+											"    pm.expect(pm.response.responseTime).to.be.below(500);\r",
+											"});\r",
+											"\r",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{url}}/api/public/cakes",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"api",
+										"public",
+										"cakes"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "getCakes Failed",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"\r",
+											"pm.test(\"Response status code is 404\", function () {\r",
+											"  pm.response.to.have.status(404);\r",
+											"});\r",
+											"\r",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{url}}/api/public/cakes",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"api",
+										"public",
+										"cakes"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "getCakeById",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"\r",
+											"pm.test(\"Response status code is 200\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});\r",
+											"\r",
+											"\r",
+											"pm.test(\"Response is an array\", function () {\r",
+											"    const responseData = pm.response.json();\r",
+											"    \r",
+											"    pm.expect(responseData).to.be.an('array');\r",
+											"});\r",
+											"\r",
+											"\r",
+											"\r",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{url}}/api/public/cakes/:cakeId",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"api",
+										"public",
+										"cakes",
+										":cakeId"
+									],
+									"variable": [
+										{
+											"key": "cakeId",
+											"value": "vanilla-dream"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "getCakeById Failed",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"\r",
+											"pm.test(\"Response status code is 404\", function () {\r",
+											"    pm.response.to.have.status(404);\r",
+											"});\r",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{url}}/api/public/cakes/:cakeId",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"api",
+										"public",
+										"cakes",
+										":cakeId"
+									],
+									"variable": [
+										{
+											"key": "cakeId",
+											"value": "vanilla-dream"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Customer APIs",
+					"item": [
+						{
+							"name": "addCustomerAccount Failed 1",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"\r",
+											"pm.test(\"Response status code is 500\", function () {\r",
+											"    pm.response.to.have.status(500);\r",
+											"});\r",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"firstName\": \"test\"\r\n    \r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url}}/api/customers",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"api",
+										"customers"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "addCustomerAccount Failed 2",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"\r",
+											"pm.test(\"Response status code is 500\", function () {\r",
+											"    pm.response.to.have.status(500);\r",
+											"});\r",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"lastName\": \"test\"\r\n    \r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url}}/api/customers",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"api",
+										"customers"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "addCustomerAccount",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"\r",
+											"pm.test(\"Response status code is 201\", function () {\r",
+											"    pm.response.to.have.status(201);\r",
+											"});\r",
+											"\r",
+											"\r",
+											"pm.test(\"Validate that the uid is a non-empty string\", function () {\r",
+											"  const responseData = pm.response.json();\r",
+											"  \r",
+											"  pm.expect(responseData.uid).to.exist.and.to.be.a('string').and.to.have.lengthOf.at.least(1, \"Value should not be empty\");\r",
+											"});\r",
+											"\r",
+											"\r",
+											"pm.test(\"First name and last name are non-empty strings\", function () {\r",
+											"    const responseData = pm.response.json();\r",
+											"    \r",
+											"    pm.expect(responseData.firstName).to.be.a('string').and.to.have.lengthOf.at.least(1, \"First name should not be empty\");\r",
+											"    pm.expect(responseData.lastName).to.be.a('string').and.to.have.lengthOf.at.least(1, \"Last name should not be empty\");\r",
+											"});\r",
+											"\r",
+											"\r",
+											"\r",
+											"pm.test(\"Schema is valid\", function () {\r",
+											"  var schema = {\r",
+											"    type: \"object\",\r",
+											"    properties: {\r",
+											"      uid: {\r",
+											"        type: \"string\",\r",
+											"        minLength: 1\r",
+											"      },\r",
+											"      firstName: {\r",
+											"        type: \"string\",\r",
+											"        minLength: 1\r",
+											"      },\r",
+											"      lastName: {\r",
+											"        type: \"string\",\r",
+											"        minLength: 1\r",
+											"      },\r",
+											"      addresses: {\r",
+											"        type: \"array\"\r",
+											"      },\r",
+											"      orders: {\r",
+											"        type: \"array\"\r",
+											"      },\r",
+											"      totalCartValue: {\r",
+											"        type: \"number\"\r",
+											"      },\r",
+											"      _id: {\r",
+											"        type: \"string\"\r",
+											"      },\r",
+											"      wishlist: {\r",
+											"        type: \"array\"\r",
+											"      },\r",
+											"      cart: {\r",
+											"        type: \"array\"\r",
+											"      }\r",
+											"    },\r",
+											"    required: [\"uid\", \"firstName\", \"lastName\"]\r",
+											"  };\r",
+											"\r",
+											"  var response = pm.response.json();\r",
+											"  pm.expect(tv4.validate(response, schema)).to.be.true;\r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"firstName\": \"test\",\r\n    \"lastName\": \"user\"\r\n    \r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url}}/api/customers",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"api",
+										"customers"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "updateCustomerDetails",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"\r",
+											"pm.test(\"Response status code is 200\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});\r",
+											"\r",
+											"\r",
+											"pm.test(\"Validate the address array\", function () {\r",
+											"  const responseData = pm.response.json();\r",
+											"  \r",
+											"  pm.expect(responseData).to.be.an('object');\r",
+											"  pm.expect(responseData.addresses).to.exist.and.to.be.an('array');\r",
+											"});\r",
+											"\r",
+											"\r",
+											"pm.test(\"Validate the orders array\", function () {\r",
+											"  const responseData = pm.response.json();\r",
+											"\r",
+											"  pm.expect(responseData).to.be.an('object');\r",
+											"  pm.expect(responseData.orders).to.exist.and.to.be.an('array');\r",
+											"});\r",
+											"\r",
+											"\r",
+											"pm.test(\"Total cart value is a non-negative number\", function () {\r",
+											"    const responseData = pm.response.json();\r",
+											"    \r",
+											"    pm.expect(responseData).to.be.an('object');\r",
+											"    pm.expect(responseData.totalCartValue).to.exist.and.to.be.a('number');\r",
+											"    pm.expect(responseData.totalCartValue).to.be.at.least(0);\r",
+											"});\r",
+											"\r",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n   \"birthDate\": \"1993-06-15\",\r\n    \"anniversaryDate\": \"2014-08-20\"\r\n}\r\n",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url}}/api/customers",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"api",
+										"customers"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "getCustomerDetails",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"\r",
+											"pm.test(\"Response status code is 200\", function () {\r",
+											"  pm.response.to.have.status(200);\r",
+											"});\r",
+											"\r",
+											"\r",
+											"pm.test(\"Verify that the 'addresses' array is present and contains at least one element\", function () {\r",
+											"    const responseData = pm.response.json();\r",
+											"    \r",
+											"    pm.expect(responseData).to.be.an('object');\r",
+											"});\r",
+											"\r",
+											"\r",
+											"pm.test(\"Validate firstName and lastName are non-empty strings\", function () {\r",
+											"    const responseData = pm.response.json();\r",
+											"    \r",
+											"    pm.expect(responseData).to.be.an('object');\r",
+											"    pm.expect(responseData.firstName).to.exist.and.to.be.a('string').and.to.not.be.empty;\r",
+											"    pm.expect(responseData.lastName).to.exist.and.to.be.a('string').and.to.not.be.empty;\r",
+											"});\r",
+											"\r",
+											"\r",
+											"pm.test(\"Verify the presence and length of the 'orders' array\", function () {\r",
+											"    const responseData = pm.response.json();\r",
+											"    \r",
+											"    pm.expect(responseData).to.be.an('object');\r",
+											"    pm.expect(responseData.orders).to.exist.and.to.be.an('array');\r",
+											"    pm.expect(responseData.orders).to.have.lengthOf(0);\r",
+											"});\r",
+											"\r",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url}}/api/customers",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"api",
+										"customers"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "getCustomerDetails Failed",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"\r",
+											"pm.test(\"Response status code is 404\", function () {\r",
+											"  pm.response.to.have.status(404);\r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url}}/api/customers",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"api",
+										"customers"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "getCustomerDetails Failed 2",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"\r",
+											"pm.test(\"Response status code is 404\", function () {\r",
+											"  pm.response.to.have.status(404);\r",
+											"});\r",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "random",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url}}/api/customers",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"api",
+										"customers"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "deleteCustomerAccount",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"\r",
+											"pm.test(\"Response status code is 204\", function () {\r",
+											"    pm.response.to.have.status(204);\r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{url}}/api/customers",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"api",
+										"customers"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "addCustomerAccount2",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"\r",
+											"pm.test(\"Response status code is 201\", function () {\r",
+											"    pm.response.to.have.status(201);\r",
+											"});\r",
+											"\r",
+											"\r",
+											"pm.test(\"Validate that the uid is a non-empty string\", function () {\r",
+											"  const responseData = pm.response.json();\r",
+											"  \r",
+											"  pm.expect(responseData.uid).to.exist.and.to.be.a('string').and.to.have.lengthOf.at.least(1, \"Value should not be empty\");\r",
+											"});\r",
+											"\r",
+											"\r",
+											"pm.test(\"First name and last name are non-empty strings\", function () {\r",
+											"    const responseData = pm.response.json();\r",
+											"    \r",
+											"    pm.expect(responseData.firstName).to.be.a('string').and.to.have.lengthOf.at.least(1, \"First name should not be empty\");\r",
+											"    pm.expect(responseData.lastName).to.be.a('string').and.to.have.lengthOf.at.least(1, \"Last name should not be empty\");\r",
+											"});\r",
+											"\r",
+											"\r",
+											"\r",
+											"pm.test(\"Schema is valid\", function () {\r",
+											"  var schema = {\r",
+											"    type: \"object\",\r",
+											"    properties: {\r",
+											"      uid: {\r",
+											"        type: \"string\",\r",
+											"        minLength: 1\r",
+											"      },\r",
+											"      firstName: {\r",
+											"        type: \"string\",\r",
+											"        minLength: 1\r",
+											"      },\r",
+											"      lastName: {\r",
+											"        type: \"string\",\r",
+											"        minLength: 1\r",
+											"      },\r",
+											"      addresses: {\r",
+											"        type: \"array\"\r",
+											"      },\r",
+											"      orders: {\r",
+											"        type: \"array\"\r",
+											"      },\r",
+											"      totalCartValue: {\r",
+											"        type: \"number\"\r",
+											"      },\r",
+											"      _id: {\r",
+											"        type: \"string\"\r",
+											"      },\r",
+											"      wishlist: {\r",
+											"        type: \"array\"\r",
+											"      },\r",
+											"      cart: {\r",
+											"        type: \"array\"\r",
+											"      }\r",
+											"    },\r",
+											"    required: [\"uid\", \"firstName\", \"lastName\"]\r",
+											"  };\r",
+											"\r",
+											"  var response = pm.response.json();\r",
+											"  pm.expect(tv4.validate(response, schema)).to.be.true;\r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"firstName\": \"test\",\r\n    \"lastName\": \"user\"\r\n    \r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url}}/api/customers",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"api",
+										"customers"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Cart APIs",
+					"item": [
+						{
+							"name": "addCartItem",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Response status code is 200\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});\r",
+											"\r",
+											"\r",
+											"pm.test(\"Validate the 'cart' array is present in the response and is not empty\", function () {\r",
+											"    const responseData = pm.response.json();\r",
+											"    \r",
+											"    pm.expect(responseData).to.be.an('array');\r",
+											"    pm.expect(responseData.length).to.be.at.least(1, \"'cart' array should not be empty\");\r",
+											"});\r",
+											"\r",
+											"\r",
+											"pm.test(\"Total Cart Value is a non-negative integer\", function () {\r",
+											"  const responseData = pm.response.json();\r",
+											"\r",
+											"  pm.expect(responseData).to.be.an('array');\r",
+											"  pm.expect(responseData[0].totalCartValue).to.be.a('number').and.to.be.at.least(0);\r",
+											"});\r",
+											"\r",
+											"\r",
+											"// Store the id of the first item in the 'cart' array as a variable\r",
+											"var responseBody = pm.response.json();\r",
+											"var itemId = responseBody[0].cart[0]._id;\r",
+											"pm.collectionVariables.set(\"cartItemId\", itemId);"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"name\": \"Lemon Zest Cake\",\r\n    \"price\": 18.99,\r\n    \"quantity\": \"1kg\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url}}/api/customers/cart",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"api",
+										"customers",
+										"cart"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "addCartItem Failed",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Response status code is 404\", function () {\r",
+											"    pm.response.to.have.status(404);\r",
+											"});\r",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "random",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"name\": \"Lemon Zest Cake\",\r\n    \"price\": 18.99,\r\n    \"quantity\": \"1kg\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url}}/api/customers/cart",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"api",
+										"customers",
+										"cart"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "addCartItem Failed 2",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Response status code is 500\", function () {\r",
+											"    pm.response.to.have.status(500);\r",
+											"});\r",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"name\": \"Lemon Zest Cake\", \r\n    \"quantity\": \"1kg\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url}}/api/customers/cart",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"api",
+										"customers",
+										"cart"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "addCartItem Failed 3",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Response status code is 500\", function () {\r",
+											"    pm.response.to.have.status(500);\r",
+											"});\r",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"name\": \"Lemon Zest Cake\"\r\n  \r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url}}/api/customers/cart",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"api",
+										"customers",
+										"cart"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "addCartItem Failed 4",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Response status code is 500\", function () {\r",
+											"    pm.response.to.have.status(500);\r",
+											"});\r",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \r\n    \"quantity\": \"1kg\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url}}/api/customers/cart",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"api",
+										"customers",
+										"cart"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "getCartItems",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Response status code is 200\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});\r",
+											"\r",
+											"\r",
+											"pm.test(\"Response is an array with at least one element\", function () {\r",
+											"    const responseData = pm.response.json();\r",
+											"    \r",
+											"    pm.expect(responseData).to.be.an('array');\r",
+											"    pm.expect(responseData).to.have.lengthOf.at.least(1);\r",
+											"});\r",
+											"\r",
+											"\r",
+											"pm.test(\"Verify cart array is present and has expected number of elements\", function () {\r",
+											"    const responseData = pm.response.json();\r",
+											"    \r",
+											"    pm.expect(responseData).to.be.an('array');\r",
+											"    pm.expect(responseData).to.have.lengthOf(1);\r",
+											"    pm.expect(responseData[0].cart).to.exist.and.to.be.an('array');\r",
+											"});\r",
+											"\r",
+											"\r",
+											"pm.test(\"Each 'name' in 'cart' array is a non-empty string\", function () {\r",
+											"    const responseData = pm.response.json();\r",
+											"    \r",
+											"    pm.expect(responseData).to.be.an('array');\r",
+											"\r",
+											"});\r",
+											"\r",
+											"\r",
+											"pm.test(\"Each 'price' in the 'cart' array is a non-negative number\", function () {\r",
+											"    const responseData = pm.response.json();\r",
+											"\r",
+											"    pm.expect(responseData).to.be.an('array');\r",
+											"    pm.expect(responseData).to.have.lengthOf.at.least(1, \"Array should not be empty\");\r",
+											"\r",
+											"    responseData.forEach(function (item) {\r",
+											"        pm.expect(item).to.be.an('object');\r",
+											"       \r",
+											"    });\r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{url}}/api/customers/cart",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"api",
+										"customers",
+										"cart"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "deleteCartItem",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"\r",
+											"pm.test(\"Response status code is 200\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});\r",
+											"\r",
+											"\r",
+											"pm.test(\"Response is an array\", function () {\r",
+											"    pm.expect(pm.response.json()).to.be.an('array');\r",
+											"});\r",
+											"\r",
+											"\r",
+											"pm.test(\"Validate that the 'cart' array is present in the response and is empty\", function () {\r",
+											"    const responseData = pm.response.json();\r",
+											"    \r",
+											"    pm.expect(responseData).to.be.an('array');\r",
+											"    pm.expect(responseData[0].cart).to.exist.and.to.be.an('array').that.is.empty;\r",
+											"});\r",
+											"\r",
+											"\r",
+											"pm.test(\"Validate totalCartValue is a number and is equal to 0\", function () {\r",
+											"  const responseData = pm.response.json();\r",
+											"\r",
+											"  pm.expect(responseData).to.be.an('array');\r",
+											"  pm.expect(responseData[0].totalCartValue).to.be.a('number');\r",
+											"  pm.expect(responseData[0].totalCartValue).to.equal(0);\r",
+											"});\r",
+											"\r",
+											"\r",
+											"\r",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{url}}/api/customers/cart/:cartItemId",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"api",
+										"customers",
+										"cart",
+										":cartItemId"
+									],
+									"variable": [
+										{
+											"key": "cartItemId",
+											"value": "{{cartItemId}}"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "deleteCartItem Failed",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"\r",
+											"pm.test(\"Response status code is 404\", function () {\r",
+											"    pm.response.to.have.status(404);\r",
+											"});\r",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{url}}/api/customers/cart/:cartItemId",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"api",
+										"customers",
+										"cart",
+										":cartItemId"
+									],
+									"variable": [
+										{
+											"key": "cartItemId",
+											"value": "{{cartItemId}}"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Order APIs",
+					"item": [
+						{
+							"name": "addCartItem",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Response status code is 200\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});\r",
+											"\r",
+											"\r",
+											"pm.test(\"Validate the 'cart' array is present in the response and is not empty\", function () {\r",
+											"    const responseData = pm.response.json();\r",
+											"    \r",
+											"    pm.expect(responseData).to.be.an('array');\r",
+											"    pm.expect(responseData.length).to.be.at.least(1, \"'cart' array should not be empty\");\r",
+											"});\r",
+											"\r",
+											"\r",
+											"pm.test(\"Total Cart Value is a non-negative integer\", function () {\r",
+											"  const responseData = pm.response.json();\r",
+											"\r",
+											"  pm.expect(responseData).to.be.an('array');\r",
+											"  pm.expect(responseData[0].totalCartValue).to.be.a('number').and.to.be.at.least(0);\r",
+											"});\r",
+											"\r",
+											"\r",
+											"// Store the id of the first item in the 'cart' array as a variable\r",
+											"var responseBody = pm.response.json();\r",
+											"var itemId = responseBody[0].cart[0]._id;\r",
+											"pm.collectionVariables.set(\"cartItemId\", itemId);"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"name\": \"Lemon Zest Cake\",\r\n    \"price\": 18.99,\r\n    \"quantity\": \"1kg\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url}}/api/customers/cart",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"api",
+										"customers",
+										"cart"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "placeOrder",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Response status code is 201\", function () {\r",
+											"    pm.response.to.have.status(201);\r",
+											"});\r",
+											"\r",
+											"\r",
+											"pm.test(\"Validate that customerId field is not empty\", function () {\r",
+											"  const responseData = pm.response.json();\r",
+											"  \r",
+											"  pm.expect(responseData.customerId).to.exist.and.to.not.be.empty;\r",
+											"});\r",
+											"\r",
+											"\r",
+											"pm.test(\"Verify that the address field is present in the response\", function () {\r",
+											"  const responseData = pm.response.json();\r",
+											"  \r",
+											"  pm.expect(responseData).to.be.an('object');\r",
+											"  pm.expect(responseData.address).to.exist;\r",
+											"});\r",
+											"\r",
+											"\r",
+											"pm.test(\"Items array is present and contains at least one element\", function () {\r",
+											"    const responseData = pm.response.json();\r",
+											"    \r",
+											"    pm.expect(responseData).to.be.an('object');\r",
+											"    pm.expect(responseData.items).to.exist.and.to.be.an('array');\r",
+											"    pm.expect(responseData.items.length).to.be.at.least(1);\r",
+											"});\r",
+											"\r",
+											"\r",
+											"pm.test(\"The totalAmount field is a non-negative number\", function () {\r",
+											"    const responseData = pm.response.json();\r",
+											"    \r",
+											"    pm.expect(responseData.totalAmount).to.be.a('number');\r",
+											"    pm.expect(responseData.totalAmount).to.be.at.least(0);\r",
+											"});\r",
+											"\r",
+											"var responseBody = pm.response.json();\r",
+											"var orderId = responseBody._id;\r",
+											"pm.collectionVariables.set(\"orderId\", orderId);\r",
+											"var itemId=responseBody.items[0]._id;\r",
+											"pm.collectionVariables.set(\"orderItemId\", itemId);"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"address\": \"B1F, ABC Society, Civil Lines\",\r\n    \"modeOfPayment\":\"cashOnDelivery\",\r\n    \"status\":\"PENDING\"\r\n\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url}}/api/customers/placeOrder",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"api",
+										"customers",
+										"placeOrder"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "placeOrder Failed 1",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Response status code is 404\", function () {\r",
+											"    pm.response.to.have.status(404);\r",
+											"});\r",
+											"\r",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "random",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"address\": \"B1F, ABC Society, Civil Lines\",\r\n    \"modeOfPayment\":\"cashOnDelivery\",\r\n    \"status\":\"PENDING\"\r\n\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url}}/api/customers/placeOrder",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"api",
+										"customers",
+										"placeOrder"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "placeOrder Failed 2",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Response status code is 500\", function () {\r",
+											"    pm.response.to.have.status(500);\r",
+											"});\r",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"address\": \"B1F, ABC Society, Civil Lines\",\r\n    \r\n    \"status\":\"PENDING\"\r\n\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url}}/api/customers/placeOrder",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"api",
+										"customers",
+										"placeOrder"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "placeOrder Failed 3",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Response status code is 500\", function () {\r",
+											"    pm.response.to.have.status(500);\r",
+											"});\r",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \r\n    \"modeOfPayment\":\"cashOnDelivery\",\r\n    \"status\":\"PENDING\"\r\n\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url}}/api/customers/placeOrder",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"api",
+										"customers",
+										"placeOrder"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "placeOrder Failed 4",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Response status code is 500\", function () {\r",
+											"    pm.response.to.have.status(500);\r",
+											"});\r",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"address\": \"B1F, ABC Society, Civil Lines\",\r\n    \"modeOfPayment\":\"cashOnDelivery\"\r\n   \r\n\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url}}/api/customers/placeOrder",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"api",
+										"customers",
+										"placeOrder"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "getOrderItem",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"\r",
+											"pm.test(\"Response status code is 200\", function () {\r",
+											"  pm.response.to.have.status(200);\r",
+											"});\r",
+											"\r",
+											"\r",
+											"pm.test(\"Response has the required fields\", function () {\r",
+											"    const responseData = pm.response.json();\r",
+											"    \r",
+											"    pm.expect(responseData).to.be.an('object');\r",
+											"    pm.expect(responseData.name).to.exist.and.to.be.a('string');\r",
+											"    pm.expect(responseData.price).to.exist.and.to.be.a('number');\r",
+											"    pm.expect(responseData.quantity).to.exist.and.to.be.a('string');\r",
+											"    pm.expect(responseData._id).to.exist.and.to.be.a('string');\r",
+											"});\r",
+											"\r",
+											"\r",
+											"pm.test(\"Price is a non-negative number\", function () {\r",
+											"    const responseData = pm.response.json();\r",
+											"    \r",
+											"    pm.expect(responseData.price).to.be.a('number');\r",
+											"    pm.expect(responseData.price).to.be.at.least(0, \"Price should be a non-negative number\");\r",
+											"});\r",
+											"\r",
+											"\r",
+											"\r",
+											"pm.test(\"Verify that the _id field is not empty\", function () {\r",
+											"    const responseData = pm.response.json();\r",
+											"    \r",
+											"    pm.expect(responseData).to.be.an('object');\r",
+											"    pm.expect(responseData._id).to.exist.and.to.not.be.empty;\r",
+											"});\r",
+											"\r",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{url}}/api/customers/orders/:orderId/items/:itemId",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"api",
+										"customers",
+										"orders",
+										":orderId",
+										"items",
+										":itemId"
+									],
+									"variable": [
+										{
+											"key": "orderId",
+											"value": "{{orderId}}"
+										},
+										{
+											"key": "itemId",
+											"value": "{{orderItemId}}"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "getOrderItem Failed",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"\r",
+											"pm.test(\"Response status code is 404\", function () {\r",
+											"  pm.response.to.have.status(404);\r",
+											"});\r",
+											"\r",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{url}}/api/customers/orders/:orderId/items/:itemId",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"api",
+										"customers",
+										"orders",
+										":orderId",
+										"items",
+										":itemId"
+									],
+									"variable": [
+										{
+											"key": "orderId",
+											"value": "{{orderId}}"
+										},
+										{
+											"key": "itemId",
+											"value": "{{orderItemId}}"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "getOrderById",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"\r",
+											"pm.test(\"Response status code is 200\", function () {\r",
+											"    pm.expect(pm.response.code).to.equal(200);\r",
+											"});\r",
+											"\r",
+											"\r",
+											"pm.test(\"Customer ID is a non-empty string\", function () {\r",
+											"    const responseData = pm.response.json();\r",
+											"\r",
+											"    pm.expect(responseData.customerId).to.be.a('string').and.to.have.lengthOf.at.least(1, \"Value should not be empty\");\r",
+											"});\r",
+											"\r",
+											"\r",
+											"pm.test(\"Address is a non-empty string\", function () {\r",
+											"  const responseData = pm.response.json();\r",
+											"  \r",
+											"  pm.expect(responseData).to.be.an('object');\r",
+											"  pm.expect(responseData.address).to.exist.and.to.be.a('string').and.to.have.lengthOf.at.least(1, \"Address should not be empty\");\r",
+											"});\r",
+											"\r",
+											"\r",
+											"pm.test(\"Verify that the 'items' array is present in the response and contains at least one element\", function () {\r",
+											"    const responseData = pm.response.json();\r",
+											"    \r",
+											"    pm.expect(responseData.items).to.exist.and.to.be.an('array');\r",
+											"    pm.expect(responseData.items.length).to.be.at.least(1);\r",
+											"});\r",
+											"\r",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{url}}/api/customers/orders/:orderId",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"api",
+										"customers",
+										"orders",
+										":orderId"
+									],
+									"variable": [
+										{
+											"key": "orderId",
+											"value": "{{orderId}}"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "getOrderById Failed",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"\r",
+											"pm.test(\"Response status code is 404\", function () {\r",
+											"    pm.expect(pm.response.code).to.equal(404);\r",
+											"});\r",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{url}}/api/customers/orders/:orderId",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"api",
+										"customers",
+										"orders",
+										":orderId"
+									],
+									"variable": [
+										{
+											"key": "orderId",
+											"value": "{{orderId}}"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "updateOrder",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"\r",
+											"pm.test(\"Response status code is 200\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});\r",
+											"\r",
+											"\r",
+											"pm.test(\"Validate that the _id field is not empty\", function () {\r",
+											"    const responseData = pm.response.json();\r",
+											"\r",
+											"    pm.expect(responseData).to.be.an('object');\r",
+											"    pm.expect(responseData._id).to.exist.and.to.not.be.empty;\r",
+											"});\r",
+											"\r",
+											"\r",
+											"pm.test(\"Validate that the customerId field is not empty\", function () {\r",
+											"    const responseData = pm.response.json();\r",
+											"    \r",
+											"    pm.expect(responseData.customerId).to.exist.and.to.not.be.empty;\r",
+											"});\r",
+											"\r",
+											"\r",
+											"pm.test(\"The address field should not be empty\", function () {\r",
+											"    const responseData = pm.response.json();\r",
+											"    \r",
+											"    pm.expect(responseData.address).to.exist.and.to.have.lengthOf.at.least(1, \"Address should not be empty\");\r",
+											"});\r",
+											"\r",
+											"\r",
+											"pm.test(\"Verify that the 'items' array is present and contains at least one element\", function () {\r",
+											"    const responseData = pm.response.json();\r",
+											"    \r",
+											"    pm.expect(responseData.items).to.exist.and.to.be.an('array');\r",
+											"    pm.expect(responseData.items).to.have.lengthOf.at.least(1, \"The 'items' array should contain at least one element\");\r",
+											"});\r",
+											"\r",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \r\n    \"recieverName\": \"John Solanki\",\r\n    \"recieverPhoneNo\": 9503415541\r\n\r\n\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url}}/api/customers/orders/:orderId",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"api",
+										"customers",
+										"orders",
+										":orderId"
+									],
+									"variable": [
+										{
+											"key": "orderId",
+											"value": "{{orderId}}"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "updateOrderFailed",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Response status code is 404\", function () {\r",
+											"    pm.response.to.have.status(404);\r",
+											"});\r",
+											"\r",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "random",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \r\n    \"recieverName\": \"John Solanki\",\r\n    \"recieverPhoneNo\": 9503415541\r\n\r\n\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url}}/api/customers/updateOrder",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"api",
+										"customers",
+										"updateOrder"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "getOrders",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"\r",
+											"pm.test(\"Response status code is 200\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});\r",
+											"\r",
+											"\r",
+											"pm.test(\"Response is an array\", function () {\r",
+											"  pm.expect(pm.response.json()).to.be.an('array');\r",
+											"});\r",
+											"\r",
+											"\r",
+											"pm.test(\"Array has at least one element\", function () {\r",
+											"    const responseData = pm.response.json();\r",
+											"    \r",
+											"    pm.expect(responseData).to.be.an('array').that.has.lengthOf.at.least(1);\r",
+											"});\r",
+											"\r",
+											"\r",
+											"pm.test(\"Array elements are non-empty strings\", function () {\r",
+											"    const responseData = pm.response.json();\r",
+											"    \r",
+											"    pm.expect(responseData).to.be.an('array');\r",
+											"    \r",
+											"    responseData.forEach(function (element) {\r",
+											"        pm.expect(element).to.be.a('string').and.to.have.lengthOf.at.least(1, \"Value should not be empty\");\r",
+											"    });\r",
+											"});\r",
+											"\r",
+											"\r",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{url}}/api/customers/orders",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"api",
+										"customers",
+										"orders"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "getOrders Failed",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"\r",
+											"pm.test(\"Response status code is 404\", function () {\r",
+											"    pm.response.to.have.status(404);\r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{url}}/api/customers/orders",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"api",
+										"customers",
+										"orders"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Wishlist APIs",
+					"item": [
+						{
+							"name": "getWishlistItems",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"\r",
+											"pm.test(\"Response status code is 200\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});\r",
+											"\r",
+											"\r",
+											"pm.test(\"Response is an array\", function () {\r",
+											"    const responseData = pm.response.json();\r",
+											"    \r",
+											"    pm.expect(responseData).to.be.an('array');\r",
+											"});\r",
+											"\r",
+											"\r",
+											"\r",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url}}/api/customers/wishlist",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"api",
+										"customers",
+										"wishlist"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "getWishlistItems Failed",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"\r",
+											"pm.test(\"Response status code is 404\", function () {\r",
+											"    pm.response.to.have.status(404);\r",
+											"});\r",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url}}/api/customers/wishlist",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"api",
+										"customers",
+										"wishlist"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "addWishlistItem",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"\r",
+											"pm.test(\"Response status code is 200\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});\r",
+											"\r",
+											"\r",
+											"pm.test(\"Response is an array with at least one element\", function () {\r",
+											"  const responseData = pm.response.json();\r",
+											"  \r",
+											"  pm.expect(responseData).to.be.an('array').and.to.have.lengthOf.at.least(1);\r",
+											"});\r",
+											"\r",
+											"\r",
+											"pm.test(\"Each element in the response has the required fields\", function () {\r",
+											"    const responseData = pm.response.json();\r",
+											"    \r",
+											"    pm.expect(responseData).to.be.an('array').that.is.not.empty;\r",
+											"    \r",
+											"    responseData.forEach(function(element) {\r",
+											"        pm.expect(element.cakeId).to.exist.and.to.be.a('string');\r",
+											"        pm.expect(element._id).to.exist.and.to.be.a('string');\r",
+											"    });\r",
+											"});\r",
+											"\r",
+											"\r",
+											"pm.test(\"cakeId is a non-empty string\", function () {\r",
+											"    const responseData = pm.response.json();\r",
+											"    \r",
+											"    pm.expect(responseData).to.be.an('array').that.is.not.empty;\r",
+											"    responseData.forEach(function (item) {\r",
+											"        pm.expect(item.cakeId).to.be.a('string').and.to.have.lengthOf.at.least(1, \"cakeId should not be empty\");\r",
+											"    });\r",
+											"});\r",
+											"\r",
+											"\r",
+											"pm.test(\"Check that _id is a non-empty string\", function () {\r",
+											"    const responseData = pm.response.json();\r",
+											"    \r",
+											"    pm.expect(responseData).to.be.an('array').that.is.not.empty;\r",
+											"    responseData.forEach(function(item) {\r",
+											"        pm.expect(item._id).to.be.a('string').and.to.have.lengthOf.at.least(1, \"_id should not be empty\");\r",
+											"    });\r",
+											"});\r",
+											"\r",
+											"var responseBody = pm.response.json();\r",
+											"var itemId = responseBody[responseBody.length-1]._id;\r",
+											"pm.collectionVariables.set(\"wishlistItemId\", itemId);\r",
+											"\r",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"cakeId\":\"65631b7578e59926d3d0892d\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url}}/api/customers/wishlist",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"api",
+										"customers",
+										"wishlist"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "addWishlistItem Failed",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"\r",
+											"pm.test(\"Response status code is 500\", function () {\r",
+											"    pm.response.to.have.status(500);\r",
+											"});\r",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"cergId\":\"65631b7578e59926d3d0892d\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url}}/api/customers/wishlist",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"api",
+										"customers",
+										"wishlist"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "updateWishlistItem",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"\r",
+											"pm.test(\"Response status code is 200\", function () {\r",
+											"  pm.response.to.have.status(200);\r",
+											"});\r",
+											"\r",
+											"\r",
+											"pm.test(\"Validate the response body is an array\", function () {\r",
+											"    const responseData = pm.response.json();\r",
+											"    \r",
+											"    pm.expect(responseData).to.be.an('array');\r",
+											"});\r",
+											"\r",
+											"\r",
+											"pm.test(\"Validate that cakeId is a non-empty string\", function () {\r",
+											"    const responseData = pm.response.json();\r",
+											"    \r",
+											"    responseData.forEach(function (item) {\r",
+											"        pm.expect(item.cakeId).to.be.a('string').and.to.have.lengthOf.at.least(1, \"Value should not be empty\");\r",
+											"    });\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Response time is within an acceptable range\", function () {\r",
+											"    pm.expect(pm.response.responseTime).to.be.below(1000);\r",
+											"});\r",
+											"\r",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"cakeId\":\"vanilla-dream\"\r\n}\r\n",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url}}/api/customers/wishlist/:wishlistItemId",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"api",
+										"customers",
+										"wishlist",
+										":wishlistItemId"
+									],
+									"variable": [
+										{
+											"key": "wishlistItemId",
+											"value": "{{wishlistItemId}}"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "updateWishlistItem Failed",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"\r",
+											"pm.test(\"Response status code is 404\", function () {\r",
+											"  pm.response.to.have.status(404);\r",
+											"});\r",
+											"\r",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"cakeId\":\"random\"\r\n}\r\n",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url}}/api/customers/wishlist/:wishlistItemId",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"api",
+										"customers",
+										"wishlist",
+										":wishlistItemId"
+									],
+									"variable": [
+										{
+											"key": "wishlistItemId",
+											"value": "{{wishlistItemId}}"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "deleteWishlistItem",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"\r",
+											"pm.test(\"Response status code is 200\", function () {\r",
+											"  pm.response.to.have.status(200);\r",
+											"});\r",
+											"\r",
+											"\r",
+											"\r",
+											"pm.test(\"Each element in the response has the required fields - cakeId and _id\", function () {\r",
+											"    const responseData = pm.response.json();\r",
+											"    \r",
+											"    pm.expect(responseData).to.be.an('array').that.is.not.empty;\r",
+											"    \r",
+											"    responseData.forEach(function(element) {\r",
+											"        pm.expect(element.cakeId).to.exist;\r",
+											"        pm.expect(element._id).to.exist;\r",
+											"    });\r",
+											"});\r",
+											"\r",
+											"\r",
+											"pm.test(\"Verify that cakeId is a non-empty string\", function () {\r",
+											"    const responseData = pm.response.json();\r",
+											"    \r",
+											"    pm.expect(responseData).to.be.an('array');\r",
+											"    responseData.forEach(function (item) {\r",
+											"        pm.expect(item.cakeId).to.be.a('string').and.to.have.lengthOf.at.least(1, \"Value should not be empty\");\r",
+											"    });\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Response time is within an acceptable range\", function () {\r",
+											"    pm.expect(pm.response.responseTime).to.be.below(1000);\r",
+											"});\r",
+											"\r",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{url}}/api/customers/wishlist/:wishlistItemId",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"api",
+										"customers",
+										"wishlist",
+										":wishlistItemId"
+									],
+									"variable": [
+										{
+											"key": "wishlistItemId",
+											"value": "{{wishlistItemId}}"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "deleteWishlistItem Failed",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"\r",
+											"pm.test(\"Response status code is 404\", function () {\r",
+											"  pm.response.to.have.status(404);\r",
+											"});\r",
+											"\r",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{url}}/api/customers/wishlist/:wishlistItemId",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"api",
+										"customers",
+										"wishlist",
+										":wishlistItemId"
+									],
+									"variable": [
+										{
+											"key": "wishlistItemId",
+											"value": "{{wishlistItemId}}"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "deleteCustomerAccount",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"\r",
+											"pm.test(\"Response status code is 204\", function () {\r",
+											"    pm.response.to.have.status(204);\r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{url}}/api/customers",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"api",
+										"customers"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				}
+			],
+			"auth": {
+				"type": "bearer",
+				"bearer": [
+					{
+						"key": "token",
+						"value": "test_user",
+						"type": "string"
+					}
+				]
+			},
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "url",
+			"value": "http://localhost:5000",
+			"type": "string"
+		},
+		{
+			"key": "cartItemId",
+			"value": ""
+		},
+		{
+			"key": "orderId",
+			"value": ""
+		},
+		{
+			"key": "orderItemId",
+			"value": ""
+		},
+		{
+			"key": "wishlistItemId",
+			"value": ""
+		},
+		{
+			"key": "cakeId",
+			"value": ""
+		},
+		{
+			"key": "s_orderId",
+			"value": ""
+		},
+		{
+			"key": "s_orderItemId",
+			"value": ""
+		}
+	]
+}

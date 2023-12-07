@@ -22,7 +22,8 @@ export async function addCustomerAccount(req, res) {
     let customerDetails = await Customer.findOne({ uid: req.user });
     if(customerDetails){
       console.log("Customer already exists");
-      res.status(200);
+      res.status(200).json({});
+      return;
     }
     else{
        console.log("Customer needs to be added");
