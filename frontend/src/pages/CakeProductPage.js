@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import client from "../sanityClient";
-import { useParams, Link } from "react-router-dom";
+import { useParams, Link, useNavigate } from "react-router-dom";
 import CakeCard from "../components/CakeCard";
 import Drift from "react-driftjs";
 import axios from "axios";
@@ -12,11 +12,13 @@ export default function CakeProductPage() {
   const [modeOfPayment, setModeOfPayment] = useState("cashOnDelivery");
   const [paymentStatus, setPaymentStatus] = useState("");
   const [isChecked, setIsChecked] = useState(false);
+  const navigate = useNavigate();
+  
   const handleCheckboxChange = () => {
     setIsChecked(!isChecked);
     if (isChecked) {
       console.log("Went to online");
-      
+
       setModeOfPayment("onlinePayment");
 
     } else {
@@ -26,7 +28,7 @@ export default function CakeProductPage() {
     console.log(modeOfPayment);
   };
 
-  const createOrder = async (mode_Payment,status_Payment) => {
+  const createOrder = async (mode_Payment, status_Payment) => {
     console.log("create order");
     const email = localStorage.getItem("paa_emailID");
     if (!email) {
@@ -81,11 +83,18 @@ export default function CakeProductPage() {
           instructions: document.getElementById("instructions").value,
         })
         .then((res) => {
-          console.log(`doc was created, document ID is ${res._id}`);
-          alert(
-            "Order placed successfully. Please continue to browse for more!"
-          );
-          window.location.href = "/catalogue";
+
+          const orderDetails = {
+            name: name,
+            address: address,
+            cakeImage: cakeUrl,
+            price: orderCost,
+          };
+        
+          navigate('/confirmation', { state: { orderDetails } });
+
+          // here here 
+
         });
     } catch (err) {
       console.error(err);
@@ -136,23 +145,23 @@ export default function CakeProductPage() {
         document.getElementById("state").value;
 
       //Placing Order
-      let orderData={}
-      if(isChecked){
+      let orderData = {}
+      if (isChecked) {
         orderData = {
           address: address,
           modeOfPayment: "onlinePayment",
         };
 
       }
-      else{
+      else {
         orderData = {
           address: address,
-          modeOfPayment:"cashOnDelivery",
+          modeOfPayment: "cashOnDelivery",
         };
 
       }
-      
-      
+
+
 
       console.log(orderData);
 
@@ -196,8 +205,8 @@ export default function CakeProductPage() {
                 verifyData,
                 payloadHeader
               );
-              
-              await createOrder("onlinePayment","Captured");
+
+              await createOrder("onlinePayment", "Captured");
             } catch (err) {
               console.log(err);
             }
@@ -209,8 +218,8 @@ export default function CakeProductPage() {
         const rzp1 = new window.Razorpay(options);
         rzp1.open();
       } else {
-        
-        await createOrder("cashOnDelivery","Pending");
+
+        await createOrder("cashOnDelivery", "Pending");
       }
     } catch (err) {
       console.log(err);
@@ -269,6 +278,7 @@ export default function CakeProductPage() {
 
   return (
     <div>
+      {/* <div onClick={temp}>hkjdashjadaksadhk</div> */}
       <div className="flex my-8 flex-row items-center justify-center space-x-12">
         <div>
           <img
@@ -476,7 +486,7 @@ export default function CakeProductPage() {
                   Submit
                 </button>
                 <button
-                  onClick={() => close()}
+                  onClick={() => { close() }}
                   type="button"
                   className="ml-8 bg-red-500 text-white px-4 py-2 rounded hover:bg-red-700 focus:outline-none focus:shadow-outline-red active:bg-red-800"
                 >

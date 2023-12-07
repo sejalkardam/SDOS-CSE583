@@ -17,6 +17,7 @@ import OrderPage from "./pages/Order_Page";
 import ProductPage from "./pages/ProductPage";
 import ProductPage1 from "./pages/ProductPage1";
 import ProductPage2 from "./pages/ProductPage2";
+import OrderConfirmed from "./pages/OrderConfirmed";
 
 function App() {
   const action = useNavigationType();
@@ -97,6 +98,7 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="/:slug" element={<CakeProductPage />} />
         <Route path="/orders" element={<OrderPage />} />
+        <Route path="/confirmation" element={<OrderConfirmed />} />
       </Routes>
       <Footer />
     </div>
