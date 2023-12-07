@@ -1,7 +1,7 @@
 import emailTransporter from "../config/nodemailer.js";
 import dotenv from "dotenv";
 dotenv.config();
-const sendWelcomeMail = async (email,data) => {
+const sendOrderPlacedMail = async (email,data) => {
   try {
     const html = `
     <div style="font-family: 'Arial', sans-serif; background-color: #f7f7f7; margin: 0; padding: 20px;">
@@ -16,11 +16,8 @@ const sendWelcomeMail = async (email,data) => {
             <h1 style="color: #333333;">Hi there!</h1>
             <p style="color: #555555; font-size: 16px;">Congratulations, your order is placed!</p>
             <p style="color: #555555; font-size: 16px;"><ul>
-             ${Object.entries(data)
-               .map(([key, value]) => `<li>${key}: ${value}</li>`)
-               .join("")}
             <li> Order Id: ${data.orderId}</li>
-            <li> Name: ${data.cakeName}</li>
+            <li> Name: ${data.name}</li>
             <li> Amount: ${data.price}</li>
             <li> Quantity: ${data.quantity}</li>
             <li> Customization: ${data.customization}</li>
@@ -59,14 +56,14 @@ const sendWelcomeMail = async (email,data) => {
 
     emailTransporter.sendMail(mailOptions, function (err, data) {
       if (err) {
-        console.log("Error in sending Welcome Mail Transporter:" + err);
+        console.log("Error in sending Order Placed Email Transporter:" + err);
       } else {
-        console.log("Successfully sent Welcome Email");
+        console.log("Successfully sent Order Placed Email");
       }
     });
   } catch (err) {
-    console.log("ERROR in sending welcome mail: ", err);
+    console.log("ERROR in sending order placed mail: ", err);
   }
 };
 
-export default sendWelcomeMail;
+export default sendOrderPlacedMail;

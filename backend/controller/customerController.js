@@ -4,6 +4,7 @@ import Cake from "../models/cake.js";
 import razorpay from "../config/razorpay.js";
 import uniqid from "uniqid";
 import sendWelcomeMail from "../mailers/welcome.js";
+import sendOrderPlacedMail from "../mailers/orderPlaced.js";
 // Customer
 export async function getCustomerDetails(req, res) {
   try {
@@ -340,15 +341,8 @@ export async function placeOrder(req, res) {
 
         orderData["psp_orderId"] = psp_order.id;
 
-        // Create the order
-        const newOrder = new Order(orderData);
-        const savedOrder = await newOrder.save();
-
-        customer.orders.push(savedOrder._id);
-        customer.cart = [];
-        customer.totalCartValue = 0;
         await customer.save();
-        return res.status(201).json(savedOrder);
+        return res.status(201).json(orderData);
       });
     } else {
       
@@ -359,7 +353,19 @@ export async function placeOrder(req, res) {
       customer.cart = [];
       customer.totalCartValue = 0;
       await customer.save();
-
+      const data = {
+        "orderId":savedOrder._id,
+        "address":savedOrder.address,
+        "modeOfPayment":savedOrder.modeOfPayment,
+        "orderStatus":savedOrder.orderStatus,
+        "paymentStatus":savedOrder.paymentStatus,
+        "name":savedOrder.items[0].name,
+        "quantity":savedOrder.items[0].quantity,
+        "customization":savedOrder.items[0].customization,
+        "price":savedOrder.items[0].price
+       
+      };
+      sendOrderPlacedMail(customer.email,data);
       return res.status(201).json(savedOrder);
     }
   } catch (error) {

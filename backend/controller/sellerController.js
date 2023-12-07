@@ -1,8 +1,10 @@
 import Cakes from "../models/cake.js";
 import { Order } from "../models/order.js";
+import { Customer } from "../models/customer.js";
 import Coupon from "../models/coupon.js";
 import { validatePaymentVerification,validateWebhookSignature } from "razorpay/dist/utils/razorpay-utils.js";
 import sendContactMail from "../mailers/contactUs.js";
+import sendOrderPlacedMail from "../mailers/orderPlaced.js";
 import dotenv from "dotenv";
 dotenv.config();
 
@@ -254,6 +256,12 @@ export async function deleteCoupon(req, res) {
 
 export async function verifyPayment(req, res) {
   try {
+     let customer = await Customer.findOne({ uid: req.user });
+     if (!customer || !customer.cart) {
+       console.error("Customer not found");
+       return res.status(404).json({ error: "Customer not found" });
+     }
+   
     const paymentId = req.body.rzp_paymentId;
     const psp_orderId = req.body.psp_orderId;
     const signature = req.body.rzp_signature;
@@ -267,29 +275,51 @@ export async function verifyPayment(req, res) {
 
     // Check if signature is valid or not
     if (isValidSignature) {
+      // Create the order
+      const orderData=req.body.orderData;
+      const newOrder = new Order(orderData);
+      const savedOrder = await newOrder.save();
+
+      customer.orders.push(savedOrder._id);
+      customer.cart = [];
+      customer.totalCartValue = 0;
       const updatedOrder = await Order.findByIdAndUpdate(
-        req.body.orderId,
-        { paymentStatus: "Captured" },
+        savedOrder._id,
+        { paymentStatus: "CAPTURED" },
         {
           new: true,
         }
       );
       if (!updatedOrder) {
-        throw new Error("Error in Updating Order Success"+ JSON.stringify(req.body));
+        throw new Error(
+          "Error in Adding Online Payment Order" + JSON.stringify(req.body)
+        );
       }
-      console.log("Payment Successful");
-      res.status(200).json("Payment Successful");
+      console.log("Payment Successful and Order Placed");
+      res.status(200).json("Payment Successful and Order Placed");
+      const data = {
+        orderId: savedOrder._id,
+        address: savedOrder.address,
+        modeOfPayment: savedOrder.modeOfPayment,
+        orderStatus: savedOrder.orderStatus,
+        paymentStatus: savedOrder.paymentStatus,
+        name: savedOrder.items[0].name,
+        quantity: savedOrder.items[0].quantity,
+        customization: savedOrder.items[0].customization,
+        price: savedOrder.items[0].price,
+      };
+      sendOrderPlacedMail(customer.email, data);
     } else {
       const updatedOrder = await Order.findByIdAndUpdate(
         req.params.orderId,
-        { paymentStatus: "Failed" },
+        { paymentStatus: "FAILED" },
         {
           new: true,
         }
       );
       if(!updatedOrder){
         throw new Error(
-          "Error in Updating Order Failed" + JSON.stringify(req.body)
+          "Error in Adding Online Payment Order Failed" + JSON.stringify(req.body)
         );
       }
       console.log("Payment Failed");

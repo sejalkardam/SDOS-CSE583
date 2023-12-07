@@ -2,17 +2,26 @@ import dotenv from "dotenv";
 dotenv.config();
 import { createTransport } from "nodemailer";
 import { google } from "googleapis";
+let oauth2Client= null;
 
-const OAuth2 = google.auth.OAuth2;
-const oauth2Client = new OAuth2(
-  process.env.CLIENT_ID,
-  process.env.CLIENT_SECRET,
-  "https://developers.google.com/oauthplayground"
-);
+try{
+  const OAuth2 = google.auth.OAuth2;
+  oauth2Client = new OAuth2(
+    process.env.CLIENT_ID,
+    process.env.CLIENT_SECRET,
+    "https://developers.google.com/oauthplayground"
+  );
 
-oauth2Client.setCredentials({
-  refresh_token: process.env.REFRESH_TOKEN,
-});
+  oauth2Client.setCredentials({
+    refresh_token: process.env.REFRESH_TOKEN,
+  });
+
+}
+catch(err){
+  console.log("Error in Oauth Instance");
+  console.log(err);
+}
+
 
 async function createTransporter() {
   try {

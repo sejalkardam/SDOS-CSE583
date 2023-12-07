@@ -187,7 +187,7 @@ export default function CakeProductPage() {
                 rzp_paymentId: response.razorpay_payment_id,
                 rzp_signature: response.razorpay_signature,
                 psp_orderId: order_response.data.psp_orderId,
-                orderId: order_response.data._id,
+                orderData: order_response.data,
               };
 
               const url = `${API_URL}/api/seller/verifyPayment`;
