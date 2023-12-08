@@ -302,7 +302,7 @@ export async function verifyPayment(req, res) {
         address: savedOrder.address,
         modeOfPayment: savedOrder.modeOfPayment,
         orderStatus: savedOrder.orderStatus,
-        paymentStatus: savedOrder.paymentStatus,
+        paymentStatus: "SUCCESSFULL",
         name: savedOrder.items[0].name,
         quantity: savedOrder.items[0].quantity,
         customization: savedOrder.items[0].customization,

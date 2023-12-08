@@ -43,7 +43,7 @@ const sendOrderPlacedMail = async (email,data) => {
     const mailOptions = {
       from: process.env.USER_EMAIL,
       to: email,
-      subject: "WELCOME TO PAA Creations!",
+      subject: "Order Placed! Your cake is being baked...",
       html: html,
       attachments: [
         {
