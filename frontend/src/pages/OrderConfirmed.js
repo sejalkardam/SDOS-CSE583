@@ -28,11 +28,11 @@ export default function OrderConfirmed(props) {
                     <p className="text-green-600">{orderDetails.price}</p>
                 </div>
 
-                <div className="text-center">
+                {/* <div className="text-center">
                     <button className="bg-yellow-500 text-white px-4 py-2 rounded hover:bg-yellow-600 focus:outline-none focus:shadow-outline-yellow">
                         Track Your Order
                     </button>
-                </div>
+                </div> */}
             </div>
         </div>
     )
